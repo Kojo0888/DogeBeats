@@ -1,0 +1,67 @@
+﻿using DogeBeats.Model;
+using DogeBeats.Model.Route;
+using DogeBeats.Other;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Testowy.Model
+{
+    public class AnimationGroupElement : IGraphicElement
+    {
+        public List<AnimationElement> Elements { get; set; }
+        public AnimationGroupRoute GroupRoute { get; set; }
+        public Placement GroupInitPlacement { get; set; }
+        public string GroupName { get; set; }
+        public string GraphicName { get; set; }
+
+        public AnimationGroupElement()
+        {
+
+        }
+
+        public AnimationGroupElement(string groupName)
+        {
+            GroupName = groupName;
+        }
+
+        internal void Update(TimeSpan currentStopperTime)
+        {
+            TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);
+            UpdateElementPlacements(elementTime);
+        }
+
+        private void UpdateElementPlacements(TimeSpan currentStopperTime)
+        {
+            var groupPlacement = GroupRoute.CalculatePlacement(currentStopperTime, GroupInitPlacement);
+            foreach (var element in Elements)
+            {
+                TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);
+                element.Update(elementTime, groupPlacement);
+            }
+        }
+
+        internal void Render()
+        {
+            foreach (var element in Elements)
+            {
+                element.Render();
+            }
+        }
+
+        public static AnimationGroupElement Create(NameValueCollection values)
+        {
+            AnimationGroupElement element = new AnimationGroupElement();
+
+            string groupName = "ElementGroupName";
+
+            if (!string.IsNullOrEmpty(values.Get(groupName)))
+                element.GroupName = values[groupName];
+
+            return element;
+        }
+    }
+}
