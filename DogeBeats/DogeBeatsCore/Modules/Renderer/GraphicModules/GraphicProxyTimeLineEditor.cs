@@ -125,9 +125,9 @@ namespace DogeBeats.Modules.Renderer.RendererModules
             TimeLineEditor.PlayFromTo(from,to);
         }
 
-        public void UpdateAnimationElementManual(string graphicName, EditAnimationElementType type,  NameValueCollection values)
+        public void UpdateAnimationElementManual(string graphicName, NameValueCollection values)
         {
-            TimeLineEditor.UpdateManual(graphicName, type, values);
+            TimeLineEditor.UpdateManual(graphicName, values);
         }
 
         public List<string> GetKeysForManualUpdate(Type type)

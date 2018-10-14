@@ -22,9 +22,11 @@ namespace Testowy.Model
 
         public bool Prediction { get; set; }
 
+        public string ElementName { get; set; }
+
         public AnimationElement()
         {
-            GraphicName = GraphicProxy.GenerateElementName(this);
+            //GraphicName = GraphicProxy.GenerateElementName(this);
         }
 
         internal void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
@@ -51,15 +53,13 @@ namespace Testowy.Model
         {
             //TO DO: Attaching Graphic Engine
             //throw new NotImplementedException();
-            GraphicProxy.TranslateObject(Shape.Placement, GraphicName);
+            GraphicProxy.TranslateObject(Shape.Placement);
         }
 
         public static AnimationElement Create(NameValueCollection values)
         {
             AnimationElement element = new AnimationElement();
 
-            if (!string.IsNullOrEmpty(values.Get("ElementName")))
-                element.GraphicName = values["ElementName"];
             if (!string.IsNullOrEmpty(values.Get("ElementName")))
             {
                 switch (values["ElementName"])

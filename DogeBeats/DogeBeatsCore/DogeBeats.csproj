@@ -78,5 +78,8 @@
   <ItemGroup>
     <Folder Include="Data\Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Progress.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

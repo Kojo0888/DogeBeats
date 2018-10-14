@@ -23,10 +23,10 @@ namespace Testowy.Model
 
         }
 
-        public AnimationGroupElement(string groupName)
-        {
-            GroupName = groupName;
-        }
+        //public AnimationGroupElement(string groupName)
+        //{
+        //    GroupName = groupName;
+        //}
 
         internal void Update(TimeSpan currentStopperTime)
         {

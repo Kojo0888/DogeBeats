@@ -11,6 +11,8 @@ namespace Testowy.Model
     {
         public List<AnimationRouteFrame> Frames { get; set; }
 
+        public string RouteName { get; set; }
+
         private TimeSpan _animationTime;
         public TimeSpan AnimationTime
         {

@@ -38,7 +38,9 @@ namespace Testowy.Model
         public static Placement operator+ (Placement p1, Placement p2)
         {
             throw new NotImplementedException();
+#pragma warning disable CS0162 // Unreachable code detected
             Placement newPlacement = new Placement();
+#pragma warning restore CS0162 // Unreachable code detected
             //newPlacement.X = frameSlider.PreviousFrame.Placement.X + (easeMultiplier * frameSlider.CurrentFrame.Placement.X);
 
             //newPlacement.Y = frameSlider.PreviousFrame.Placement.Y + (easeMultiplier * frameSlider.CurrentFrame.Placement.Y);
@@ -55,7 +57,9 @@ namespace Testowy.Model
         public static Placement operator* (Placement p1, float scalar)
         {
             throw new NotImplementedException();
+#pragma warning disable CS0162 // Unreachable code detected
             Placement newPlacement = new Placement();
+#pragma warning restore CS0162 // Unreachable code detected
             return newPlacement;
         }
     }

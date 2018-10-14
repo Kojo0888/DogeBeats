@@ -18,13 +18,9 @@ namespace DogeBeats.Renderer
 
         public static Dictionary<string, GameObject> ShapesOnScreen = new Dictionary<string, GameObject>();
 
-        public static void TranslateObject(Placement placement, string elementName)
+        public static void TranslateObject(Placement placement)
         {
-            //var shape = ShapesOnScreen.FirstOrDefault(f => f.Name == elementName);
-            if (ShapesOnScreen.ContainsKey(elementName))
-            {
-                //attach to the gameObejct of Unity
-            }
+
         }
 
         internal static string GenerateElementName(AnimationElement animationElement)

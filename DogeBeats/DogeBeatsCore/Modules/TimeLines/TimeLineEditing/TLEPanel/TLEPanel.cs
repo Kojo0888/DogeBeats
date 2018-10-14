@@ -84,6 +84,7 @@ namespace DogeBeats.Modules.TimeLines
 
             IniitializeCurrentElements();
             //InitializeGrouppedElements();
+            //return cells.FirstOrDefault()?.ReferencingTimedElement.Object;
         }
 
         public int CalculateMaxElementsAtColumn()
@@ -96,6 +97,7 @@ namespace DogeBeats.Modules.TimeLines
             StartTime = startTime;
             EndTime = endTime;
             IniitializeCurrentElements();
+            RefreshPanelCells();
         }
 
         public void RefreshPanelCells(List<TimedTLEPanelElement> element = null)
@@ -159,6 +161,16 @@ namespace DogeBeats.Modules.TimeLines
             var timespanKey = GrouppedElements.Where(w => w.Key < timespan).Max(m => m.Key);
 
             return new KeyValuePair<TimeSpan, List<TimedTLEPanelElement>>(timespanKey, GrouppedElements[timespanKey]);
+        }
+
+        public ITLEPanelElement GetObjectFromCellElementName(string elementName)
+        {
+            TLEPanelCell cell = PanelCells.Where(w => w.GraphicName == elementName).FirstOrDefault();
+            if (cell != null)
+            {
+                return cell.ReferencingTimedElement.Object;
+            }
+            return null;
         }
     }
 }

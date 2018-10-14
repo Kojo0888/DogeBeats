@@ -39,6 +39,19 @@ namespace DogeBeats.Modules.TimeLines
             return timedElements;
         }
 
+        public static List<TimedTLEPanelElement> Parse(List<AnimationRouteFrame> elements, TimeSpan startTime)
+        {
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
+            foreach (var element in elements)
+            {
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
+                timedElem.Object = element;
+                timedElem.Timestamp = element.TimeLength + startTime;
+                timedElements.Add(timedElem);
+            }
+            return timedElements;
+        }
+
         public static List<TimedTLEPanelElement> Parse(List<Beat> elements)
         {
             List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();

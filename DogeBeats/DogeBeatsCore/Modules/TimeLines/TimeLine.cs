@@ -143,43 +143,43 @@ namespace Testowy.Model
             _playToTimeSpan = to;
         }
 
-        internal AnimationGroupElement SearchForAnimationGroupElement(string graphicName)
-        {
-            foreach (var group in AnimationGroupElements)
-            {
-                if (group.GraphicName == graphicName)
-                    return group;
-            }
-            return null;
-        }
+        //internal AnimationGroupElement SearchForAnimationGroupElement(string graphicName)
+        //{
+        //    foreach (var group in AnimationGroupElements)
+        //    {
+        //        if (group.GraphicName == graphicName)
+        //            return group;
+        //    }
+        //    return null;
+        //}
 
-        internal AnimationElement SearchForAnimationElement(string graphicName)
-        {
-            foreach (var group in AnimationGroupElements)
-            {
-                foreach (var element in group.Elements)
-                {
-                    if (element.GraphicName == graphicName)
-                        return element;
-                }
-            }
-            return null;
-        }
+        //internal AnimationElement SearchForAnimationElement(string graphicName)
+        //{
+        //    foreach (var group in AnimationGroupElements)
+        //    {
+        //        foreach (var element in group.Elements)
+        //        {
+        //            if (element.GraphicName == graphicName)
+        //                return element;
+        //        }
+        //    }
+        //    return null;
+        //}
 
-        internal AnimationRouteFrame SearchForRouteFrame(string graphicName)
-        {
-            foreach (var group in AnimationGroupElements)
-            {
-                foreach (var element in group.Elements)
-                {
-                    foreach (var frame in element.Route.Frames)
-                    {
-                        if (frame.GraphicName == graphicName)
-                            return frame;
-                    }
-                }
-            }
-            return null;
-        }
+        //internal AnimationRouteFrame SearchForRouteFrame(string graphicName)
+        //{
+        //    foreach (var group in AnimationGroupElements)
+        //    {
+        //        foreach (var element in group.Elements)
+        //        {
+        //            foreach (var frame in element.Route.Frames)
+        //            {
+        //                if (frame.GraphicName == graphicName)
+        //                    return frame;
+        //            }
+        //        }
+        //    }
+        //    return null;
+        //}
     }
 }
