@@ -7,15 +7,15 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class TimeLineEditorPanel
+    public class TLEPanel
     {
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public TimeSpan StopperTime { get; set; }
         public TimeSpan TimeCellWidth { get; set; } = new TimeSpan(0, 0, 0, 1, 0);
-        public List<TimedGraphicElement> AllElements { get; set; } = new List<TimedGraphicElement>();
-        public List<TimedGraphicElement> CurrentElements { get; set; } = new List<TimedGraphicElement>();
-        public Dictionary<TimeSpan, List<TimedGraphicElement>> GrouppedElements { get; set; } = new Dictionary<TimeSpan, List<TimedGraphicElement>>();
+        public List<TimedTLEPanelElement> AllElements { get; set; } = new List<TimedTLEPanelElement>();
+        public List<TimedTLEPanelElement> CurrentElements { get; set; } = new List<TimedTLEPanelElement>();
+        public Dictionary<TimeSpan, List<TimedTLEPanelElement>> GrouppedElements { get; set; } = new Dictionary<TimeSpan, List<TimedTLEPanelElement>>();
 
         public float Height { get; set; }
         public float OffsetHeight { get; set; }
@@ -25,7 +25,7 @@ namespace DogeBeats.Modules.TimeLines
         public List<TLEPanelCell> PanelCells { get; set; }
         public static TLEPanelCell SelectedCell { get; set; }
 
-        public void InitialineElements(List<TimedGraphicElement> elements)
+        public void InitialineElements(List<TimedTLEPanelElement> elements)
         {
             AllElements = elements;
         }
@@ -38,12 +38,12 @@ namespace DogeBeats.Modules.TimeLines
 
         public void InitializeGrouppedElements()
         {
-            GrouppedElements = new Dictionary<TimeSpan, List<TimedGraphicElement>>();
+            GrouppedElements = new Dictionary<TimeSpan, List<TimedTLEPanelElement>>();
 
             TimeSpan currentTimeSpan = new TimeSpan(StartTime.Ticks);
             currentTimeSpan = currentTimeSpan.Add(TimeCellWidth);
 
-            List<TimedGraphicElement> group = new List<TimedGraphicElement>();
+            List<TimedTLEPanelElement> group = new List<TimedTLEPanelElement>();
 
             for (int i = 0; i < CurrentElements.Count; i++)
             {
@@ -61,21 +61,27 @@ namespace DogeBeats.Modules.TimeLines
             }
         }
 
-        internal void MoveElementTime(string elementName, TimeSpan destenationTime)
+        internal void MovePanelCellTime(string graphicName, TimeSpan destenationTime)
         {
-            var elements = AllElements.Where(w => w.Object.GraphicName == elementName).ToList();
-
-            foreach (var element in elements)
+            var cells = PanelCells.Where(w => w.GraphicName == graphicName);
+            foreach (var cell in cells)
             {
-                element.Timestamp = destenationTime;
+                cell.ReferencingTimedElement.Timestamp = destenationTime;
+                RefreshPanelCells(new List<TimedTLEPanelElement>() { cell.ReferencingTimedElement });
             }
 
             IniitializeCurrentElements();
         }
 
-        public void RemoveElement(string graphicName)
+        public void RemovePanelCell(string graphicName)
         {
-            AllElements.RemoveAll(r => r.Object.GraphicName == graphicName);
+            var cells = PanelCells.Where(w => w.GraphicName == graphicName);
+            foreach (var cell in cells)
+            {
+                AllElements.Remove(cell.ReferencingTimedElement);
+                PanelCells.Remove(cell);
+            }
+
             IniitializeCurrentElements();
             //InitializeGrouppedElements();
         }
@@ -92,7 +98,20 @@ namespace DogeBeats.Modules.TimeLines
             IniitializeCurrentElements();
         }
 
-        public List<TLEPanelCell> CreatePanelCells(List<TimedGraphicElement> elements)
+        public void RefreshPanelCells(List<TimedTLEPanelElement> element = null)
+        {
+            if(CurrentElements != null)
+            {
+                PanelCells.RemoveAll(r => element.Contains(r.ReferencingTimedElement));
+                PanelCells.AddRange(CreatePanelCells(element));
+            }
+            else
+            {
+                PanelCells = CreatePanelCells(CurrentElements);
+            }
+        }
+
+        public List<TLEPanelCell> CreatePanelCells(List<TimedTLEPanelElement> elements)
         {
             List<TLEPanelCell> panelCells = new List<TLEPanelCell>();
             foreach (var element in elements)
@@ -104,7 +123,7 @@ namespace DogeBeats.Modules.TimeLines
             return panelCells;
         }
 
-        private Placement CalculatePlacementForPanelCell(TimedGraphicElement element)
+        private Placement CalculatePlacementForPanelCell(TimedTLEPanelElement element)
         {
             float cellWidth = 0;
             if (TimeCellWidth == null)
@@ -135,11 +154,11 @@ namespace DogeBeats.Modules.TimeLines
             return placement;
         }
 
-        public KeyValuePair<TimeSpan, List<TimedGraphicElement>> GetElementGroupForTimeSpan(TimeSpan timespan)
+        public KeyValuePair<TimeSpan, List<TimedTLEPanelElement>> GetElementGroupForTimeSpan(TimeSpan timespan)
         {
             var timespanKey = GrouppedElements.Where(w => w.Key < timespan).Max(m => m.Key);
 
-            return new KeyValuePair<TimeSpan, List<TimedGraphicElement>(timespanKey, GrouppedElements[timespanKey]);
+            return new KeyValuePair<TimeSpan, List<TimedTLEPanelElement>>(timespanKey, GrouppedElements[timespanKey]);
         }
     }
 }

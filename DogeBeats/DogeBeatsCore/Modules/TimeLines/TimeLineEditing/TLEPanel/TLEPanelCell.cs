@@ -13,9 +13,9 @@ namespace DogeBeats.Modules.TimeLines
     {
         public Placement Placement { get; set; }
         public string GraphicName { get; set; }
-        public TimedGraphicElement ReferencingTimedElement { get; set; }
+        public TimedTLEPanelElement ReferencingTimedElement { get; set; }
 
-        internal static TLEPanelCell Parse(TimedGraphicElement element)
+        internal static TLEPanelCell Parse(TimedTLEPanelElement element)
         {
             TLEPanelCell cell = new TLEPanelCell();
             cell.GraphicName = GraphicProxy.GenerateElementName();

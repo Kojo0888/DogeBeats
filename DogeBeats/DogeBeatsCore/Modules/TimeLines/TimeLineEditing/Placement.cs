@@ -30,6 +30,11 @@ namespace Testowy.Model
                 placement.Rotation = tempfloat;
         }
 
+        public static List<string> GetKeysForUpdate()
+        {
+            return new List<string>() { "X", "Y", "Width", "Height", "Rotation"};
+        }
+
         public static Placement operator+ (Placement p1, Placement p2)
         {
             throw new NotImplementedException();

@@ -8,7 +8,7 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class Beat : IGraphicElement
+    public class Beat : ITLEPanelElement
     {
         public string GraphicName { get; set; }
         public TimeSpan Timestamp { get; set; }

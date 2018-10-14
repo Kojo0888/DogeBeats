@@ -1,5 +1,6 @@
 ﻿using DogeBeats.Model;
 using DogeBeats.Model.Route;
+using DogeBeats.Modules.TimeLines;
 using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,12 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationGroupElement : IGraphicElement
+    public class AnimationGroupElement : ITLEPanelElement
     {
         public List<AnimationElement> Elements { get; set; }
         public AnimationGroupRoute GroupRoute { get; set; }
-        public Placement GroupInitPlacement { get; set; }
+        public Placement InitPlacement { get; set; }
         public string GroupName { get; set; }
-        public string GraphicName { get; set; }
 
         public AnimationGroupElement()
         {
@@ -36,7 +36,7 @@ namespace Testowy.Model
 
         private void UpdateElementPlacements(TimeSpan currentStopperTime)
         {
-            var groupPlacement = GroupRoute.CalculatePlacement(currentStopperTime, GroupInitPlacement);
+            var groupPlacement = GroupRoute.CalculatePlacement(currentStopperTime, InitPlacement);
             foreach (var element in Elements)
             {
                 TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);

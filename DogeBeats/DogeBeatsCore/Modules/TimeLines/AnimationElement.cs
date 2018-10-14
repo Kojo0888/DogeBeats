@@ -1,4 +1,5 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.Modules.TimeLines;
+using DogeBeats.Other;
 using DogeBeats.Renderer;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Testowy.Model.Shapes;
 
 namespace Testowy.Model
 {
-    public class AnimationElement : IGraphicElement
+    public class AnimationElement : ITLEPanelElement
     {
         public GraphicElementBase Shape { get; set; }
 
@@ -20,8 +21,6 @@ namespace Testowy.Model
         public Placement InitPlacement { get; set; }
 
         public bool Prediction { get; set; }
-
-        public string GraphicName { get; set; }
 
         public AnimationElement()
         {

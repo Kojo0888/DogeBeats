@@ -8,17 +8,17 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class TimedGraphicElement
+    public class TimedTLEPanelElement
     {
         public TimeSpan Timestamp { get; set; }
-        public IGraphicElement Object { get; set; }
+        public ITLEPanelElement Object { get; set; }
 
-        public static List<TimedGraphicElement> Parse(List<AnimationGroupElement> elements)
+        public static List<TimedTLEPanelElement> Parse(List<AnimationGroupElement> elements)
         {
-            List<TimedGraphicElement> timedElements = new List<TimedGraphicElement>();
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
             foreach (var element in elements)
             {
-                TimedGraphicElement timedElem = new TimedGraphicElement();
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
                 timedElem.Object = element;
                 timedElem.Timestamp = element.GroupRoute.AnimationStartTime;
                 timedElements.Add(timedElem);
@@ -26,12 +26,12 @@ namespace DogeBeats.Modules.TimeLines
             return timedElements;
         }
 
-        public static List<TimedGraphicElement> Parse(List<AnimationElement> elements)
+        public static List<TimedTLEPanelElement> Parse(List<AnimationElement> elements)
         {
-            List<TimedGraphicElement> timedElements = new List<TimedGraphicElement>();
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
             foreach (var element in elements)
             {
-                TimedGraphicElement timedElem = new TimedGraphicElement();
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
                 timedElem.Object = element;
                 timedElem.Timestamp = element.Route.AnimationTime;
                 timedElements.Add(timedElem);
@@ -39,12 +39,12 @@ namespace DogeBeats.Modules.TimeLines
             return timedElements;
         }
 
-        public static List<TimedGraphicElement> Parse(List<Beat> elements)
+        public static List<TimedTLEPanelElement> Parse(List<Beat> elements)
         {
-            List<TimedGraphicElement> timedElements = new List<TimedGraphicElement>();
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
             foreach (var element in elements)
             {
-                TimedGraphicElement timedElem = new TimedGraphicElement();
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
                 timedElem.Object = element;
                 timedElem.Timestamp = element.Timestamp;
                 timedElements.Add(timedElem);
@@ -52,25 +52,25 @@ namespace DogeBeats.Modules.TimeLines
             return timedElements;
         }
 
-        public static TimedGraphicElement Parse(Beat element)
+        public static TimedTLEPanelElement Parse(Beat element)
         {
-            TimedGraphicElement timedElem = new TimedGraphicElement();
+            TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
             timedElem.Object = element;
             timedElem.Timestamp = element.Timestamp;
             return timedElem;
         }
 
-        public static TimedGraphicElement Parse(AnimationElement element)
+        public static TimedTLEPanelElement Parse(AnimationElement element)
         {
-            TimedGraphicElement timedElem = new TimedGraphicElement();
+            TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
             timedElem.Object = element;
             timedElem.Timestamp = element.Route.AnimationTime;
             return timedElem;
         }
 
-        public static TimedGraphicElement Parse(AnimationGroupElement element)
+        public static TimedTLEPanelElement Parse(AnimationGroupElement element)
         {
-            TimedGraphicElement timedElem = new TimedGraphicElement();
+            TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
             timedElem.Object = element;
             timedElem.Timestamp = element.GroupRoute.AnimationTime;
             return timedElem;

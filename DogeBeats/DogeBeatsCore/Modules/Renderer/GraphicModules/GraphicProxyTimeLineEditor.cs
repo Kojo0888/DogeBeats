@@ -38,16 +38,16 @@ namespace DogeBeats.Modules.Renderer.RendererModules
             TimeLineEditor.ShowPreviousPanelSection();
         }
 
-        public TimeLineEditorPanel GetPanel(string panelName)
+        public TLEPanel GetPanel(string panelName)
         {
             switch (panelName)
             {
                 case "ElementPanel":
-                    return TimeLineEditor.ElementPanel;
+                    return TimeLineEditor.PanelElement;
                 case "GroupPanel":
-                    return TimeLineEditor.GroupPanel;
+                    return TimeLineEditor.PanelGroup;
                 case "BeatPanel":
-                    return TimeLineEditor.BeatPanel;
+                    return TimeLineEditor.PanelBeat;
             }
 
             return null;
@@ -56,6 +56,11 @@ namespace DogeBeats.Modules.Renderer.RendererModules
         public void LeftMouseClickOnPanelElement(string elementName)
         {
             //nothing to do
+        }
+
+        public void LeftMouseClickOnPanel(string elementName)
+        {
+            //todo
         }
 
         public void LeftMouseOnDropClickOnPanelElement(string elementName, float wayPrecentage)
@@ -82,18 +87,12 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void AddAnimationElement(string graphicGroupName)
         {
-            AnimationElement element = new AnimationElement();
-            string newName = GraphicProxy.GenerateElementName(element);
-            element.GraphicName = newName;
-            TimeLineEditor.AddAnimationElement(graphicGroupName, element);
+            TimeLineEditor.AddNewAnimationElement(graphicGroupName);
         }
 
         public void AddAnimationGroup(string groupName)
         {
-            AnimationGroupElement group = new AnimationGroupElement(groupName);
-            string newName = GraphicProxy.GenerateElementName(group);
-            group.GraphicName = newName;
-            TimeLineEditor.AddAnimationGroup(group);
+            TimeLineEditor.AddNewAnimationGroup(groupName);
         }
 
         public void SaveTimeLine()
@@ -129,6 +128,16 @@ namespace DogeBeats.Modules.Renderer.RendererModules
         public void UpdateAnimationElementManual(string graphicName, EditAnimationElementType type,  NameValueCollection values)
         {
             TimeLineEditor.UpdateManual(graphicName, type, values);
+        }
+
+        public List<string> GetKeysForManualUpdate(Type type)
+        {
+            return TimeLineEditor.GetKeysForManualUpdate(type);
+        }
+
+        public void PerformManualUpdate(NameValueCollection values)
+        {
+            //todo
         }
     }
 }
