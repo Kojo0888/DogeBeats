@@ -15,7 +15,7 @@ namespace Testowy.Model
         public float Height { get; set; }
         public float Rotation { get; set; }
 
-        public static void Update(Placement placement, NameValueCollection values)
+        public static void UpdateManual(Placement placement, NameValueCollection values)
         {
             float tempfloat;
             if (!string.IsNullOrEmpty(values["X"]) && float.TryParse(values["X"], out tempfloat))
@@ -30,7 +30,7 @@ namespace Testowy.Model
                 placement.Rotation = tempfloat;
         }
 
-        public static List<string> GetKeysForUpdate()
+        public static List<string> GetKeysManualUpdate()
         {
             return new List<string>() { "X", "Y", "Width", "Height", "Rotation"};
         }

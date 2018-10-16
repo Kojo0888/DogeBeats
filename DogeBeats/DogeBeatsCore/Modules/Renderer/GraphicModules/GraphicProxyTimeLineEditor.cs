@@ -30,27 +30,17 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void NextPanelSection()
         {
-            TimeLineEditor.ShowNextPanelSection();
+            TimeLineEditor.MoveForwardPanelTimeSection();
         }
 
         public void PreviousPanelSection()
         {
-            TimeLineEditor.ShowPreviousPanelSection();
+            TimeLineEditor.MoveBackPanelTimeSection();
         }
 
         public TLEPanel GetPanel(string panelName)
         {
-            switch (panelName)
-            {
-                case "ElementPanel":
-                    return TimeLineEditor.PanelElement;
-                case "GroupPanel":
-                    return TimeLineEditor.PanelGroup;
-                case "BeatPanel":
-                    return TimeLineEditor.PanelBeat;
-            }
-
-            return null;
+            return TimeLineEditor.GetPanel(panelName);
         }
 
         public void LeftMouseClickOnPanelElement(string elementName)

@@ -63,5 +63,23 @@ namespace Testowy.Model
 
             return element;
         }
+
+        internal static void UpdateManual(AnimationGroupElement group, NameValueCollection values)
+        {
+            if (!string.IsNullOrEmpty(values["GroupName"].ToString()))
+                group.GroupName = ManualUpdateString(values["GroupName"]);
+        }
+
+        private static string ManualUpdateString(string v)
+        {
+            return v;
+        }
+
+        internal static IEnumerable<string> GetKeysManualUpdate()
+        {
+            List<string> keys = new List<string>();
+            keys.Add("GroupName");
+            return keys;
+        }
     }
 }

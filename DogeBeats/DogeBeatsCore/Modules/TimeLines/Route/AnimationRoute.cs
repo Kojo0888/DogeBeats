@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,11 @@ namespace Testowy.Model
             }
 
             return slider;
+        }
+
+        internal static void UpdateManual(AnimationRouteFrame route, NameValueCollection values)
+        {
+            throw new NotImplementedException();
         }
     }
 }

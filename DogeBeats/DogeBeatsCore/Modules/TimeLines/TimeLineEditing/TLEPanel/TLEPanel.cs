@@ -23,7 +23,8 @@ namespace DogeBeats.Modules.TimeLines
         public string PanelName { get; set; }
 
         public List<TLEPanelCell> PanelCells { get; set; }
-        public static TLEPanelCell SelectedCell { get; set; }
+
+        public bool Selected { get; set; }
 
         public void InitialineElements(List<TimedTLEPanelElement> elements)
         {
@@ -129,10 +130,7 @@ namespace DogeBeats.Modules.TimeLines
         {
             float cellWidth = 0;
             if (TimeCellWidth == null)
-            {
-                //Todo automatic calculation of cell width
-                cellWidth = 0;
-            }
+                cellWidth = CalculateDynamicCellWidth(element);
             else
             {
                 var diffticks = EndTime.Ticks - StartTime.Ticks;
@@ -156,6 +154,19 @@ namespace DogeBeats.Modules.TimeLines
             return placement;
         }
 
+        private float CalculateDynamicCellWidth(TimedTLEPanelElement element)
+        {
+            var frame = element.Object as AnimationRouteFrame;
+            if(frame != null)
+            {
+                var diffTime = EndTime - StartTime;
+                var cellWidth = ((float)frame.TimeLength.Ticks / diffTime.Ticks) * Width;
+                return cellWidth;
+            }
+
+            throw new Exception("Nesu: Unable to calculate dynamic cell width");
+        }
+
         public KeyValuePair<TimeSpan, List<TimedTLEPanelElement>> GetElementGroupForTimeSpan(TimeSpan timespan)
         {
             var timespanKey = GrouppedElements.Where(w => w.Key < timespan).Max(m => m.Key);
@@ -171,6 +182,24 @@ namespace DogeBeats.Modules.TimeLines
                 return cell.ReferencingTimedElement.Object;
             }
             return null;
+        }
+
+        public TLEPanelCell GetCell(string elementName)
+        {
+            return PanelCells.FirstOrDefault(f => f.GraphicName == elementName);
+        }
+
+        public void SelectPanelCell(string elementName)
+        {
+            ClearCellSelection();
+
+            TLEPanelCell cell = GetCell(elementName);
+            cell.Selected = true;
+        }
+
+        private void ClearCellSelection()
+        {
+            PanelCells.ForEach(fe => fe.Selected = false);
         }
     }
 }

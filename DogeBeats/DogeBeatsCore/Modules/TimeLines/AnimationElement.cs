@@ -72,5 +72,41 @@ namespace Testowy.Model
 
             return element;
         }
+
+        internal static void UpdateManual(AnimationElement element, NameValueCollection values)
+        {
+            if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
+                element.Prediction = ManualUpdateBool(values["Prediction"]);
+            if (!string.IsNullOrEmpty(values["Shape"].ToString()))
+                element.Shape = ManualUpdateShape(values["Shape"]);
+        }
+
+        private static GraphicElementBase ManualUpdateShape(string v)
+        {
+            switch (v)
+            {
+                case "SimpleCircle":
+                    return new SimpleCircle();
+            }
+            return null;
+        }
+
+        private static bool ManualUpdateBool(string v)
+        {
+            bool temp;
+            if(bool.TryParse(v, out temp))
+            {
+                return temp;
+            }
+            return false;
+        }
+
+        internal static IEnumerable<string> GetKeysManualUpdate()
+        {
+            List<string> keys = new List<string>();
+            keys.Add("Prediction");
+            keys.Add("Shape");
+            return keys;
+        }
     }
 }

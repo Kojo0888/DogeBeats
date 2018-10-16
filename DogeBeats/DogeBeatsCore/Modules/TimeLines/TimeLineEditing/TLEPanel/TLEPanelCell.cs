@@ -15,6 +15,8 @@ namespace DogeBeats.Modules.TimeLines
         public string GraphicName { get; set; }
         public TimedTLEPanelElement ReferencingTimedElement { get; set; }
 
+        public bool Selected { get; set; }
+
         internal static TLEPanelCell Parse(TimedTLEPanelElement element)
         {
             TLEPanelCell cell = new TLEPanelCell();

@@ -28,9 +28,17 @@ namespace DogeBeats.Modules
         public static TimeSpan PanelOffsetTime { get; set; } = new TimeSpan();
         public static TimeSpan PanelWidthTime { get; set; } = new TimeSpan(0, 0, 1, 0, 0);
 
+        public static TLEPanelTimeGraphicIndicator TimeIdentyficator { get; set; }
+
         static TimeLineEditor()
         {
 
+        }
+
+        public static void InitializeGraphicIdentyficator()
+        {
+            float panelHeight = PanelBeat.Height + PanelElement.Height + PanelGroup.Height + PanelRoute.Height;
+            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         public static void AttachTimeLineToEditor(TimeLine timeline)
@@ -43,6 +51,8 @@ namespace DogeBeats.Modules
             PanelGroup.EndTime = PanelOffsetTime + PanelWidthTime;
             List<TimedTLEPanelElement> timedElements = TimedTLEPanelElement.Parse(timeline.AnimationGroupElements);
             PanelGroup.InitialineElements(timedElements);
+            PanelGroup.Height = 100;
+            PanelGroup.OffsetHeight = 0;
 
             PanelBeat = new TLEPanel();
             PanelBeat.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
@@ -50,6 +60,8 @@ namespace DogeBeats.Modules
             PanelBeat.EndTime = PanelOffsetTime + PanelWidthTime;
             timedElements = timeline.BeatGuider.Beats;
             PanelBeat.InitialineElements(timedElements);
+            PanelBeat.Height = 40;
+            PanelBeat.OffsetHeight = 220;
 
             PanelRoute = new TLEPanel();
             //PanelRoute.TimeCellWidth = null;// for undefined
@@ -58,6 +70,7 @@ namespace DogeBeats.Modules
             //timedElements = timeline.;
 
             InitializeAnimationElementPanel(null);
+            InitializeGraphicIdentyficator();
         }
 
         private static void InitializeAnimationRoutePanel(AnimationGroupElement group)
@@ -69,14 +82,15 @@ namespace DogeBeats.Modules
             PanelRoute.InitialineElements(timedElements);
         }
 
-        private static void InitializeAnimationRoutePanel(AnimationElement element)
+        private static void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationElement element)
         {
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
-            //do something with this...
-            var timedElements = TimedTLEPanelElement.Parse(element.Route.Frames, element.Route.AnimationTime);
+            var timedElements = TimedTLEPanelElement.Parse(element.Route.Frames, group.GroupRoute.AnimationStartTime);
             PanelRoute.InitialineElements(timedElements);
+            PanelRoute.Height = 20;
+            PanelRoute.OffsetHeight = 200;
         }
 
         private static void InitializeAnimationElementPanel(AnimationGroupElement group)
@@ -90,6 +104,8 @@ namespace DogeBeats.Modules
             PanelElement.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
             PanelElement.StartTime = PanelOffsetTime;
             PanelElement.EndTime = PanelOffsetTime + PanelWidthTime;
+            PanelElement.Height = 100;
+            PanelElement.OffsetHeight = 100;
         }
 
         internal static void MoveTimeForPanelElement(string elementName, float wayPrecentage)
@@ -148,7 +164,8 @@ namespace DogeBeats.Modules
                 if (group != null)
                 {
                     Placement placement = group.InitPlacement;
-                    Placement.Update(placement, values);
+                    Placement.UpdateManual(placement, values);
+                    AnimationGroupElement.UpdateManual(group, values);
                 }
             }
             else if (refferencedObject as AnimationElement != null)
@@ -157,7 +174,8 @@ namespace DogeBeats.Modules
                 if (element != null)
                 {
                     Placement placement = element.InitPlacement;
-                    Placement.Update(placement, values);
+                    Placement.UpdateManual(placement, values);
+                    AnimationElement.UpdateManual(element, values);
                 }
             }
             else if (refferencedObject as AnimationRouteFrame != null)
@@ -166,7 +184,8 @@ namespace DogeBeats.Modules
                 if (route != null)
                 {
                     Placement placement = route.Placement;
-                    Placement.Update(placement, values);
+                    Placement.UpdateManual(placement, values);
+                    AnimationRoute.UpdateManual(route, values);
                 }
             }
             else if (refferencedObject as Beat != null)
@@ -349,19 +368,21 @@ namespace DogeBeats.Modules
             TimeLine.Stopper.Elapsed = newTimespamp;
         }
 
-        internal static void ShowNextPanelSection()
+        internal static void MoveForwardPanelTimeSection()
         {
             PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks + (PanelWidthTime.Ticks / 2));
             UpdatePanelSectionTimeForAllPanels();
+            InitializeGraphicIdentyficator();
         }
 
-        internal static void ShowPreviousPanelSection()
+        internal static void MoveBackPanelTimeSection()
         {
             if (PanelOffsetTime.Ticks - (PanelWidthTime.Ticks / 2) < 0)
                 return;
 
             PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks - (PanelWidthTime.Ticks / 2));
             UpdatePanelSectionTimeForAllPanels();
+            InitializeGraphicIdentyficator();
         }
 
         internal static void UpdatePanelSectionTimeForAllPanels()
@@ -377,20 +398,21 @@ namespace DogeBeats.Modules
         public static List<string> GetKeysForManualUpdate(Type type)
         {
             List<string> keys = new List<string>();
-            keys.AddRange(Placement.GetKeysForUpdate());
+            keys.AddRange(Placement.GetKeysManualUpdate());
             if (type == typeof(AnimationGroupElement))
             {
-                keys.Add("GroupName");
+                keys.AddRange(Placement.GetKeysManualUpdate());
+                keys.AddRange(AnimationGroupElement.GetKeysManualUpdate());
             }
             else if (type == typeof(AnimationElement))
             {
-                keys.Add("Prediction");
-                keys.Add("Shape");
+                keys.AddRange(Placement.GetKeysManualUpdate());
+                keys.AddRange(AnimationElement.GetKeysManualUpdate());
             }
             else if (type == typeof(AnimationRouteFrame))
             {
-                keys.Add("RunningTime");
-                keys.Add("Ease");
+                keys.AddRange(Placement.GetKeysManualUpdate());
+                keys.AddRange(AnimationRouteFrame.GetKeysManualUpdate());
             }
             else if (type == typeof(Beat))
             {
@@ -399,6 +421,36 @@ namespace DogeBeats.Modules
             }
 
             return keys;
+        }
+
+        public static void SelectPanel(string panelName)
+        {
+            GetPanel(panelName).Selected = true;
+        }
+
+        public static void ClearPanelSelection()
+        {
+            PanelRoute.Selected = false;
+            PanelElement.Selected = false;
+            PanelGroup.Selected = false;
+            PanelBeat.Selected = false;
+        } 
+
+        public static TLEPanel GetPanel(string panelName)
+        {
+            switch (panelName)
+            {
+                case "PanelElement":
+                    return PanelElement;
+                case "PanelGroup":
+                    return PanelGroup;
+                case "PanelBeat":
+                    return PanelBeat;
+                case "PanelRoute":
+                    return PanelRoute;
+            }
+
+            return null;
         }
     }
 }
