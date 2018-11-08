@@ -2,6 +2,7 @@
 using DogeBeats.Modules.TimeLines;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,21 @@ namespace Testowy.Model
         public string TimeLineName { get; internal set; }
 
         private TimeSpan _playToTimeSpan { get; set; }
+
+        public string MusicName { get; set; }
+
+        public static void ManualUpdate(TimeLine timeline, NameValueCollection values)
+        {
+            if (!string.IsNullOrEmpty(values["TimeLineName"].ToString()))
+                timeline.TimeLineName = values["TimeLineName"].ToString();
+            if (!string.IsNullOrEmpty(values["MusicName"].ToString()))
+                timeline.MusicName = values["MusicName"].ToString();
+        }
+
+        public static List<string> GetKeysManualUpdate()
+        {
+            return new List<string>() { "MusicName", "TimeLineName" };
+        }
 
         public void StartStoryboardAnimation()
         {

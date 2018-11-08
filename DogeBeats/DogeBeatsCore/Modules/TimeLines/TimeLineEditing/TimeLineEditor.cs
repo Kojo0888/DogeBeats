@@ -30,6 +30,8 @@ namespace DogeBeats.Modules
 
         public static TLEPanelTimeGraphicIndicator TimeIdentyficator { get; set; }
 
+        public static float Width = 600;
+
         static TimeLineEditor()
         {
 
@@ -53,6 +55,7 @@ namespace DogeBeats.Modules
             PanelGroup.InitialineElements(timedElements);
             PanelGroup.Height = 100;
             PanelGroup.OffsetHeight = 0;
+            PanelGroup.Width = Width;
 
             PanelBeat = new TLEPanel();
             PanelBeat.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
@@ -62,6 +65,7 @@ namespace DogeBeats.Modules
             PanelBeat.InitialineElements(timedElements);
             PanelBeat.Height = 40;
             PanelBeat.OffsetHeight = 220;
+            PanelBeat.Width = Width;
 
             PanelRoute = new TLEPanel();
             //PanelRoute.TimeCellWidth = null;// for undefined
@@ -80,6 +84,9 @@ namespace DogeBeats.Modules
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
             var timedElements = TimedTLEPanelElement.Parse(group.GroupRoute.Frames, group.GroupRoute.AnimationStartTime);
             PanelRoute.InitialineElements(timedElements);
+            PanelRoute.Height = 20;
+            PanelRoute.OffsetHeight = 200;
+            PanelRoute.Width = Width;
         }
 
         private static void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationElement element)
@@ -91,6 +98,7 @@ namespace DogeBeats.Modules
             PanelRoute.InitialineElements(timedElements);
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
+            PanelRoute.Width = Width;
         }
 
         private static void InitializeAnimationElementPanel(AnimationGroupElement group)
@@ -106,6 +114,7 @@ namespace DogeBeats.Modules
             PanelElement.EndTime = PanelOffsetTime + PanelWidthTime;
             PanelElement.Height = 100;
             PanelElement.OffsetHeight = 100;
+            PanelElement.Width = Width;
         }
 
         internal static void MoveTimeForPanelElement(string elementName, float wayPrecentage)
