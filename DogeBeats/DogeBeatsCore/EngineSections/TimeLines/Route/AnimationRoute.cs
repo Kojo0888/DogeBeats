@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 
 namespace Testowy.Model
 {
-    public  class AnimationRoute
+    public class AnimationRoute
     {
         public List<AnimationRouteFrame> Frames { get; set; }
 

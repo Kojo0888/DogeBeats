@@ -10,7 +10,7 @@ namespace DogeBeats.Model
 {
     public static class CenterResource
     {
-        public static NDictionary<string, NDictionary<string, byte[]>> Resources = new NDictionary<string, NDictionary<string, byte[]>>();
+        public static DDictionary<string, DDictionary<string, byte[]>> Resources = new DDictionary<string, DDictionary<string, byte[]>>();
         
         public static readonly string RESOURCE_PATH = @"Data\Resources";
 
@@ -21,7 +21,7 @@ namespace DogeBeats.Model
             string[] directories = Directory.GetDirectories(RESOURCE_PATH);
             foreach (var directory in directories)
             {
-                Resources.Add(directory, new NDictionary<string, byte[]>());
+                Resources.Add(directory, new DDictionary<string, byte[]>());
                 LoadResourcesFromFolder(directory);
             }
         }

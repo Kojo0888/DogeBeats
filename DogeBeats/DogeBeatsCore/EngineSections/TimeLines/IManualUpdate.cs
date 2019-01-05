@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Testowy.Model
+namespace DogeBeats.Modules.TimeLines
 {
-    public interface IShape
+    public interface IManualUpdate
     {
-        void Render(); 
+        List<string> GetKeysManualUpdate();
+
+
     }
 }

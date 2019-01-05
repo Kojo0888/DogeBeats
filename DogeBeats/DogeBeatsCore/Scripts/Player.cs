@@ -29,7 +29,7 @@ namespace DogeBeats
 
         private static void Kill()
         {
-            
+            //TODO in future
         }
 
         public static void Heal(int heal)

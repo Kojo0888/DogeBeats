@@ -1,4 +1,5 @@
 ﻿using DogeBeats.Model;
+using DogeBeats.Modules.Music;
 using DogeBeats.Other;
 using NAudio.Wave;
 using System;
@@ -11,40 +12,42 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.Modules.MusicPlayer
 {
-    public class CentreSound
+    public class SoundManager
     {
         //public static NDictionary<string, SoundPlayer> soundPlayers = new NDictionary<string, SoundPlayer>();
 
-        public static SoundPlayer PlaySound(string trackName)
+        public static SoundItem PlaySound(string trackName)
         {
             MemoryStream ms = GetSoundMemoryStream(trackName);
             SoundPlayer player = new SoundPlayer(ms);
             player.Play();
-            return player;
+            SoundItem track = new SoundItem();
+            track.Play();
+            return track;
         }
 
         //TODO: Tests
-        public static IWavePlayer AdvPlay(string trackName)
-        {
-            IWavePlayer waveOutDevice = new WaveOut();
-            WaveStream mainOutputStream;
-            WaveChannel32 volumeStream;
+        //public static SoundTrack AdvPlay(string trackName)
+        //{
+        //    IWavePlayer waveOutDevice = new WaveOut();
+        //    WaveStream mainOutputStream;
+        //    WaveChannel32 volumeStream;
 
-            MemoryStream ms = GetSoundMemoryStream(trackName);
-            WaveStream wmaReader = ParseToMP3WaveStream(ms);
-            byte[] soundBytes = CenterResource.GetResource("Music", trackName);
-            wmaReader.Write(soundBytes, 0, soundBytes.Length);
+        //    MemoryStream ms = GetSoundMemoryStream(trackName);
+        //    WaveStream wmaReader = ParseToMP3WaveStream(ms);
+        //    byte[] soundBytes = CenterResource.GetResource("Music", trackName);
+        //    wmaReader.Write(soundBytes, 0, soundBytes.Length);
 
-            volumeStream = new WaveChannel32(wmaReader);
+        //    volumeStream = new WaveChannel32(wmaReader);
 
-            mainOutputStream = volumeStream;
+        //    mainOutputStream = volumeStream;
 
-            mainOutputStream.Skip(30); //start 30 seconds into the file
-            waveOutDevice.Init(mainOutputStream);
-            waveOutDevice.Play();
-            //mainOutputStream.
-            return waveOutDevice;
-        }
+        //    mainOutputStream.Skip(30); //start 30 seconds into the file
+        //    waveOutDevice.Init(mainOutputStream);
+        //    waveOutDevice.Play();
+        //    //mainOutputStream.
+        //    return null;
+        //}
 
         private static WaveStream ParseToMP3WaveStream(MemoryStream ms)
         {

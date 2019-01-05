@@ -46,7 +46,7 @@ namespace DogeBeats.Renderer
         public static string CreateGraphicElement(AnimationElement element)
         {
             string shapeName = element.GetType().Name;
-            byte[] resourceBytes = CenterResource.GetResource(shapeName);
+            byte[] resourceBytes = CenterResource.GetResource(element.Shape.GetType().Name, shapeName);
             string gameObjectName = GenerateElementName(element);
 
             GameObject gameObject = PrepareGameObject(gameObjectName);

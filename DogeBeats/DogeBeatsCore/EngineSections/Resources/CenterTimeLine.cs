@@ -11,7 +11,7 @@ namespace DogeBeats.Model
 {
     public static class CenterTimeLine
     {
-        public static readonly string TIMELINE_FOLDER = "TimeLines";
+        public static readonly string TIMELINE_FOLDER = @"TimeLines";
 
         public static List<TimeLine> TimeLines { get; set; } = new List<TimeLine>();
 
@@ -20,7 +20,6 @@ namespace DogeBeats.Model
             VerifyFolderExistance();
 
             string[] files = Directory.GetFiles(TIMELINE_FOLDER);
-
             foreach (var file in files)
             {
                 TimeLine timeline = LoadTimeLine(file);
@@ -39,7 +38,7 @@ namespace DogeBeats.Model
         {
             string data = File.ReadAllText(file);
             XmlSerializer serializer = new XmlSerializer(typeof(TimeLine));
-
+            
             using (TextReader tr = new StreamReader(file))
             {
                 TimeLine timeline = serializer.Deserialize(tr) as TimeLine;

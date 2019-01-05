@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Testowy.Model;
-using Testowy.Model.GraphicElements;
 
 namespace DogeBeats.Modules
 {

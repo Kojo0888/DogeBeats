@@ -1,4 +1,5 @@
 ﻿using DogeBeats.Modules.TimeLines;
+using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
 using DogeBeats.Renderer;
 using System;
@@ -7,14 +8,12 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Testowy.Model.GraphicElements;
-using Testowy.Model.Shapes;
 
 namespace Testowy.Model
 {
     public class AnimationElement : ITLEPanelElement
     {
-        public GraphicElementBase Shape { get; set; }
+        public TimeLineShape Shape { get; set; }
 
         public AnimationRoute Route { get; set; }
 
@@ -62,12 +61,7 @@ namespace Testowy.Model
 
             if (!string.IsNullOrEmpty(values.Get("ElementName")))
             {
-                switch (values["ElementName"])
-                {
-                    case "SimpleCircle":
-                        element.Shape = new SimpleCircle();
-                        break;
-                }
+                element.Shape = new TimeLineShape(values["ElementName"]);
             }
 
             return element;
@@ -81,14 +75,10 @@ namespace Testowy.Model
                 element.Shape = ManualUpdateShape(values["Shape"]);
         }
 
-        private static GraphicElementBase ManualUpdateShape(string v)
+        private static TimeLineShape ManualUpdateShape(string v)
         {
-            switch (v)
-            {
-                case "SimpleCircle":
-                    return new SimpleCircle();
-            }
-            return null;
+            TimeLineShape shape = new TimeLineShape(v);
+            return shape;
         }
 
         private static bool ManualUpdateBool(string v)

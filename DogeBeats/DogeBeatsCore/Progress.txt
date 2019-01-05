@@ -1,1 +1,43 @@
-﻿14_10_2018 - Applying RoutePanel for TimeLineEditor
+﻿14_10_2018:
+Applying RoutePanel for TimeLineEditor
+
+long break... I'm lazy...
+
+03_01_2019:
+Simple reorganisation & preparing change Progress notes.
+
+04_01_2019:
+√ - Create Trigonometric helper.
+√ - UnitTests for trigonometric helper
+Gathering Decimal information (23 bits unused [from 128])
+
+05_01_2019:
+℗  Center overall revork/rethink.
+℗  Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
+℗  Think - about reorganisating classes, is Model folder necessary?
+℗  Think - if the GameGlobal class idea is better than static classes.
+℗  CenterTimeLine needs full rework. Exclude FileHelper.
+℗  CentreSound also need rework.
+_________________________________________________________________________________________________
+
+TODO Legend:
+○ - TODO
+℗ - In progress
+❶ - Implemented
+√ - Tested & Finished
+x - Won't be implemented
+
+TODO Notes:
+℗  CenterTimeLine needs full rework. Exclude FileHelper.
+℗  CentreSound also need rework.
+○  Think - about remaking AnimationGroupElements to unlimited groupping.
+○  There is still trigonometric movement to implement, right?
+℗  Center overall revork/rethink.
+℗  Think - if the GameGlobal class idea is better than static classes.
+○  Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
+○  Placement for IGraphicElement needs change?
+○  Few Shape implementations
+○  Think - about colissions is this supposed to be Unitiy Colliders?
+℗  Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
+℗  Think - about reorganisating classes, is Model folder necessary?
+○  CentreResource for nested structures
