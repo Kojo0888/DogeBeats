@@ -17,6 +17,10 @@ namespace DogeBeats.Other
                 else
                     return default(V);
             }
+            set
+            {
+                base[key] = value;
+            }
         }
 
         public void AddRange(Dictionary<K, V> dic)

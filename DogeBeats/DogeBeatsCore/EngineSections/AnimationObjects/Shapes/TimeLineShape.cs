@@ -20,7 +20,7 @@ namespace DogeBeats.Modules.TimeLines.Shapes
             TypeName = name;
         }
 
-        public string TypeName { get; internal set; }
+        public string TypeName { get; set; }
 
         public Placement Placement { get; set; }
 

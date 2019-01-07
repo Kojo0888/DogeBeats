@@ -56,7 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Modules\Centers\CenterTrigonometricTests.cs" />
+    <Compile Include="EngineSections\Resources\ResourceManagerTests.cs" />
+    <Compile Include="EngineSections\Resources\TrigonometricCacheTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,11 @@
       <Project>{75C264D1-9294-4B4A-9B76-75514C9E8826}</Project>
       <Name>DogeBeats</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Resources\Music\" />
+    <Folder Include="Data\Resources\Shapes\" />
+    <Folder Include="Data\Resources\TimeLines\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

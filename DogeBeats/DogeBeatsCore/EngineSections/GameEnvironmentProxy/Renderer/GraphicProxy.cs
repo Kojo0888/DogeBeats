@@ -1,4 +1,5 @@
-﻿using DogeBeats.MockUps;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.MockUps;
 using DogeBeats.Model;
 using DogeBeats.Modules.Renderer.RendererModules;
 using System;
@@ -46,7 +47,7 @@ namespace DogeBeats.Renderer
         public static string CreateGraphicElement(AnimationElement element)
         {
             string shapeName = element.GetType().Name;
-            byte[] resourceBytes = CenterResource.GetResource(element.Shape.GetType().Name, shapeName);
+            byte[] resourceBytes = StaticHub.ResourceManager.GetResource(element.Shape.GetType().Name, shapeName);
             string gameObjectName = GenerateElementName(element);
 
             GameObject gameObject = PrepareGameObject(gameObjectName);

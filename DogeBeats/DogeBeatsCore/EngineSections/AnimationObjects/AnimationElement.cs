@@ -50,7 +50,7 @@ namespace Testowy.Model
 
         internal void Render()
         {
-            //TO DO: Attaching Graphic Engine
+            //TODO: Attaching Graphic Engine
             //throw new NotImplementedException();
             GraphicProxy.TranslateObject(Shape.Placement);
         }
@@ -59,9 +59,9 @@ namespace Testowy.Model
         {
             AnimationElement element = new AnimationElement();
 
-            if (!string.IsNullOrEmpty(values.Get("ElementName")))
+            if (!string.IsNullOrEmpty(values.Get("ShapeName")))
             {
-                element.Shape = new TimeLineShape(values["ElementName"]);
+                element.Shape = new TimeLineShape(values["ShapeName"]);
             }
 
             return element;
@@ -70,28 +70,12 @@ namespace Testowy.Model
         internal static void UpdateManual(AnimationElement element, NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
-                element.Prediction = ManualUpdateBool(values["Prediction"]);
+                element.Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
             if (!string.IsNullOrEmpty(values["Shape"].ToString()))
-                element.Shape = ManualUpdateShape(values["Shape"]);
+                element.Shape = new TimeLineShape(values["Shape"]);
         }
 
-        private static TimeLineShape ManualUpdateShape(string v)
-        {
-            TimeLineShape shape = new TimeLineShape(v);
-            return shape;
-        }
-
-        private static bool ManualUpdateBool(string v)
-        {
-            bool temp;
-            if(bool.TryParse(v, out temp))
-            {
-                return temp;
-            }
-            return false;
-        }
-
-        internal static IEnumerable<string> GetKeysManualUpdate()
+        public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
             keys.Add("Prediction");

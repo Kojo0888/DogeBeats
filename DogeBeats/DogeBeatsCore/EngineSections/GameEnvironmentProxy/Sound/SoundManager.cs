@@ -1,4 +1,5 @@
-﻿using DogeBeats.Model;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Model;
 using DogeBeats.Modules.Music;
 using DogeBeats.Other;
 using NAudio.Wave;
@@ -59,7 +60,7 @@ namespace DogeBeats.Modules.MusicPlayer
 
         private static MemoryStream GetSoundMemoryStream(string resourceName)
         {
-            byte[] bytes = CenterResource.GetResource("Music", resourceName);
+            byte[] bytes = StaticHub.ResourceManager.GetResource("Music", resourceName);
             if (bytes == null || bytes.Length == 0)
                 return null;
 

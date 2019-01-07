@@ -18,14 +18,22 @@ Gathering Decimal information (23 bits unused [from 128])
 ℗  Think - if the GameGlobal class idea is better than static classes.
 ℗  CenterTimeLine needs full rework. Exclude FileHelper.
 ℗  CentreSound also need rework.
+
+08_01_2019:
+x  Think - if the GameGlobal class idea is better than static classes.
+   UnitTests for ResourceManager.
+   ResourceManager XML serialization support.
+   ManualUpdader thought
+√  FileAssistant
+
 _________________________________________________________________________________________________
 
 TODO Legend:
 ○ - TODO
 ℗ - In progress
-❶ - Implemented
-√ - Tested & Finished
-x - Won't be implemented
+√ - Implemented
+╦ - Tested
+x - Abandoned
 
 TODO Notes:
 ℗  CenterTimeLine needs full rework. Exclude FileHelper.
@@ -33,7 +41,6 @@ TODO Notes:
 ○  Think - about remaking AnimationGroupElements to unlimited groupping.
 ○  There is still trigonometric movement to implement, right?
 ℗  Center overall revork/rethink.
-℗  Think - if the GameGlobal class idea is better than static classes.
 ○  Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
 ○  Placement for IGraphicElement needs change?
 ○  Few Shape implementations
@@ -41,3 +48,6 @@ TODO Notes:
 ℗  Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
 ℗  Think - about reorganisating classes, is Model folder necessary?
 ○  CentreResource for nested structures
+○  Logging
+○  Think - ManualUpdated - leave it as static methods?
+√  FileAssistant
