@@ -19,13 +19,25 @@ Gathering Decimal information (23 bits unused [from 128])
 ℗  CenterTimeLine needs full rework. Exclude FileHelper.
 ℗  CentreSound also need rework.
 
+...few day (weekend) break.
+
 08_01_2019:
 x  Think - if the GameGlobal class idea is better than static classes.
-   UnitTests for ResourceManager.
+╦  UnitTests for ResourceManager.
    ResourceManager XML serialization support.
    ManualUpdader thought
 √  FileAssistant
 
+09_01_2019:
+╦  FileAssistant
+℗  Few Shape implementations
+	℗  Circle
+	℗  Square
+	℗  Triangle
+   Removal TimeLineCentre & Immidiatelly regretting this decition. Creating new TimeLineCenter.
+℗  TimeLineCentre
+╦  AnimationElement (partially, without methods: Update, Render)
+√  ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -42,12 +54,17 @@ TODO Notes:
 ○  There is still trigonometric movement to implement, right?
 ℗  Center overall revork/rethink.
 ○  Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
+○  Think - ManualUpdated - leave it as static methods?
 ○  Placement for IGraphicElement needs change?
-○  Few Shape implementations
+℗  Few Shape implementations
+	℗  Circle
+	℗  Square
+	℗  Triangle
 ○  Think - about colissions is this supposed to be Unitiy Colliders?
+		Ye, the best would be...
 ℗  Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
 ℗  Think - about reorganisating classes, is Model folder necessary?
 ○  CentreResource for nested structures
 ○  Logging
-○  Think - ManualUpdated - leave it as static methods?
-√  FileAssistant
+√  ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
+℗  TimeLineCentre

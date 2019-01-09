@@ -18,6 +18,16 @@ namespace DogeBeats.Model
 
         private FileAssistant _fileAssistant = new FileAssistant();
 
+        public void SetAllOfSerializedObjects<T>(string type, Dictionary<string, T> timeLines) where T : class
+        {
+            type = type.ToLower();
+
+            foreach (var timeLinePair in timeLines)
+            {
+                SetSerializedObject(timeLinePair.Value, type, timeLinePair.Key);
+            }
+        }
+
         public void LoadAllResources()
         {
             Resources = _fileAssistant.GetAllResourceFilesFromFolder(RESOURCE_PATH);
@@ -44,12 +54,12 @@ namespace DogeBeats.Model
             type = type.ToLower();
             name = name.ToLower();
 
-            return _fileAssistant.DeserializeXML<T>(resourceBytes, type, name);
+            return _fileAssistant.DeserializeXML<T>(resourceBytes);
         }
 
         public void SetSerializedObject<T>(T obj, string type, string name) where T : class
         {
-            var bytes = _fileAssistant.SerializeXML(obj, type, name);
+            var bytes = _fileAssistant.SerializeXML(obj);
             string path = _fileAssistant.GetFullPathForFolderName(type, RESOURCE_PATH);
 
             if (!name.EndsWith(".xml"))
@@ -59,6 +69,23 @@ namespace DogeBeats.Model
 
             string fullPath = Path.Combine(path, name);
             File.WriteAllBytes(fullPath, bytes);
+        }
+
+        public Dictionary<string, T> GetAllOfSerializedObjects<T>(string type) where T : class
+        {
+            Dictionary<string, T> toReturn = new Dictionary<string, T>();
+            type = type.ToLower();
+
+            if (Resources.ContainsKey(type)){
+                Dictionary<string, byte[]> resourcesWithType = Resources[type];
+
+                foreach (var resourceWithType in resourcesWithType)
+                {
+                    var obj = _fileAssistant.DeserializeXML<T>(resourceWithType.Value);
+                    toReturn.Add(resourceWithType.Key, obj);
+                }
+            }
+            return toReturn;
         }
     }
 }

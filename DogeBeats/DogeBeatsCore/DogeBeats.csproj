@@ -49,6 +49,7 @@
     <Compile Include="Assumptions.cs" />
     <Compile Include="EngineSections\Resources\FileAssistant.cs" />
     <Compile Include="EngineSections\Resources\StaticHub.cs" />
+    <Compile Include="EngineSections\Resources\TimeLineCentre.cs" />
     <Compile Include="EngineSections\TimeLineEditing\ManualUpdater.cs" />
     <Compile Include="Misc\DStopWatch.cs" />
     <Compile Include="MockUps\GameObject.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\RendererElements\GraphicObjectParser.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\RendererElements\GraphicProxyTimeLineEditor.cs" />
     <Compile Include="EngineSections\Resources\ResourceManager.cs" />
-    <Compile Include="EngineSections\Resources\CenterTimeLine.cs" />
     <Compile Include="EngineSections\AnimationObjects\AnimationElement.cs" />
     <Compile Include="EngineSections\AnimationObjects\AnimationGroupElement.cs" />
     <Compile Include="EngineSections\AnimationObjects\Shapes\TimeLineShape.cs" />
@@ -86,10 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Resources\Music\" />
-    <Folder Include="Data\Resources\Shapes\" />
     <Folder Include="Data\Resources\TimeLines\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Resources\Shapes\Circle.png" />
+    <Content Include="Data\Resources\Shapes\Square.png" />
+    <Content Include="Data\Resources\Shapes\Triangle.png" />
     <Content Include="Progress.txt" />
   </ItemGroup>
   <ItemGroup>

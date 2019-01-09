@@ -55,5 +55,34 @@ namespace DogeBeats.Model.Tests
             if (obj == null)
                 Assert.Fail();
         }
+
+        [TestMethod()]
+        public void SetAllOfSerializedObjectsTest()
+        {
+            var values = new System.Collections.Specialized.NameValueCollection();
+            values.Add("Prediction", "False");
+            values.Add("ShapeName", "IdkYet");
+            var aElem = AnimationElement.Create(values);
+
+            var values2 = new System.Collections.Specialized.NameValueCollection();
+            values2.Add("Prediction", "False");
+            values2.Add("ShapeName", "IdkYet432");
+            var aElem2 = AnimationElement.Create(values);
+
+            var dic = new Dictionary<string, AnimationElement>();
+            dic.Add("test AnimationELement1", aElem);
+            dic.Add("test AnimationELement2", aElem2);
+
+            manager.SetAllOfSerializedObjects<AnimationElement>("Shapes", dic);
+        }
+
+        [TestMethod()]
+        public void GetAllOfSerializedObjectsTest()
+        {
+            var dic = manager.GetAllOfSerializedObjects<AnimationElement>("Shapes");
+            if (dic == null || dic.Count == 0)
+                Assert.Fail();
+        }
+
     }
 }

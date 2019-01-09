@@ -28,7 +28,7 @@ namespace Testowy.Model
             //GraphicName = GraphicProxy.GenerateElementName(this);
         }
 
-        internal void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
+        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
         {
             TimeSpan currentStopperTime = VerifyStopperTime(currentStopperTimeRaw);
 
@@ -48,7 +48,7 @@ namespace Testowy.Model
             return new TimeSpan(ticks);
         }
 
-        internal void Render()
+        public void Render()
         {
             //TODO: Attaching Graphic Engine
             //throw new NotImplementedException();
@@ -58,21 +58,19 @@ namespace Testowy.Model
         public static AnimationElement Create(NameValueCollection values)
         {
             AnimationElement element = new AnimationElement();
-
             if (!string.IsNullOrEmpty(values.Get("ShapeName")))
             {
                 element.Shape = new TimeLineShape(values["ShapeName"]);
             }
-
             return element;
         }
 
-        internal static void UpdateManual(AnimationElement element, NameValueCollection values)
+        public void UpdateManual(NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
-                element.Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
+                Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
             if (!string.IsNullOrEmpty(values["Shape"].ToString()))
-                element.Shape = new TimeLineShape(values["Shape"]);
+                Shape = new TimeLineShape(values["Shape"]);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()

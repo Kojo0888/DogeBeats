@@ -39,7 +39,7 @@ namespace DogeBeats.EngineSections.Resources
             return toReturn;
         }
 
-        internal T DeserializeXML<T>(byte[] resourceBytes, string type, string name) where T : class 
+        public T DeserializeXML<T>(byte[] resourceBytes) where T : class 
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (MemoryStream ms = new MemoryStream(resourceBytes))
@@ -70,7 +70,7 @@ namespace DogeBeats.EngineSections.Resources
             return string.Empty;
         }
 
-        public byte[] SerializeXML<T>(T obj, string type, string name) where T : class
+        public byte[] SerializeXML<T>(T obj) where T : class
         {
             //byte[] resourceBytes = GetResource(type, name);
             //string xmlString = new string(Encoding.UTF8.GetChars(resourceBytes));

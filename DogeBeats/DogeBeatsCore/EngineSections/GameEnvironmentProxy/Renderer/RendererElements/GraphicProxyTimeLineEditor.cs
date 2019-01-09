@@ -1,4 +1,5 @@
-﻿using DogeBeats.Model;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Model;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Renderer;
 using System;
@@ -97,7 +98,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public List<string> GetAllTimeLineNames()
         {
-            return CenterTimeLine.TimeLines.Select(s => s.TimeLineName).ToList();
+            return StaticHub.ResourceManager.GetAllOfSerializedObjects<TimeLine>("TimeLines").Select(s => s.Value.TimeLineName).ToList();
         }
 
         public List<string> GetAllAnimationGroupElements()

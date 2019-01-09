@@ -15,6 +15,8 @@ namespace DogeBeats.EngineSections.Resources
 
         public static ResourceManager ResourceManager { get; set; } = new ResourceManager();
 
-        public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
+        public static TimeLineCentre TimeLineCentre { get; set; } = new TimeLineCentre();
+
+        //public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
     }
 }
