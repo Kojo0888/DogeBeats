@@ -38,6 +38,18 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗  TimeLineCentre
 ╦  AnimationElement (partially, without methods: Update, Render)
 √  ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
+
+10_01_2019:
+   JSON serialization
+   new UnitTests for missed internal methods
+   Fixing compilation issues (Project is compilable now)
+℗  TimeLineCenter - unit tests & further implementation
+℗  TimeLine - XML Serialization issue (Queue has no accessor)
+
+11_01_2019:
+   All Tests are Passing
+   ResourceManager, FileAssistant & TimeLineCentre changes
+
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -68,3 +80,5 @@ TODO Notes:
 ○  Logging
 √  ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
 ℗  TimeLineCentre
+℗  TimeLine
+○  Think - Should it be better if ResourceManager could hold filenames with extensions. For deserialization purposes?

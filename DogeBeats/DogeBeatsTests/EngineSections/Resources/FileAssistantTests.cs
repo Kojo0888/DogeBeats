@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Testowy.Model;
 using System.Xml.Linq;
+using DogeBeatsTests;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
@@ -18,41 +19,87 @@ namespace DogeBeats.EngineSections.Resources.Tests
         [TestMethod()]
         public void GetFilesFromFolderTest()
         {
-            
+
             var files = fileAssistant.GetFilesFromFolder(@"Data\Resources\Shapes");
             if (files == null || files.Count == 0)
                 Assert.Fail();
         }
 
         [TestMethod()]
-        public void SerializeXMLTest()
+        public void GetFullPathForFolderNameTest()
         {
-            var values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("Prediction", "False");
-            values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
+            var path = fileAssistant.GetFullPathForFolderName("Shapes", "Data");
+            if (!(!string.IsNullOrEmpty(path) && path.EndsWith("Shapes") && path.Contains("\\")))
+                Assert.Fail();
+        }
 
-            byte[] bytes = fileAssistant.SerializeXML(aElem);
-            string xml = new string(Encoding.Unicode.GetChars(bytes));
-            if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
+        [TestMethod()]
+        public void GetAllResourceFilesFromFolderTest()
+        {
+            var dic = fileAssistant.GetAllResourceFilesFromFolder(@"Data\Resources");
+            if (dic == null || dic.Count == 0)
                 Assert.Fail();
         }
 
         [TestMethod()]
         public void DeserializeXMLTest()
         {
-            var values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("Prediction", "False");
-            values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
+            fileAssistant = new FileAssistant();
+            fileAssistant.SerializationType = "XML";
 
-            byte[] bytes = fileAssistant.SerializeXML(aElem);
+            var aElem = MockObjects.GetAnimationElement();
+
+            byte[] bytes = fileAssistant.Serialize(aElem);
             string xml = new string(Encoding.Unicode.GetChars(bytes));
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
                 Assert.Fail();
 
-            var aElem2 = fileAssistant.DeserializeXML<AnimationElement>(bytes);
+            var aElem2 = fileAssistant.Deserialize<AnimationElement>(bytes);
             if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
+                Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void DeserializeJSONTest()
+        {
+            fileAssistant = new FileAssistant();
+            fileAssistant.SerializationType = "JSON";
+
+            var aElem = MockObjects.GetAnimationElement();
+
+            byte[] bytes = fileAssistant.Serialize(aElem);
+            string xml = new string(Encoding.Unicode.GetChars(bytes));
+            if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
+                Assert.Fail();
+
+            var aElem2 = fileAssistant.Deserialize<AnimationElement>(bytes);
+            if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
+                Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void SerializeJSONTest()
+        {
+            fileAssistant = new FileAssistant();
+            fileAssistant.SerializationType = "JSON";
+            var aElem = MockObjects.GetAnimationElement();
+
+            byte[] bytes = fileAssistant.Serialize(aElem);
+            string xml = new string(Encoding.Unicode.GetChars(bytes));
+            if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
+                Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void SerializeXMLTest()
+        {
+            fileAssistant = new FileAssistant();
+            fileAssistant.SerializationType = "XML";
+            var aElem = MockObjects.GetAnimationElement();
+
+            byte[] bytes = fileAssistant.Serialize(aElem);
+            string xml = new string(Encoding.Unicode.GetChars(bytes));
+            if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
                 Assert.Fail();
         }
     }

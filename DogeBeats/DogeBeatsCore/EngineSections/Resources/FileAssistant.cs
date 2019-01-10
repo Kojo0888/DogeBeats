@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace DogeBeats.EngineSections.Resources
 {
     public class FileAssistant
     {
+        public string SerializationType = "JSON";
+
         public DDictionary<string, byte[]> GetFilesFromFolder(string folderFullPath)
         {
             DDictionary<string, byte[]> toReturn = new DDictionary<string, byte[]>();
@@ -24,7 +27,7 @@ namespace DogeBeats.EngineSections.Resources
             return toReturn;
         }
 
-        internal DDictionary<string, DDictionary<string, byte[]>> GetAllResourceFilesFromFolder(string folderPath)
+        public DDictionary<string, DDictionary<string, byte[]>> GetAllResourceFilesFromFolder(string folderPath)
         {
             DDictionary<string, DDictionary<string, byte[]>> toReturn = new DDictionary<string, DDictionary<string, byte[]>>();
             string[] directories = Directory.GetDirectories(folderPath);
@@ -39,20 +42,10 @@ namespace DogeBeats.EngineSections.Resources
             return toReturn;
         }
 
-        public T DeserializeXML<T>(byte[] resourceBytes) where T : class 
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (MemoryStream ms = new MemoryStream(resourceBytes))
-            {
-                T obj = serializer.Deserialize(ms) as T;
-                return obj;
-            }
-        }
-
-        internal string GetFullPathForFolderName(string type, string basePath)
+        public string GetFullPathForFolderName(string type, string basePath)
         {
             string[] dirs = Directory.GetDirectories(basePath);
-            if(dirs != null && dirs.Length > 0)
+            if (dirs != null && dirs.Length > 0)
             {
                 foreach (var dir in dirs)
                 {
@@ -70,11 +63,53 @@ namespace DogeBeats.EngineSections.Resources
             return string.Empty;
         }
 
-        public byte[] SerializeXML<T>(T obj) where T : class
-        {
-            //byte[] resourceBytes = GetResource(type, name);
-            //string xmlString = new string(Encoding.UTF8.GetChars(resourceBytes));
+        #region serialiation
 
+        public T Deserialize<T>(byte[] resourceBytes) where T : class 
+        {
+            if (SerializationType == "JSON")
+                return DeserializeJSON<T>(resourceBytes);
+            else if (SerializationType == "XML")
+                return DeserializeXML<T>(resourceBytes);
+            else
+                throw new Exception("Serialization Type: " + SerializationType + " is not supported");
+        }
+
+        private T DeserializeXML<T>(byte[] resourceBytes) where T : class
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (MemoryStream ms = new MemoryStream(resourceBytes))
+            {
+                T obj = serializer.Deserialize(ms) as T;
+                return obj;
+            }
+        }
+
+        private T DeserializeJSON<T>(byte[] resourceBytes) where T : class
+        {
+            string json = new string (Encoding.UTF8.GetChars(resourceBytes));
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        public byte[] Serialize<T>(T obj) where T : class
+        {
+            if (SerializationType == "JSON")
+                return SerializeJSON<T>(obj);
+            else if (SerializationType == "XML")
+                return SerializeXML<T>(obj);
+            else
+                throw new Exception("Serialization Type: " + SerializationType + " is not supported");
+        }
+
+        private byte[] SerializeJSON<T>(T obj) where T : class
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            byte[] bytes = Encoding.UTF8.GetBytes(json);
+            return bytes;
+        }
+
+        private byte[] SerializeXML<T>(T obj) where T : class
+        {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (MemoryStream ms = new MemoryStream())
             {
@@ -83,16 +118,6 @@ namespace DogeBeats.EngineSections.Resources
             }
         }
 
-        internal T LoadTimeLine<T>(string file) where T : class
-        {
-            string data = File.ReadAllText(file);
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-
-            using (TextReader tr = new StreamReader(file))
-            {
-                T obj = serializer.Deserialize(tr) as T;
-                return obj;
-            }
-        }
+        #endregion
     }
 }

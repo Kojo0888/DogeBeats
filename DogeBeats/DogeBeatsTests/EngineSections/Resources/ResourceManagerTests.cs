@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Testowy.Model;
+using DogeBeatsTests;
 
 namespace DogeBeats.Model.Tests
 {
@@ -27,10 +28,10 @@ namespace DogeBeats.Model.Tests
         }
 
         [TestMethod()]
-        [DataRow("Shapes", "test")]
-        [DataRow("Shapes", "test.png")]
-        [DataRow("shapes", "test")]
-        [DataRow("shapes", "test.png")]
+        [DataRow("Images", "test")]
+        [DataRow("Images", "test.png")]
+        [DataRow("images", "test")]
+        [DataRow("images", "test.png")]
         public void GetResourceTest(string type, string name)
         {
             byte[] bytes = manager.GetResource(type, name);
@@ -59,15 +60,8 @@ namespace DogeBeats.Model.Tests
         [TestMethod()]
         public void SetAllOfSerializedObjectsTest()
         {
-            var values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("Prediction", "False");
-            values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
-
-            var values2 = new System.Collections.Specialized.NameValueCollection();
-            values2.Add("Prediction", "False");
-            values2.Add("ShapeName", "IdkYet432");
-            var aElem2 = AnimationElement.Create(values);
+            var aElem = MockObjects.GetAnimationElement();
+            var aElem2 = MockObjects.GetAnimationElement2();
 
             var dic = new Dictionary<string, AnimationElement>();
             dic.Add("test AnimationELement1", aElem);
@@ -79,8 +73,17 @@ namespace DogeBeats.Model.Tests
         [TestMethod()]
         public void GetAllOfSerializedObjectsTest()
         {
-            var dic = manager.GetAllOfSerializedObjects<AnimationElement>("Shapes");
-            if (dic == null || dic.Count == 0)
+            var aElem = MockObjects.GetAnimationElement();
+            var aElem2 = MockObjects.GetAnimationElement2();
+
+            var dic = new Dictionary<string, AnimationElement>();
+            dic.Add("test AnimationELement1", aElem);
+            dic.Add("test AnimationELement2", aElem2);
+
+            manager.SetAllOfSerializedObjects<AnimationElement>("Shapes", dic);
+
+            var dic2 = manager.GetAllOfSerializedObjects<AnimationElement>("Shapes");
+            if (dic2 == null || dic2.Count == 0)
                 Assert.Fail();
         }
 

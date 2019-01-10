@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DogeBeatsTests;
 
 namespace Testowy.Model.Tests
 {
@@ -59,16 +60,13 @@ namespace Testowy.Model.Tests
         [TestMethod()]
         public void UpdateManualTest()
         {
-            var values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("Prediction", "False");
-            values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
+            var aElem = MockObjects.GetAnimationElement();
             if (aElem == null)
                 Assert.Fail();
 
             var values2 = new System.Collections.Specialized.NameValueCollection();
             values2.Add("Prediction", "False");
-            values2.Add("ShapeName", "IdkYet3");
+            values2.Add("ShapeTypeName", "IdkYet3");
             aElem.UpdateManual(values2);
             if (aElem.Shape.TypeName != "IdkYet3")
                 Assert.Fail();

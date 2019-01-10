@@ -16,19 +16,20 @@ namespace Testowy.Model
     {
         public DStopper Stopper = new DStopper();
 
+        [NonSerialized]
         public Queue<AnimationGroupElement> Storyboard = new Queue<AnimationGroupElement>();
 
         public List<AnimationGroupElement> CurrentlyAnimatingGroups = new List<AnimationGroupElement>();
 
         public List<AnimationGroupElement> PassedAnimationGroups = new List<AnimationGroupElement>();
 
-        public List<AnimationGroupElement> AnimationGroupElements = new List<AnimationGroupElement>();
+        public List<AnimationGroupElement> AnimationGroupElementsAll  = new List<AnimationGroupElement>();
 
         public TimeSpan LoopTime;
 
         public BeatGuider BeatGuider { get; set; } = new BeatGuider();
 
-        public string TimeLineName { get; internal set; }
+        public string TimeLineName { get; set; }
 
         private TimeSpan _playToTimeSpan { get; set; }
 
@@ -127,7 +128,7 @@ namespace Testowy.Model
         public void InitializeStoryboardQueue()
         {
             Storyboard = new Queue<AnimationGroupElement>();
-            foreach (var element in AnimationGroupElements.OrderBy(o => o.GroupRoute.AnimationStartTime))
+            foreach (var element in AnimationGroupElementsAll.OrderBy(o => o.GroupRoute.AnimationStartTime))
             {
                 Storyboard.Enqueue(element);
             }
@@ -151,7 +152,7 @@ namespace Testowy.Model
 
         public void OrderAllAnimationElements()
         {
-            AnimationGroupElements = AnimationGroupElements.OrderBy(o => o.GroupRoute.AnimationStartTime).ToList();
+            AnimationGroupElementsAll = AnimationGroupElementsAll.OrderBy(o => o.GroupRoute.AnimationStartTime).ToList();
         }
 
         internal void RegisterPlayToTimeSpan(TimeSpan to)

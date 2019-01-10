@@ -23,10 +23,10 @@ namespace Testowy.Model
 
         }
 
-        //public AnimationGroupElement(string groupName)
-        //{
-        //    GroupName = groupName;
-        //}
+        public AnimationGroupElement(string groupName)
+        {
+            GroupName = groupName;
+        }
 
         internal void Update(TimeSpan currentStopperTime)
         {
@@ -64,15 +64,10 @@ namespace Testowy.Model
             return element;
         }
 
-        internal static void UpdateManual(AnimationGroupElement group, NameValueCollection values)
+        internal void UpdateManual(NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["GroupName"].ToString()))
-                group.GroupName = ManualUpdateString(values["GroupName"]);
-        }
-
-        private static string ManualUpdateString(string v)
-        {
-            return v;
+                GroupName = values["GroupName"];
         }
 
         internal static IEnumerable<string> GetKeysManualUpdate()

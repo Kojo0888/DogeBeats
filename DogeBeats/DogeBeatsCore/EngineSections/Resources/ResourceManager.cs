@@ -54,35 +54,48 @@ namespace DogeBeats.Model
             type = type.ToLower();
             name = name.ToLower();
 
-            return _fileAssistant.DeserializeXML<T>(resourceBytes);
+            return _fileAssistant.Deserialize<T>(resourceBytes);
         }
 
         public void SetSerializedObject<T>(T obj, string type, string name) where T : class
         {
-            var bytes = _fileAssistant.SerializeXML(obj);
+            var bytes = _fileAssistant.Serialize(obj);
             string path = _fileAssistant.GetFullPathForFolderName(type, RESOURCE_PATH);
 
-            if (!name.EndsWith(".xml"))
-                name += ".xml";
-
             type = type.ToLower();
+
+            AddResourceToList(name, type, bytes);//pieroli sie tu
+
+            string extension = "." + _fileAssistant.SerializationType.ToLower();
+            if (!name.EndsWith(extension))
+                name += extension;
 
             string fullPath = Path.Combine(path, name);
             File.WriteAllBytes(fullPath, bytes);
         }
 
-        public Dictionary<string, T> GetAllOfSerializedObjects<T>(string type) where T : class
+        private void AddResourceToList(string name, string type, byte[] bytes)
         {
-            Dictionary<string, T> toReturn = new Dictionary<string, T>();
+            if (!Resources.ContainsKey(type))
+                Resources[type] = new DDictionary<string, byte[]>();
+
+            //if (!Resources[type].ContainsKey(name))
+            Resources[type][name] = bytes;
+        }
+
+        public DDictionary<string, T> GetAllOfSerializedObjects<T>(string type) where T : class
+        {
+            DDictionary<string, T> toReturn = new DDictionary<string, T>();
             type = type.ToLower();
 
             if (Resources.ContainsKey(type)){
-                Dictionary<string, byte[]> resourcesWithType = Resources[type];
+                DDictionary<string, byte[]> resourcesWithType = Resources[type];
 
                 foreach (var resourceWithType in resourcesWithType)
                 {
-                    var obj = _fileAssistant.DeserializeXML<T>(resourceWithType.Value);
-                    toReturn.Add(resourceWithType.Key, obj);
+                    var fileNameWithoutExt = Path.GetFileNameWithoutExtension(resourceWithType.Key);
+                    var obj = _fileAssistant.Deserialize<T>(resourceWithType.Value);
+                    toReturn.Add(fileNameWithoutExt, obj);
                 }
             }
             return toReturn;

@@ -58,9 +58,9 @@ namespace Testowy.Model
         public static AnimationElement Create(NameValueCollection values)
         {
             AnimationElement element = new AnimationElement();
-            if (!string.IsNullOrEmpty(values.Get("ShapeName")))
+            if (!string.IsNullOrEmpty(values.Get("ShapeTypeName")))
             {
-                element.Shape = new TimeLineShape(values["ShapeName"]);
+                element.Shape = new TimeLineShape(values["ShapeTypeName"]);
             }
             return element;
         }
@@ -69,15 +69,15 @@ namespace Testowy.Model
         {
             if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
                 Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
-            if (!string.IsNullOrEmpty(values["Shape"].ToString()))
-                Shape = new TimeLineShape(values["Shape"]);
+            if (!string.IsNullOrEmpty(values["ShapeTypeName"].ToString()))
+                Shape = new TimeLineShape(values["ShapeTypeName"]);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
             keys.Add("Prediction");
-            keys.Add("Shape");
+            keys.Add("ShapeTypeName");
             return keys;
         }
     }

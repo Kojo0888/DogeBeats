@@ -1,4 +1,5 @@
-﻿using DogeBeats.Model;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Model;
 using DogeBeats.Model.Route;
 using DogeBeats.Modules.TimeLines;
 using System;
@@ -50,7 +51,7 @@ namespace DogeBeats.Modules
             PanelGroup.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
             PanelGroup.StartTime = PanelOffsetTime;
             PanelGroup.EndTime = PanelOffsetTime + PanelWidthTime;
-            List<TimedTLEPanelElement> timedElements = TimedTLEPanelElement.Parse(timeline.AnimationGroupElements);
+            List<TimedTLEPanelElement> timedElements = TimedTLEPanelElement.Parse(timeline.AnimationGroupElementsAll);
             PanelGroup.InitialineElements(timedElements);
             PanelGroup.Height = 100;
             PanelGroup.OffsetHeight = 0;
@@ -143,7 +144,7 @@ namespace DogeBeats.Modules
         internal static void AddNewAnimationGroup(string groupName)
         {
             AnimationGroupElement group = new AnimationGroupElement();
-            TimeLine.AnimationGroupElements.Add(group);
+            TimeLine.AnimationGroupElementsAll.Add(group);
 
             TimedTLEPanelElement timedElement = TimedTLEPanelElement.Parse(group);
             PanelGroup.AllElements.Add(timedElement);
@@ -173,7 +174,7 @@ namespace DogeBeats.Modules
                 {
                     Placement placement = group.InitPlacement;
                     Placement.UpdateManual(placement, values);
-                    AnimationGroupElement.UpdateManual(group, values);
+                    group.UpdateManual(values);
                 }
             }
             else if (refferencedObject as AnimationElement != null)
@@ -183,7 +184,7 @@ namespace DogeBeats.Modules
                 {
                     Placement placement = element.InitPlacement;
                     Placement.UpdateManual(placement, values);
-                    AnimationElement.UpdateManual(element, values);
+                    element.UpdateManual(values);
                 }
             }
             else if (refferencedObject as AnimationRouteFrame != null)
@@ -212,12 +213,12 @@ namespace DogeBeats.Modules
 
         internal static void SaveTimeLine()
         {
-            CenterTimeLine.SaveTimeLine(TimeLine);
+            StaticHub.TimeLineCentre.SaveTimeLine(TimeLine);
         }
 
         internal static void LoadTimeLine(string timelineName)
         {
-            TimeLine timeline = CenterTimeLine.TimeLines.FirstOrDefault(f => f.TimeLineName == timelineName);
+            TimeLine timeline = StaticHub.TimeLineCentre.GetTimeLine(timelineName);
             if (timeline != null)
                 AttachTimeLineToEditor(timeline);
         }
@@ -307,7 +308,7 @@ namespace DogeBeats.Modules
                 var group = elementToRemove as AnimationGroupElement;
                 if (group != null)
                 {
-                    TimeLine.AnimationGroupElements.Remove(group);
+                    TimeLine.AnimationGroupElementsAll.Remove(group);
                 }
             }
             else if (elementToRemove as AnimationElement != null)
@@ -315,7 +316,7 @@ namespace DogeBeats.Modules
                 var element = elementToRemove as AnimationElement;
                 if (element != null)
                 {
-                    foreach (var group in TimeLine.AnimationGroupElements)
+                    foreach (var group in TimeLine.AnimationGroupElementsAll)
                     {
                         group.Elements.Remove(element);
                     }
@@ -326,7 +327,7 @@ namespace DogeBeats.Modules
                 var frame = elementToRemove as AnimationRouteFrame;
                 if (frame != null)
                 {
-                    foreach (var group in TimeLine.AnimationGroupElements)
+                    foreach (var group in TimeLine.AnimationGroupElementsAll)
                     {
                         foreach (var element in group.Elements)
                         {

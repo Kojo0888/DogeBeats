@@ -27,7 +27,10 @@ namespace DogeBeats.Other
         {
             foreach (var dicPair in dic)
             {
-                Add(dicPair);
+                if (base.ContainsKey(dicPair.Key))
+                    base[dicPair.Key] = dicPair.Value;
+                else 
+                    Add(dicPair);
             }
         }
 
@@ -35,7 +38,10 @@ namespace DogeBeats.Other
         {
             foreach (var dicPair in list)
             {
-                Add(dicPair);
+                if (base.ContainsKey(dicPair.Key))
+                    base[dicPair.Key] = dicPair.Value;
+                else
+                    Add(dicPair);
             }
         }
 

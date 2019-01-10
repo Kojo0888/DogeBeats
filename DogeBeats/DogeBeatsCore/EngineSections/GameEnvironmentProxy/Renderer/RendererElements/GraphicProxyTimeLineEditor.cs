@@ -98,12 +98,12 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public List<string> GetAllTimeLineNames()
         {
-            return StaticHub.ResourceManager.GetAllOfSerializedObjects<TimeLine>("TimeLines").Select(s => s.Value.TimeLineName).ToList();
+            return StaticHub.TimeLineCentre.TimeLines.Select(s => s.Key).ToList();
         }
 
         public List<string> GetAllAnimationGroupElements()
         {
-            return CenterTimeLine.GetAllAnimationGroupElements().Select(s => s.GroupName).ToList();
+            return StaticHub.TimeLineCentre.GetAllAnimationGroupElements().Select(s => s.Key).ToList();
         }
 
         public void SetTimeCursorToPrecentage(float precentage)
