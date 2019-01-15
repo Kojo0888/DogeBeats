@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Testowy.Model;
 using DogeBeatsTests;
+using System.IO;
+using DogeBeatsTests.Data;
 
 namespace DogeBeats.Model.Tests
 {
@@ -18,6 +20,7 @@ namespace DogeBeats.Model.Tests
         [TestInitialize()]
         public void Init()
         {
+            FileTestHelper.Init();
             manager.LoadAllResources();
         }
 
@@ -32,8 +35,13 @@ namespace DogeBeats.Model.Tests
         [DataRow("Images", "test.png")]
         [DataRow("images", "test")]
         [DataRow("images", "test.png")]
+        [DataRow("images", "tEst.png")]
+        [DataRow("images", "Test.png")]
         public void GetResourceTest(string type, string name)
         {
+            FileTestHelper.CreateDummyFile(type, name);
+            manager.LoadAllResources();
+
             byte[] bytes = manager.GetResource(type, name);
             if (bytes == null || bytes.Length == 0)
                 Assert.Fail();
@@ -46,13 +54,13 @@ namespace DogeBeats.Model.Tests
             values.Add("Prediction", "False");
             values.Add("ShapeName", "IdkYet");
             var aElem = AnimationElement.Create(values);
-            manager.SetSerializedObject(aElem, "Shapes", "TestSerialization");
+            manager.SetSerializedObject(aElem, "TestSerialization", "TestSerialization");
         }
 
         [TestMethod()]
         public void GetSerializedObjectTest()
         {
-            var obj = manager.GetSerializedObject<AnimationElement>("Shapes", "TestSerialization");
+            var obj = manager.GetSerializedObject<AnimationElement>("TestSerialization", "TestSerialization");
             if (obj == null)
                 Assert.Fail();
         }
@@ -67,7 +75,7 @@ namespace DogeBeats.Model.Tests
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SetAllOfSerializedObjects<AnimationElement>("Shapes", dic);
+            manager.SetAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
         }
 
         [TestMethod()]
@@ -80,12 +88,36 @@ namespace DogeBeats.Model.Tests
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SetAllOfSerializedObjects<AnimationElement>("Shapes", dic);
+            manager.SetAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
 
-            var dic2 = manager.GetAllOfSerializedObjects<AnimationElement>("Shapes");
+            var dic2 = manager.GetAllOfSerializedObjects<AnimationElement>("TestSerialization");
             if (dic2 == null || dic2.Count == 0)
                 Assert.Fail();
         }
 
+        [TestMethod()]
+        public void GetResourceNameWithExtensionTest()
+        {
+            var aElem = MockObjects.GetAnimationElement();
+            manager.SetSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.ElementName);
+
+            var filenameWithExtension = manager.GetResourceNameWithExtension("TimeLines", aElem.ElementName);
+            if (filenameWithExtension != aElem.ElementName + ".json")
+                Assert.Fail();
+        }
+
+        [TestMethod()]
+        [DataRow("Nested1\\Nested2", "nesttest1")]
+        [DataRow("Nested1\\Nested2\\Nested3", "nestTest2")]
+        [DataRow("Nested1\\Nested2\\Nested3", "nestTest2.txt")]
+        public void NestedFolderResourcesSupport(string type, string name)
+        {
+            FileTestHelper.CreateDummyFile(type, name);
+            manager.LoadAllResources();
+
+            byte[] bytes = manager.GetResource(type, name);
+            if (bytes == null || bytes.Length == 0)
+                Assert.Fail();
+        }
     }
 }

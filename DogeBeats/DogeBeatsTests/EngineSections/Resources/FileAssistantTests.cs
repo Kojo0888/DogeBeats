@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Testowy.Model;
 using System.Xml.Linq;
 using DogeBeatsTests;
+using DogeBeatsTests.Data;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
@@ -16,9 +17,16 @@ namespace DogeBeats.EngineSections.Resources.Tests
     {
         FileAssistant fileAssistant = new FileAssistant();
 
+        [TestInitialize()]
+        public void Init()
+        {
+            FileTestHelper.Init();
+        }
+
         [TestMethod()]
         public void GetFilesFromFolderTest()
         {
+            FileTestHelper.CreateDummyFile("Shapes", "whatever");
 
             var files = fileAssistant.GetFilesFromFolder(@"Data\Resources\Shapes");
             if (files == null || files.Count == 0)

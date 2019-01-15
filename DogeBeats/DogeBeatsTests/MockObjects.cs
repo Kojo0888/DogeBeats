@@ -14,6 +14,7 @@ namespace DogeBeatsTests
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeTypeName", "IdkYet");
+            values.Add("Name", "TestName");
             var aElem = AnimationElement.Create(values);
             return aElem;
         }

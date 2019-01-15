@@ -20,7 +20,7 @@ namespace DogeBeats.EngineSections.Resources
             string[] files = Directory.GetFiles(folderFullPath);
             foreach (var file in files)
             {
-                string filename = Path.GetFileNameWithoutExtension(file).ToLower();
+                string filename = Path.GetFileName(file);
                 byte[] bytes = File.ReadAllBytes(file);
                 toReturn[filename] = bytes;
             }
@@ -35,9 +35,18 @@ namespace DogeBeats.EngineSections.Resources
             {
                 var directoryName = Path.GetFileName(directory).ToLower();
 
-                //toReturn.Add(directoryName, new DDictionary<string, byte[]>());
                 var dic = GetFilesFromFolder(directory);
-                toReturn.Add(directoryName, dic);
+                if(dic.Count > 0)
+                    toReturn.Add(directoryName, dic);
+
+                var childDic = GetAllResourceFilesFromFolder(directory);
+                if(childDic.Count > 0)
+                {
+                    foreach (var childDicPair in childDic)
+                    {
+                        toReturn.Add(Path.Combine(directoryName, childDicPair.Key), childDicPair.Value);
+                    }
+                }
             }
             return toReturn;
         }

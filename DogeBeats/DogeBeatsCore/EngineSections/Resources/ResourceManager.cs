@@ -37,14 +37,29 @@ namespace DogeBeats.Model
         {
             if (name.Contains('.'))
                 name = Path.GetFileNameWithoutExtension(name);
-
             name = name.ToLower();
             type = type.ToLower();
 
             if (Resources != null && Resources.ContainsKey(type))
-                if (Resources[type].ContainsKey(name))
-                    return Resources[type]?[name];
+            {
+                string key = GetResourceNameWithExtension(type, name);
+                if (string.IsNullOrEmpty(key))
+                    return new byte[0];
+
+                if (Resources[type].ContainsKey(key))
+                    return Resources[type]?[key];
+            }
             return new byte[0];
+        }
+
+        public string GetResourceNameWithExtension(string type, string name)
+        {
+            type = type.ToLower();
+            string key = Resources[type].Keys.FirstOrDefault(f => f.ToLower().StartsWith(name.ToLower()));
+            if (!string.IsNullOrEmpty(key))
+                return key;
+            return string.Empty;
+            //key = Resources[type].Keys.FirstOrDefault(f => f.ToLower().StartsWith(name.ToLower()));
         }
 
         public T GetSerializedObject<T>(string type, string name) where T : class
@@ -52,7 +67,7 @@ namespace DogeBeats.Model
             byte[] resourceBytes = GetResource(type, name);
             //string xmlString = new string(Encoding.UTF8.GetChars(resourceBytes));
             type = type.ToLower();
-            name = name.ToLower();
+            name = Path.GetFileNameWithoutExtension(name).ToLower();
 
             return _fileAssistant.Deserialize<T>(resourceBytes);
         }
@@ -64,23 +79,13 @@ namespace DogeBeats.Model
 
             type = type.ToLower();
 
-            AddResourceToList(name, type, bytes);//pieroli sie tu
+            if (!name.Contains("."))
+                name += "." + _fileAssistant.SerializationType.ToLower();
 
-            string extension = "." + _fileAssistant.SerializationType.ToLower();
-            if (!name.EndsWith(extension))
-                name += extension;
+            AddResourceToList(name, type, bytes);
 
             string fullPath = Path.Combine(path, name);
             File.WriteAllBytes(fullPath, bytes);
-        }
-
-        private void AddResourceToList(string name, string type, byte[] bytes)
-        {
-            if (!Resources.ContainsKey(type))
-                Resources[type] = new DDictionary<string, byte[]>();
-
-            //if (!Resources[type].ContainsKey(name))
-            Resources[type][name] = bytes;
         }
 
         public DDictionary<string, T> GetAllOfSerializedObjects<T>(string type) where T : class
@@ -88,17 +93,29 @@ namespace DogeBeats.Model
             DDictionary<string, T> toReturn = new DDictionary<string, T>();
             type = type.ToLower();
 
-            if (Resources.ContainsKey(type)){
+            if (Resources.ContainsKey(type))
+            {
                 DDictionary<string, byte[]> resourcesWithType = Resources[type];
 
                 foreach (var resourceWithType in resourcesWithType)
                 {
-                    var fileNameWithoutExt = Path.GetFileNameWithoutExtension(resourceWithType.Key);
+                    var fileNameWithoutExt = resourceWithType.Key;
                     var obj = _fileAssistant.Deserialize<T>(resourceWithType.Value);
                     toReturn.Add(fileNameWithoutExt, obj);
                 }
             }
             return toReturn;
+        }
+
+        private void AddResourceToList(string name, string type, byte[] bytes)
+        {
+            if (!Resources.ContainsKey(type))
+                Resources[type] = new DDictionary<string, byte[]>();
+            if (!name.Contains("."))
+                name += "." + _fileAssistant.SerializationType.ToLower();
+
+            //if (!Resources[type].ContainsKey(name))
+            Resources[type][name] = bytes;
         }
     }
 }

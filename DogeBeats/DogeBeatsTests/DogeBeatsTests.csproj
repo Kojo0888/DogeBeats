@@ -57,6 +57,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="FileTestHelper.cs" />
     <Compile Include="EngineSections\AnimationObjects\AnimationElementTests.cs" />
     <Compile Include="EngineSections\Resources\FileAssistantTests.cs" />
     <Compile Include="EngineSections\Resources\ResourceManagerTests.cs" />
@@ -66,6 +67,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\Resources\TestSerialization\test AnimationELement1.json" />
+    <None Include="Data\Resources\TestSerialization\test AnimationELement2.json" />
+    <None Include="Data\Resources\TestSerialization\TestSerialization.json" />
+    <None Include="Data\Resources\TimeLines\TEstLimeLint1.json" />
+    <None Include="Data\Resources\TimeLines\testlimelint1.xml.json" />
+    <None Include="Data\Resources\TimeLines\TestName.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +84,11 @@
   <ItemGroup>
     <Folder Include="Data\Resources\Music\" />
     <Folder Include="Data\Resources\Shapes\" />
-    <Folder Include="Data\Resources\TimeLines\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Resources\Images\test.bmp" />
+    <Content Include="Data\Resources\Nested1\Nested2\Nested3\NestTest2.txt" />
+    <Content Include="Data\Resources\Nested1\Nested2\NestTest1.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

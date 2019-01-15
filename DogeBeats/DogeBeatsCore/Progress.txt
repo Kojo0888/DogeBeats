@@ -49,7 +49,24 @@ x  Think - if the GameGlobal class idea is better than static classes.
 11_01_2019:
    All Tests are Passing
    ResourceManager, FileAssistant & TimeLineCentre changes
+   There are still some things to adjust
 
+12_01_2019:
+√  Think - Should it be better if ResourceManager could hold filenames with extensions. For deserialization purposes? - YES
+
+13_01_2019 (Sat):
+	Found problem with ResourceManager Dictionary Key with extension is hard to retreive from Contains method.
+	
+14_01_2019:
+√	Think - about colissions is this supposed to be Unitiy Colliders?
+√	Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
+√	Think - about reorganisating classes, is Model folder necessary?
+√	Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
+√	Think - ManualUpdated - leave it as static methods?
+
+15_01_2019:
+√	Think - about remaking AnimationGroupElements to unlimited groupping.
+√	CentreResource for nested structures
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -57,28 +74,22 @@ TODO Legend:
 ℗ - In progress
 √ - Implemented
 ╦ - Tested
-x - Abandoned
+x -	Abandoned
 
 TODO Notes:
-℗  CenterTimeLine needs full rework. Exclude FileHelper.
-℗  CentreSound also need rework.
-○  Think - about remaking AnimationGroupElements to unlimited groupping.
-○  There is still trigonometric movement to implement, right?
-℗  Center overall revork/rethink.
-○  Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
-○  Think - ManualUpdated - leave it as static methods?
-○  Placement for IGraphicElement needs change?
-℗  Few Shape implementations
-	℗  Circle
-	℗  Square
-	℗  Triangle
-○  Think - about colissions is this supposed to be Unitiy Colliders?
-		Ye, the best would be...
-℗  Think - bout usability of Assumptions class, if it is even necessary near GameGlobal class.
-℗  Think - about reorganisating classes, is Model folder necessary?
-○  CentreResource for nested structures
-○  Logging
-√  ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
-℗  TimeLineCentre
-℗  TimeLine
-○  Think - Should it be better if ResourceManager could hold filenames with extensions. For deserialization purposes?
+℗	CenterTimeLine needs full rework. Exclude FileHelper. 
+℗	CentreSound also need rework. Name will probably differ, since it should be proxy.
+○	Changing all ElementsNAme to Name, Implementing Interface with name prop
+○	AnimationGroupElements to unlimited groupping
+○	There is still trigonometric movement to implement, right?
+℗	Center overall revork/rethink.
+○	Placement for IGraphicElement needs change?
+℗	Few Shape implementations
+	℗	Circle
+	℗	Square
+	℗	Triangle
+○	CentreResource for nested structures
+○	Logging
+√	ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
+℗	TimeLineCentre
+℗	TimeLine

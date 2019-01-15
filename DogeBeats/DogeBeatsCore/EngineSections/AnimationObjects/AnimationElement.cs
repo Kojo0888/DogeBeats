@@ -59,9 +59,10 @@ namespace Testowy.Model
         {
             AnimationElement element = new AnimationElement();
             if (!string.IsNullOrEmpty(values.Get("ShapeTypeName")))
-            {
                 element.Shape = new TimeLineShape(values["ShapeTypeName"]);
-            }
+            if (!string.IsNullOrEmpty(values.Get("Name")))
+                element.ElementName = values["Name"];
+
             return element;
         }
 

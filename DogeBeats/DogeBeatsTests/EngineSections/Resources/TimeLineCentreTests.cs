@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Testowy.Model;
 using DogeBeatsTests;
+using DogeBeatsTests.Data;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
@@ -54,7 +55,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
             TimeLine timeLine = MockObjects.GetTimeLine();
             TimeLineCentre.SaveTimeLine(timeLine);
 
-            if (!StaticHub.ResourceManager.Resources.ContainsKey("timelines") || !StaticHub.ResourceManager.Resources["timelines"].ContainsKey(timeLine.TimeLineName))
+            if (!StaticHub.ResourceManager.Resources.ContainsKey("timelines") || !StaticHub.ResourceManager.Resources["timelines"].ContainsKey(StaticHub.ResourceManager.GetResourceNameWithExtension("timelines", timeLine.TimeLineName)))
                 Assert.Fail();
         }
 
