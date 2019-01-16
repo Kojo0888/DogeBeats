@@ -32,7 +32,7 @@ namespace DogeBeatsTests
         {
             TimeLine timeLine = new TimeLine();
             timeLine.AnimationGroupElementsAll = new List<AnimationGroupElement>() { new AnimationGroupElement("TestGroup1") };
-            timeLine.TimeLineName = "TEstLimeLint1";
+            timeLine.Name = "TEstLimeLint1";
             return timeLine;
         }
     }

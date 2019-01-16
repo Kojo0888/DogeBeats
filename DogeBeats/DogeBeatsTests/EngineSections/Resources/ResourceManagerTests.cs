@@ -99,10 +99,10 @@ namespace DogeBeats.Model.Tests
         public void GetResourceNameWithExtensionTest()
         {
             var aElem = MockObjects.GetAnimationElement();
-            manager.SetSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.ElementName);
+            manager.SetSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.Name);
 
-            var filenameWithExtension = manager.GetResourceNameWithExtension("TimeLines", aElem.ElementName);
-            if (filenameWithExtension != aElem.ElementName + ".json")
+            var filenameWithExtension = manager.GetResourceNameWithExtension("TimeLines", aElem.Name);
+            if (filenameWithExtension != aElem.Name + ".json")
                 Assert.Fail();
         }
 
@@ -118,6 +118,18 @@ namespace DogeBeats.Model.Tests
             byte[] bytes = manager.GetResource(type, name);
             if (bytes == null || bytes.Length == 0)
                 Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void GetAllResourcesTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void SaveAllTest()
+        {
+            Assert.Fail();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
         public void Init()
         {
             TimeLineCentre = new TimeLineCentre();
-            TimeLineCentre.LoadAllTimeLines();
+            TimeLineCentre.LoadAll();
 
             StaticHub.ResourceManager.LoadAllResources();
         }
@@ -29,20 +29,20 @@ namespace DogeBeats.EngineSections.Resources.Tests
         public void LoadAllTimeLinesTest()
         {
             TimeLineCentre = new TimeLineCentre();
-            TimeLineCentre.LoadAllTimeLines();
+            TimeLineCentre.LoadAll();
         }
 
         [TestMethod()]
         public void SaveAllTimeLinesTest()
         {
-            TimeLineCentre.SaveAllTimeLines();
+            TimeLineCentre.SaveAll();
         }
 
         [TestMethod()]
         public void GetAllAnimationGroupElementsTest()
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
-            TimeLineCentre.SaveTimeLine(timeLine);
+            TimeLineCentre.Save(timeLine);
 
             var groups = TimeLineCentre.GetAllAnimationGroupElements();
             if (groups == null || groups.Count == 0)
@@ -53,9 +53,9 @@ namespace DogeBeats.EngineSections.Resources.Tests
         public void SaveTimeLineTest()
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
-            TimeLineCentre.SaveTimeLine(timeLine);
+            TimeLineCentre.Save(timeLine);
 
-            if (!StaticHub.ResourceManager.Resources.ContainsKey("timelines") || !StaticHub.ResourceManager.Resources["timelines"].ContainsKey(StaticHub.ResourceManager.GetResourceNameWithExtension("timelines", timeLine.TimeLineName)))
+            if (!StaticHub.ResourceManager.Resources.ContainsKey("timelines") || !StaticHub.ResourceManager.Resources["timelines"].ContainsKey(StaticHub.ResourceManager.GetResourceNameWithExtension("timelines", timeLine.Name)))
                 Assert.Fail();
         }
 
@@ -63,9 +63,9 @@ namespace DogeBeats.EngineSections.Resources.Tests
         public void GetTimeLineTest()
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
-            TimeLineCentre.SaveTimeLine(timeLine);
+            TimeLineCentre.Save(timeLine);
 
-            TimeLine timeLine2 = TimeLineCentre.GetTimeLine(timeLine.TimeLineName);
+            TimeLine timeLine2 = TimeLineCentre.Get(timeLine.Name);
             if (timeLine2 == null)
                 Assert.Fail();
         }
@@ -73,8 +73,8 @@ namespace DogeBeats.EngineSections.Resources.Tests
         [TestMethod()]
         public void GetAllTimeLinesTest()
         {
-            TimeLineCentre.LoadAllTimeLines();
-            var timeLine = TimeLineCentre.GetAllTimeLines();
+            TimeLineCentre.LoadAll();
+            var timeLine = TimeLineCentre.GetAll();
             if (timeLine == null || timeLine.Count == 0)
                 Assert.Fail();
         }

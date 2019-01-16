@@ -1,4 +1,5 @@
-﻿using DogeBeats.EngineSections.TimeLineEditing;
+﻿using DogeBeats.EngineSections.Resources.Centres;
+using DogeBeats.EngineSections.TimeLineEditing;
 using DogeBeats.Model;
 using DogeBeats.Modules.Centers;
 using System;
@@ -16,6 +17,8 @@ namespace DogeBeats.EngineSections.Resources
         public static ResourceManager ResourceManager { get; set; } = new ResourceManager();
 
         public static TimeLineCentre TimeLineCentre { get; set; } = new TimeLineCentre();
+
+        public static CentreFileBase SoundCentre { get; set; } = new CentreFileBase();
 
         //public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
     }

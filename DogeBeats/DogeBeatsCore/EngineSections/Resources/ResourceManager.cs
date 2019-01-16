@@ -52,6 +52,37 @@ namespace DogeBeats.Model
             return new byte[0];
         }
 
+        public DDictionary<string,byte[]> GetAllResources(string type)
+        {
+            type = type.ToLower();
+            if (Resources.ContainsKey(type))
+                return Resources[type];
+            else
+                return new DDictionary<string, byte[]>();
+        }
+
+        public void Save(string type, Dictionary<string, byte[]> resources)
+        {
+            foreach (var resource in resources)
+            {
+                AddResourceToList(resource.Key, type, resource.Value);
+            }
+
+            SaveAll();
+        }
+
+        public void SaveAll()
+        {
+            foreach (var resourceTypePair in Resources)
+            {
+                foreach (var resource in resourceTypePair.Value)
+                {
+                    string path = Path.Combine(RESOURCE_PATH, resourceTypePair.Key, resource.Key);
+                    _fileAssistant.SaveFile(path, resource.Value);
+                }
+            }
+        }
+
         public string GetResourceNameWithExtension(string type, string name)
         {
             type = type.ToLower();
@@ -99,9 +130,9 @@ namespace DogeBeats.Model
 
                 foreach (var resourceWithType in resourcesWithType)
                 {
-                    var fileNameWithoutExt = resourceWithType.Key;
-                    var obj = _fileAssistant.Deserialize<T>(resourceWithType.Value);
-                    toReturn.Add(fileNameWithoutExt, obj);
+                    var fileNamewithExtension = resourceWithType.Key;
+                    var obj = _fileAssistant.Deserialize<T>(fileNamewithExtension, resourceWithType.Value);
+                    toReturn.Add(fileNamewithExtension, obj);
                 }
             }
             return toReturn;

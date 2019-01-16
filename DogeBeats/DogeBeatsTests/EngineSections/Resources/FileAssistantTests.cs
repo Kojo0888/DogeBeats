@@ -110,5 +110,11 @@ namespace DogeBeats.EngineSections.Resources.Tests
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
                 Assert.Fail();
         }
+
+        [TestMethod()]
+        public void SaveFileTest()
+        {
+            Assert.Fail();
+        }
     }
 }

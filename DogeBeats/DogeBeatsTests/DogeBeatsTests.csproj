@@ -57,11 +57,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="EngineSections\Resources\Centres\CentreFileBaseTests.cs" />
+    <Compile Include="EngineSections\Resources\Centres\CentreSerializationBaseTests.cs" />
     <Compile Include="FileTestHelper.cs" />
     <Compile Include="EngineSections\AnimationObjects\AnimationElementTests.cs" />
     <Compile Include="EngineSections\Resources\FileAssistantTests.cs" />
     <Compile Include="EngineSections\Resources\ResourceManagerTests.cs" />
-    <Compile Include="EngineSections\Resources\TimeLineCentreTests.cs" />
+    <Compile Include="EngineSections\Resources\Centres\TimeLineCentreTests.cs" />
     <Compile Include="EngineSections\Resources\TrigonometricCacheTests.cs" />
     <Compile Include="MockObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

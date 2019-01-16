@@ -30,7 +30,7 @@ x  Think - if the GameGlobal class idea is better than static classes.
 
 09_01_2019:
 ╦  FileAssistant
-℗  Few Shape implementations
+℗  Few Shape implementations (Resources)
 	℗  Circle
 	℗  Square
 	℗  Triangle
@@ -41,7 +41,7 @@ x  Think - if the GameGlobal class idea is better than static classes.
 
 10_01_2019:
    JSON serialization
-   new UnitTests for missed internal methods
+   new UnitTests for missed internal methods (FileAssistant, ResourceManaget, TimeLineCenter)
    Fixing compilation issues (Project is compilable now)
 ℗  TimeLineCenter - unit tests & further implementation
 ℗  TimeLine - XML Serialization issue (Queue has no accessor)
@@ -55,7 +55,7 @@ x  Think - if the GameGlobal class idea is better than static classes.
 √  Think - Should it be better if ResourceManager could hold filenames with extensions. For deserialization purposes? - YES
 
 13_01_2019 (Sat):
-	Found problem with ResourceManager Dictionary Key with extension is hard to retreive from Contains method.
+	Found problem with ResourceManager Dictionary Key with extension is hard to retreive from Contains method (filename without extension).
 	
 14_01_2019:
 √	Think - about colissions is this supposed to be Unitiy Colliders?
@@ -64,32 +64,45 @@ x  Think - if the GameGlobal class idea is better than static classes.
 √	Think - about IManualUpdate and if ManualUpdate should be handled by static methods.
 √	Think - ManualUpdated - leave it as static methods?
 
-15_01_2019:
+15_01_2019: (3-4h)
 √	Think - about remaking AnimationGroupElements to unlimited groupping.
-√	CentreResource for nested structures
+╦	CentreResource for nested structures
+╦	ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
+╦	TimeLineCentre
+╦	Center overall revork/rethink.
+╦	CenterTimeLine needs full rework. Exclude FileHelper. 
+
+16_01_2019:
+√	Changing all ElementsNAme to Name, Implementing Interface with name prop
+℗	SoundCentre
+℗	Think about structure of SoundCentre. Since it should be places in Proxy and at Resources section at the same time.
+	Centre module excludion. Interface, 2 base classes. 
+	Sound Centre needs adjustments, since it should return Sound object instead of bytes, which ResourceManager are taking care of.
+	Generating 13 unpassable test units
+
 _________________________________________________________________________________________________
 
 TODO Legend:
-○ - TODO
-℗ - In progress
-√ - Implemented
-╦ - Tested
-x -	Abandoned
+○	TODO
+℗	In progress
+√	Implemented
+╦	Tested
+x	Abandoned
 
 TODO Notes:
-℗	CenterTimeLine needs full rework. Exclude FileHelper. 
-℗	CentreSound also need rework. Name will probably differ, since it should be proxy.
-○	Changing all ElementsNAme to Name, Implementing Interface with name prop
-○	AnimationGroupElements to unlimited groupping
+○	Assumptions out!
+√	Changing all ElementsNAme to Name, Implementing Interface with name prop
+○	AnimationGroupElements to unlimited groupping.
+	○	Interface for AnimationElement
+	○	Two classes. 1 for Group, 1 for singleElement.
 ○	There is still trigonometric movement to implement, right?
-℗	Center overall revork/rethink.
-○	Placement for IGraphicElement needs change?
+○	Placement for IGraphicElement needs change? no? why?
 ℗	Few Shape implementations
 	℗	Circle
 	℗	Square
 	℗	Triangle
-○	CentreResource for nested structures
 ○	Logging
-√	ResourceManager GetAllOfSerializedObjects & SetAllOfSerializedObjects methods (With test, although cant launch yet)
-℗	TimeLineCentre
 ℗	TimeLine
+℗	CentreSound also need rework. Name will probably differ, since it should be proxy.
+℗	SoundCentre
+℗	Think about structure of SoundCentre. Since it should be places in Proxy and at Resources section at the same time.

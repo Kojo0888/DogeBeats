@@ -213,12 +213,12 @@ namespace DogeBeats.Modules
 
         internal static void SaveTimeLine()
         {
-            StaticHub.TimeLineCentre.SaveTimeLine(TimeLine);
+            StaticHub.TimeLineCentre.Save(TimeLine);
         }
 
         internal static void LoadTimeLine(string timelineName)
         {
-            TimeLine timeline = StaticHub.TimeLineCentre.GetTimeLine(timelineName);
+            TimeLine timeline = StaticHub.TimeLineCentre.Get(timelineName);
             if (timeline != null)
                 AttachTimeLineToEditor(timeline);
         }

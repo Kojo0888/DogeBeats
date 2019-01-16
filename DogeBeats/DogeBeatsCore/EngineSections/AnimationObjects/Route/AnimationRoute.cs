@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogeBeats.EngineSections.Shared;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -8,11 +9,11 @@ using System.Windows.Media.Animation;
 
 namespace Testowy.Model
 {
-    public class AnimationRoute
+    public class AnimationRoute : INamedElement
     {
         public List<AnimationRouteFrame> Frames { get; set; }
 
-        public string RouteName { get; set; }
+        public string Name { get; set; }
 
         private TimeSpan _animationTime;
         public TimeSpan AnimationTime

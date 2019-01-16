@@ -29,7 +29,7 @@ namespace DogeBeats.Modules.Centers
             {
                 return _values[key];
             }
-            else throw new Exception("Trigonometric does not have such value liek " + key);
+            else throw new Exception("Trigonometric does not have such value like " + key);
         }
 
         private void PopulateSin()

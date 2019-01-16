@@ -1,4 +1,5 @@
-﻿using DogeBeats.Misc;
+﻿using DogeBeats.EngineSections.Shared;
+using DogeBeats.Misc;
 using DogeBeats.Modules.TimeLines;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class TimeLine
+    public class TimeLine : INamedElement
     {
         public DStopper Stopper = new DStopper();
 
@@ -29,7 +30,7 @@ namespace Testowy.Model
 
         public BeatGuider BeatGuider { get; set; } = new BeatGuider();
 
-        public string TimeLineName { get; set; }
+        public string Name { get; set; }
 
         private TimeSpan _playToTimeSpan { get; set; }
 
@@ -38,7 +39,7 @@ namespace Testowy.Model
         public static void ManualUpdate(TimeLine timeline, NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["TimeLineName"].ToString()))
-                timeline.TimeLineName = values["TimeLineName"].ToString();
+                timeline.Name = values["TimeLineName"].ToString();
             if (!string.IsNullOrEmpty(values["MusicName"].ToString()))
                 timeline.MusicName = values["MusicName"].ToString();
         }

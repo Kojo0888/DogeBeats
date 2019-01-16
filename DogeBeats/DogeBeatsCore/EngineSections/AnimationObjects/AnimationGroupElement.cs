@@ -1,4 +1,5 @@
-﻿using DogeBeats.Model;
+﻿using DogeBeats.EngineSections.Shared;
+using DogeBeats.Model;
 using DogeBeats.Model.Route;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Other;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationGroupElement : ITLEPanelElement
+    public class AnimationGroupElement : ITLEPanelElement, INamedElement
     {
         public List<AnimationElement> Elements { get; set; }
         public AnimationGroupRoute GroupRoute { get; set; }
         public Placement InitPlacement { get; set; }
-        public string GroupName { get; set; }
+        public string Name { get; set; }
 
         public AnimationGroupElement()
         {
@@ -25,7 +26,7 @@ namespace Testowy.Model
 
         public AnimationGroupElement(string groupName)
         {
-            GroupName = groupName;
+            Name = groupName;
         }
 
         internal void Update(TimeSpan currentStopperTime)
@@ -59,7 +60,7 @@ namespace Testowy.Model
             string groupName = "ElementGroupName";
 
             if (!string.IsNullOrEmpty(values.Get(groupName)))
-                element.GroupName = values[groupName];
+                element.Name = values[groupName];
 
             return element;
         }
@@ -67,7 +68,7 @@ namespace Testowy.Model
         internal void UpdateManual(NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["GroupName"].ToString()))
-                GroupName = values["GroupName"];
+                Name = values["GroupName"];
         }
 
         internal static IEnumerable<string> GetKeysManualUpdate()

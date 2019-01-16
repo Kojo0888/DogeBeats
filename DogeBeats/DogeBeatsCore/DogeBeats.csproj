@@ -51,9 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assumptions.cs" />
+    <Compile Include="EngineSections\Resources\Centres\CentreFileBase.cs" />
+    <Compile Include="EngineSections\Resources\Centres\CentreSerializationBase.cs" />
+    <Compile Include="EngineSections\Resources\Centres\ICentreBase.cs" />
     <Compile Include="EngineSections\Resources\FileAssistant.cs" />
     <Compile Include="EngineSections\Resources\StaticHub.cs" />
-    <Compile Include="EngineSections\Resources\TimeLineCentre.cs" />
+    <Compile Include="EngineSections\Resources\Centres\TimeLineCentre.cs" />
+    <Compile Include="EngineSections\AnimationObjects\INamedElement.cs" />
     <Compile Include="EngineSections\TimeLineEditing\ManualUpdater.cs" />
     <Compile Include="Misc\DStopWatch.cs" />
     <Compile Include="MockUps\GameObject.cs" />
@@ -91,6 +95,7 @@
   <ItemGroup>
     <Folder Include="Data\Resources\Music\" />
     <Folder Include="Data\Resources\TimeLines\" />
+    <Folder Include="EngineSections\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Resources\Shapes\Circle.png" />

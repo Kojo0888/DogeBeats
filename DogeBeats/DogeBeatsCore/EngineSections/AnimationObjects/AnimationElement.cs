@@ -1,4 +1,5 @@
-﻿using DogeBeats.Modules.TimeLines;
+﻿using DogeBeats.EngineSections.Shared;
+using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
 using DogeBeats.Renderer;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationElement : ITLEPanelElement
+    public class AnimationElement : ITLEPanelElement, INamedElement
     {
         public TimeLineShape Shape { get; set; }
 
@@ -21,7 +22,7 @@ namespace Testowy.Model
 
         public bool Prediction { get; set; }
 
-        public string ElementName { get; set; }
+        public string Name { get; set; }
 
         public AnimationElement()
         {
@@ -61,7 +62,7 @@ namespace Testowy.Model
             if (!string.IsNullOrEmpty(values.Get("ShapeTypeName")))
                 element.Shape = new TimeLineShape(values["ShapeTypeName"]);
             if (!string.IsNullOrEmpty(values.Get("Name")))
-                element.ElementName = values["Name"];
+                element.Name = values["Name"];
 
             return element;
         }

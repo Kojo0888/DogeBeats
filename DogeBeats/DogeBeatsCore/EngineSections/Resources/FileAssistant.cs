@@ -72,6 +72,11 @@ namespace DogeBeats.EngineSections.Resources
             return string.Empty;
         }
 
+        public void SaveFile(string path, byte[] value)
+        {
+            File.WriteAllBytes(path, value);
+        }
+
         #region serialiation
 
         public T Deserialize<T>(byte[] resourceBytes) where T : class 
@@ -81,7 +86,17 @@ namespace DogeBeats.EngineSections.Resources
             else if (SerializationType == "XML")
                 return DeserializeXML<T>(resourceBytes);
             else
-                throw new Exception("Serialization Type: " + SerializationType + " is not supported");
+                return null;
+        }
+
+        public T Deserialize<T>(string filename, byte[] resourceBytes) where T : class
+        {
+            if (filename.ToLower().EndsWith(".json"))
+                return DeserializeJSON<T>(resourceBytes);
+            else if (filename.ToLower().EndsWith(".xml"))
+                return DeserializeXML<T>(resourceBytes);
+            else
+                return null;
         }
 
         private T DeserializeXML<T>(byte[] resourceBytes) where T : class
