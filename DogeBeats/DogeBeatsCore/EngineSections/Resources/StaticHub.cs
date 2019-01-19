@@ -2,6 +2,7 @@
 using DogeBeats.EngineSections.TimeLineEditing;
 using DogeBeats.Model;
 using DogeBeats.Modules.Centers;
+using DogeBeats.Modules.Music;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace DogeBeats.EngineSections.Resources
 
         public static TimeLineCentre TimeLineCentre { get; set; } = new TimeLineCentre();
 
-        public static CentreFileBase SoundCentre { get; set; } = new CentreFileBase();
+        public static CentreFileBase<SoundItem> SoundCentre { get; set; } = new CentreFileBase<SoundItem>();
 
         //public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
     }

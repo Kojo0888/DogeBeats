@@ -72,7 +72,7 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ╦	Center overall revork/rethink.
 ╦	CenterTimeLine needs full rework. Exclude FileHelper. 
 
-16_01_2019:
+16_01_2019 (1h 15min):
 √	Changing all ElementsNAme to Name, Implementing Interface with name prop
 ℗	SoundCentre
 ℗	Think about structure of SoundCentre. Since it should be places in Proxy and at Resources section at the same time.
@@ -80,6 +80,32 @@ x  Think - if the GameGlobal class idea is better than static classes.
 	Sound Centre needs adjustments, since it should return Sound object instead of bytes, which ResourceManager are taking care of.
 	Generating 13 unpassable test units
 
+17_01_2019 (sick) ~1h:
+	Think about implementation for CentreFileBase Generic class
+√	SoundCentre finished. New interface for IByteParsable for Sound item.
+	14 unpassable test
+
+18_01_2019 (very sick)
+
+19_01_2019 (still kinda sick) ~1h:
+	6 unpassable tests
+	Things to do:
+		need to hide Resource Dictionary from ResourceManager, Issue: missleading key.
+		need to change retreiving objects fromm centres. Keys with extension needed. See test for more memory refresh.
+√	Think about structure of SoundCentre. Since it should be places in Proxy and at Resources section at the same time.
+
+20_01_2019 (Sat) ~1h:
+	All test passes
+	Things done:
+		keys in centre dictionaries & ResourceManager are now stored without lowering name. CaseSenssitive with extensions
+		ResourceDictionary is now private.
+	Centres looks finished!
+╦	SoundCentre
+√	Assumptions out!
+╦	Changing all ElementsNAme to Name, Implementing Interface with name prop
+╦	CentreSound also need rework. Name will probably differ, since it should be proxy
+╦	need to hide Resource Dictionary from ResourceManager, Issue: missleading key.
+╦	need to change retreiving objects fromm centres. Keys with extension needed. See test for more memory refresh.
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -90,8 +116,6 @@ TODO Legend:
 x	Abandoned
 
 TODO Notes:
-○	Assumptions out!
-√	Changing all ElementsNAme to Name, Implementing Interface with name prop
 ○	AnimationGroupElements to unlimited groupping.
 	○	Interface for AnimationElement
 	○	Two classes. 1 for Group, 1 for singleElement.
@@ -103,6 +127,4 @@ TODO Notes:
 	℗	Triangle
 ○	Logging
 ℗	TimeLine
-℗	CentreSound also need rework. Name will probably differ, since it should be proxy.
-℗	SoundCentre
-℗	Think about structure of SoundCentre. Since it should be places in Proxy and at Resources section at the same time.
+○	SoundItem Sound playing implementation

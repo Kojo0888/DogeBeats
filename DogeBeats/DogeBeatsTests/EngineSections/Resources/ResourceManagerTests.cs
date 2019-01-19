@@ -54,7 +54,7 @@ namespace DogeBeats.Model.Tests
             values.Add("Prediction", "False");
             values.Add("ShapeName", "IdkYet");
             var aElem = AnimationElement.Create(values);
-            manager.SetSerializedObject(aElem, "TestSerialization", "TestSerialization");
+            manager.SaveSerializedObject(aElem, "TestSerialization", "TestSerialization");
         }
 
         [TestMethod()]
@@ -75,7 +75,7 @@ namespace DogeBeats.Model.Tests
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SetAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
+            manager.SaveAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
         }
 
         [TestMethod()]
@@ -88,7 +88,7 @@ namespace DogeBeats.Model.Tests
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SetAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
+            manager.SaveAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
 
             var dic2 = manager.GetAllOfSerializedObjects<AnimationElement>("TestSerialization");
             if (dic2 == null || dic2.Count == 0)
@@ -99,7 +99,7 @@ namespace DogeBeats.Model.Tests
         public void GetResourceNameWithExtensionTest()
         {
             var aElem = MockObjects.GetAnimationElement();
-            manager.SetSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.Name);
+            manager.SaveSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.Name);
 
             var filenameWithExtension = manager.GetResourceNameWithExtension("TimeLines", aElem.Name);
             if (filenameWithExtension != aElem.Name + ".json")
@@ -123,13 +123,31 @@ namespace DogeBeats.Model.Tests
         [TestMethod()]
         public void GetAllResourcesTest()
         {
-            Assert.Fail();
+            FileTestHelper.CreateDummyFile("Test\\Test232", "Test.txt");
+            manager.LoadAllResources();
+            var results = manager.GetAllResources("Test\\Test232");
+            if (results.Count != 1)
+                Assert.Fail();
         }
 
         [TestMethod()]
-        public void SaveAllTest()
+        [DataRow("Test\\Test2322", "Test331.txt")]
+        public void SaveAllTest(string type, string name)
         {
-            Assert.Fail();
+            FileTestHelper.CreateDummyFile(type, name);
+            manager.LoadAllResources();
+            var resource = manager.GetAllResources(type).FirstOrDefault();
+
+            byte[] bytes = new byte[] { 1, 1, 1, 1, 1, 1 };
+
+            //resource.Value = bytes;
+            manager.AddOrUpdateResource(type, name, bytes);
+
+            manager.SaveAll();
+            manager.LoadAllResources();
+
+            var resource2 = manager.GetResource(type, name);
+            CollectionAssert.AreEqual(bytes, resource2);
         }
     }
 }

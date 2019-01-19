@@ -36,12 +36,14 @@ namespace DogeBeatsTests.Data
 
         }
 
-        public static void CreateDummyFile(string type, string name)
+        public static void CreateDummyFile(string type, string name, string value = "whatever")
         {
+            CreateFolder("Data\\Resources\\" + type);
+
             if (name.Contains("."))
-                File.WriteAllText(Path.Combine("Data\\Resources", type, name), "whatever");
+                File.WriteAllText(Path.Combine("Data\\Resources", type, name), value);
             else
-                File.WriteAllText(Path.Combine("Data\\Resources", type, name + ".txt"), "whatever");
+                File.WriteAllText(Path.Combine("Data\\Resources", type, name + ".txt"), value);
         }
     }
 }

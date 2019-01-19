@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.Shared;
+using DogeBeats.Modules.Music;
 using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
@@ -8,28 +9,60 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.EngineSections.Resources.Centres
 {
-    public class CentreFileBase<T> : ICentreBase<byte[]>
+    public class CentreFileBase<T> : ICentreBase<T> where T : IByteParsable, INamedElement, new()
     {
         public string ResourceType { get; set; }
 
-        public DDictionary<string, byte[]> CentreElements { get; set; }
+        public DDictionary<string, T> CentreElements { get; set; }
 
         public void LoadAll()
         {
-            CentreElements = StaticHub.ResourceManager.GetAllResources(ResourceType);
+            CentreElements = new DDictionary<string, T>();
+
+            var elements = StaticHub.ResourceManager.GetAllResources(ResourceType);
+            foreach (var element in elements)
+            {
+                T si = new T();
+                si.LoadBytes(element.Value);
+                si.Name = element.Key;
+                CentreElements.Add(element.Key, si);
+            }
         }
 
         public void SaveAll()
         {
-            StaticHub.ResourceManager.Save(ResourceType, CentreElements);
+            Dictionary<string, byte[]> toUpdate = new Dictionary<string, byte[]>();
+            foreach (var CentreElement in CentreElements)
+            {
+                toUpdate.Add(CentreElement.Key, CentreElement.Value.GetBytes());
+            }
+
+            StaticHub.ResourceManager.Save(ResourceType, toUpdate);
+        }
+        //to do rest
+
+        public void Save(string name, T obj)
+        {
+            if (!CentreElements.ContainsKey(name))
+                CentreElements.Add(name, obj);
+            else if (!ReferenceEquals(obj, CentreElements[name]))
+                CentreElements[name] = obj;
+
+            byte[] bytes = obj.GetBytes();
+
+            StaticHub.ResourceManager.Save(ResourceType, new Dictionary<string, byte[]>() { { name, bytes } });
         }
 
         public void Save(string name, byte[] bytes)
         {
+            T obj = new T();
+            obj.LoadBytes(bytes);
+            obj.Name = name;
+
             if (!CentreElements.ContainsKey(name))
-                CentreElements.Add(name, bytes);
-            else if (!ReferenceEquals(bytes, CentreElements[name]))
-                CentreElements[name] = bytes;
+                CentreElements.Add(name, obj);
+            else if (!ReferenceEquals(obj, CentreElements[name]))
+                CentreElements[name] = obj;
 
             StaticHub.ResourceManager.Save(ResourceType, new Dictionary<string, byte[]>() { { name, bytes } });
         }
@@ -39,7 +72,7 @@ namespace DogeBeats.EngineSections.Resources.Centres
             if (CentreElements.ContainsKey(name))
                 return CentreElements[name];
             else
-                return null;
+                return default(T);
         }
 
         public DDictionary<string, T> GetAll()

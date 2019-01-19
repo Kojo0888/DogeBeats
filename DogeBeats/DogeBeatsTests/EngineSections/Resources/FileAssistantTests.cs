@@ -9,6 +9,7 @@ using Testowy.Model;
 using System.Xml.Linq;
 using DogeBeatsTests;
 using DogeBeatsTests.Data;
+using System.IO;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
@@ -114,7 +115,12 @@ namespace DogeBeats.EngineSections.Resources.Tests
         [TestMethod()]
         public void SaveFileTest()
         {
-            Assert.Fail();
+            //FileTestHelper.CreateDummyFile("Test\\TEst2323","asd.txt");
+            byte[] bytes = new byte[] { 1, 3, 4, 5, 33, 2, 32, 32 };
+            string path = "Data\\testSave.txt";
+            fileAssistant.SaveFile(path, bytes);
+            byte[] bytes2 = File.ReadAllBytes(path);
+            CollectionAssert.AreEqual(bytes, bytes2);
         }
     }
 }

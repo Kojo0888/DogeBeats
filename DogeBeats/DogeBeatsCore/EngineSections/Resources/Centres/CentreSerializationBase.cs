@@ -22,7 +22,7 @@ namespace DogeBeats.EngineSections.Resources
 
         public void SaveAll()
         {
-            StaticHub.ResourceManager.SetAllOfSerializedObjects<T>(ResourceType, CentreElements);
+            StaticHub.ResourceManager.SaveAllOfSerializedObjects<T>(ResourceType, CentreElements);
         }
 
         public void Save(T obj)
@@ -37,7 +37,7 @@ namespace DogeBeats.EngineSections.Resources
             else if (!ReferenceEquals(obj, CentreElements[name]))
                 CentreElements[name] = obj;
 
-            StaticHub.ResourceManager.SetAllOfSerializedObjects(ResourceType, new Dictionary<string, T>() { { name, obj } });
+            StaticHub.ResourceManager.SaveAllOfSerializedObjects(ResourceType, new Dictionary<string, T>() { { name, obj } });
         }
 
         public T Get(string name)

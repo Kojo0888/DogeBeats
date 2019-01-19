@@ -33,7 +33,7 @@ namespace DogeBeats.EngineSections.Resources
             string[] directories = Directory.GetDirectories(folderPath);
             foreach (var directory in directories)
             {
-                var directoryName = Path.GetFileName(directory).ToLower();
+                var directoryName = Path.GetFileName(directory);
 
                 var dic = GetFilesFromFolder(directory);
                 if(dic.Count > 0)

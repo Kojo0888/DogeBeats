@@ -55,7 +55,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
             TimeLine timeLine = MockObjects.GetTimeLine();
             TimeLineCentre.Save(timeLine);
 
-            if (!StaticHub.ResourceManager.Resources.ContainsKey("timelines") || !StaticHub.ResourceManager.Resources["timelines"].ContainsKey(StaticHub.ResourceManager.GetResourceNameWithExtension("timelines", timeLine.Name)))
+            if (StaticHub.ResourceManager.GetResource("TimeLines", timeLine.Name) == null)
                 Assert.Fail();
         }
 

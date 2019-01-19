@@ -13,9 +13,10 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.Modules.MusicPlayer
 {
-    public class SoundManager
+    public class ProxySoundManager
     {
         //public static NDictionary<string, SoundPlayer> soundPlayers = new NDictionary<string, SoundPlayer>();
+
 
         public static SoundItem PlaySound(string trackName)
         {

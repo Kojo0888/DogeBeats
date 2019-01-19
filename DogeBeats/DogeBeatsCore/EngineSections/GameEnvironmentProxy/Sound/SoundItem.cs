@@ -7,19 +7,29 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.Modules.Music
 {
-    public class SoundItem : INamedElement
+    public class SoundItem : INamedElement, IByteParsable
     {
         public TimeSpan TimeOffset { get; set; }//for now not needed
-
-        public string TrackName { get; set; }
 
         public object SoundObject { get; set; }//choose music engine and set object
 
         public string Name { get; set; }
 
+        public byte[] Bytes { get; set; }
+
+        public byte[] GetBytes()
+        {
+            return Bytes;
+        }
+
+        public void LoadBytes(byte[] bytes)
+        {
+            Bytes = bytes;
+        }
+
         public void Play()
         {
-
+            
         }
     }
 }
