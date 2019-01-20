@@ -1,7 +1,9 @@
-﻿using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.Model;
 using DogeBeats.Model.Route;
 using DogeBeats.Modules.TimeLines;
+using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
@@ -12,12 +14,16 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationGroupElement : ITLEPanelElement, INamedElement
+    public class AnimationGroupElement : ITLEPanelElement, INamedElement, IAnimationElement
     {
-        public List<AnimationElement> Elements { get; set; }
+        public List<AnimationSingleElement> Elements { get; set; }
         public AnimationGroupRoute GroupRoute { get; set; }
         public Placement InitPlacement { get; set; }
         public string Name { get; set; }
+
+        public AnimationRoute Route { get; set; }
+
+        public bool Prediction { get; set; }
 
         public AnimationGroupElement()
         {
@@ -29,7 +35,7 @@ namespace Testowy.Model
             Name = groupName;
         }
 
-        internal void Update(TimeSpan currentStopperTime)
+        public void Update(TimeSpan currentStopperTime)
         {
             TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);
             UpdateElementPlacements(elementTime);
@@ -45,7 +51,7 @@ namespace Testowy.Model
             }
         }
 
-        internal void Render()
+        public void Render()
         {
             foreach (var element in Elements)
             {
@@ -65,17 +71,22 @@ namespace Testowy.Model
             return element;
         }
 
-        internal void UpdateManual(NameValueCollection values)
+        public void UpdateManual(NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["GroupName"].ToString()))
                 Name = values["GroupName"];
         }
 
-        internal static IEnumerable<string> GetKeysManualUpdate()
+        public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
             keys.Add("GroupName");
             return keys;
+        }
+
+        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
+        {
+            throw new NotImplementedException();
         }
     }
 }

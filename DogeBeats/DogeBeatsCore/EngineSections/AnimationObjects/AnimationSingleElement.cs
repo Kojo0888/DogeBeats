@@ -1,4 +1,5 @@
-﻿using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
@@ -12,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationElement : ITLEPanelElement, INamedElement
+    public class AnimationSingleElement : ITLEPanelElement, INamedElement, IAnimationElement
     {
-        public TimeLineShape Shape { get; set; }
+        public AnimationElementShape Shape { get; set; }
 
         public AnimationRoute Route { get; set; }
 
@@ -24,7 +25,7 @@ namespace Testowy.Model
 
         public string Name { get; set; }
 
-        public AnimationElement()
+        public AnimationSingleElement()
         {
             //GraphicName = GraphicProxy.GenerateElementName(this);
         }
@@ -56,11 +57,11 @@ namespace Testowy.Model
             GraphicProxy.TranslateObject(Shape.Placement);
         }
 
-        public static AnimationElement Create(NameValueCollection values)
+        public static AnimationSingleElement Create(NameValueCollection values)
         {
-            AnimationElement element = new AnimationElement();
+            AnimationSingleElement element = new AnimationSingleElement();
             if (!string.IsNullOrEmpty(values.Get("ShapeTypeName")))
-                element.Shape = new TimeLineShape(values["ShapeTypeName"]);
+                element.Shape = new AnimationElementShape(values["ShapeTypeName"]);
             if (!string.IsNullOrEmpty(values.Get("Name")))
                 element.Name = values["Name"];
 
@@ -72,7 +73,7 @@ namespace Testowy.Model
             if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
                 Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
             if (!string.IsNullOrEmpty(values["ShapeTypeName"].ToString()))
-                Shape = new TimeLineShape(values["ShapeTypeName"]);
+                Shape = new AnimationElementShape(values["ShapeTypeName"]);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()

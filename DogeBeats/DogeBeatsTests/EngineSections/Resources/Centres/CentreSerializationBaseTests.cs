@@ -13,7 +13,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
     [TestClass()]
     public class CentreSerializationBaseTests
     {
-        CentreSerializationBase<AnimationElement> centreSerializationBase = new CentreSerializationBase<AnimationElement>();
+        CentreSerializationBase<AnimationSingleElement> centreSerializationBase = new CentreSerializationBase<AnimationSingleElement>();
 
         [TestInitialize]
         public void Init()

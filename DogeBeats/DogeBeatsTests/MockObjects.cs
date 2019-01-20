@@ -9,22 +9,22 @@ namespace DogeBeatsTests
 {
     public static class MockObjects
     {
-        public static AnimationElement GetAnimationElement()
+        public static AnimationSingleElement GetAnimationElement()
         {
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeTypeName", "IdkYet");
             values.Add("Name", "TestName");
-            var aElem = AnimationElement.Create(values);
+            var aElem = AnimationSingleElement.Create(values);
             return aElem;
         }
 
-        public static AnimationElement GetAnimationElement2()
+        public static AnimationSingleElement GetAnimationElement2()
         {
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeTypeName", "IdkYet32");
-            var aElem = AnimationElement.Create(values);
+            var aElem = AnimationSingleElement.Create(values);
             return aElem;
         }
 

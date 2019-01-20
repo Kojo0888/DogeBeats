@@ -26,7 +26,7 @@ namespace DogeBeats.Modules.TimeLines
             return timedElements;
         }
 
-        public static List<TimedTLEPanelElement> Parse(List<AnimationElement> elements)
+        public static List<TimedTLEPanelElement> Parse(List<AnimationSingleElement> elements)
         {
             List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
             foreach (var element in elements)
@@ -73,7 +73,7 @@ namespace DogeBeats.Modules.TimeLines
             return timedElem;
         }
 
-        public static TimedTLEPanelElement Parse(AnimationElement element)
+        public static TimedTLEPanelElement Parse(AnimationSingleElement element)
         {
             TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
             timedElem.Object = element;

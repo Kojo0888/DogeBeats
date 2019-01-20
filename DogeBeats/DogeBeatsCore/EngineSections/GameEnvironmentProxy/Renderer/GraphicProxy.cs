@@ -24,7 +24,7 @@ namespace DogeBeats.Renderer
 
         }
 
-        internal static string GenerateElementName(AnimationElement animationElement)
+        internal static string GenerateElementName(AnimationSingleElement animationElement)
         {
             string name = animationElement.Shape.GetType().Name.ToString() + "_" + (GraphicElementNameIndex++);
             if (animationElement.Prediction)
@@ -44,7 +44,7 @@ namespace DogeBeats.Renderer
             return "Object_" + (GraphicElementNameIndex++);
         }
 
-        public static string CreateGraphicElement(AnimationElement element)
+        public static string CreateGraphicElement(AnimationSingleElement element)
         {
             string shapeName = element.GetType().Name;
             byte[] resourceBytes = StaticHub.ResourceManager.GetResource(element.Shape.GetType().Name, shapeName);

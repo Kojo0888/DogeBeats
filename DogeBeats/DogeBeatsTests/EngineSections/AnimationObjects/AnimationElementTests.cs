@@ -12,18 +12,18 @@ namespace Testowy.Model.Tests
     [TestClass()]
     public class AnimationElementTests
     {
-        public AnimationElement aElem { get; set; }
+        public AnimationSingleElement aElem { get; set; }
 
         [TestInitialize]
         public void Init()
         {
-            aElem = new AnimationElement();
+            aElem = new AnimationSingleElement();
         }
 
         [TestMethod()]
         public void AnimationElementTest()
         {
-            aElem = new AnimationElement();
+            aElem = new AnimationSingleElement();
         }
 
         [TestMethod()]
@@ -32,7 +32,7 @@ namespace Testowy.Model.Tests
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
+            var aElem = AnimationSingleElement.Create(values);
             if(aElem == null)
                 Assert.Fail();
         }
@@ -40,7 +40,7 @@ namespace Testowy.Model.Tests
         [TestMethod()]
         public void GetKeysManualUpdateTest()
         {
-            var keys = AnimationElement.GetKeysManualUpdate();
+            var keys = AnimationSingleElement.GetKeysManualUpdate();
             if (keys == null || keys.Count() == 0 || string.IsNullOrEmpty(keys.ElementAt(0)))
                 Assert.Fail();
         }

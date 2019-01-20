@@ -1,4 +1,6 @@
-﻿using DogeBeats.Modules.TimeLines;
+﻿using DogeBeats.EngineSections.AnimationObjects.Route;
+using DogeBeats.EngineSections.Shared;
+using DogeBeats.Modules.TimeLines;
 using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
@@ -13,50 +15,62 @@ namespace Testowy.Model
     //struct candidate
     public class AnimationRouteFrame : ITLEPanelElement
     {
-        public Placement Placement { get; set; }
-        public EasingMode Ease { get; set; }
-        public TimeSpan TimeLength { get; set; }
+        public float Amplitude { get; set; }
+
+        public int Cycles { get; set; }
+
+        public float SpeedAmplitude { get; set; }
+
+        public float SpeedPhase { get; set; }
+
+        public float SpeedCycles { get; set; }
+
+        public TimeSpan FrameTime { get; set; }
+
+        public Placement CheckpointPosition { get; set; }
 
         internal static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
-            keys.Add("Ease");
-            keys.Add("RunningTime");
+            keys.Add("Amplitude");
+            keys.Add("Cycles");
+            keys.Add("SpeedAmplitude");
+            keys.Add("SpeedPhase");
+            keys.Add("SpeedCycles");
+            keys.Add("FrameTime");
+            keys.Add("CheckpointPosition.X");
+            keys.Add("CheckpointPosition.Y");
+            keys.Add("CheckpointPosition.Width");
+            keys.Add("CheckpointPosition.Height");
+            keys.Add("CheckpointPosition.Rotation");
             return keys;
         }
 
-        public static void ManualUpdate(AnimationRouteFrame frame, NameValueCollection values)
+        public void ManualUpdate(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["Ease"].ToString()))
-                frame.Ease = ManualUpdateEase(values["Ease"]);
+            if (!string.IsNullOrEmpty(values["Amplitude"].ToString()))
+                Amplitude = ManualUpdaterParser.ParseFloat(values["Ease"]);
+            else if (!string.IsNullOrEmpty(values["Cycles"].ToString()))
+                Cycles = ManualUpdaterParser.ParseInt(values["RunningTime"]);
+            else if (!string.IsNullOrEmpty(values["SpeedAmplitude"].ToString()))
+                SpeedAmplitude = ManualUpdaterParser.ParseFloat(values["SpeedAmplitude"]);
+            else if (!string.IsNullOrEmpty(values["SpeedPhase"].ToString()))
+                SpeedPhase = ManualUpdaterParser.ParseFloat(values["SpeedPhase"]);
+            else if (!string.IsNullOrEmpty(values["SpeedCycles"].ToString()))
+                SpeedCycles = ManualUpdaterParser.ParseFloat(values["SpeedCycles"]);
+            else if (!string.IsNullOrEmpty(values["FrameTime"].ToString()))
+                FrameTime = ManualUpdaterParser.ParseTimeSpan(values["FrameTime"]);
+            else if (!string.IsNullOrEmpty(values["CheckpointPosition.X"].ToString()))
+                CheckpointPosition.X = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.X"]);
+            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Y"].ToString()))
+                CheckpointPosition.Y = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Y"]);
+            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Width"].ToString()))
+                CheckpointPosition.Width = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Width"]);
+            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Height"].ToString()))
+                CheckpointPosition.Height = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Height"]);
+            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Rotation"].ToString()))
+                CheckpointPosition.Rotation = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Rotation"]);
 
-            if (!string.IsNullOrEmpty(values["RunningTime"].ToString()))
-                frame.TimeLength = ManualUpdateTime(values["RunningTime"]);
-        }
-
-        private static TimeSpan ManualUpdateTime(string v)
-        {
-            TimeSpan temp;
-            if(TimeSpan.TryParse(v, out temp))
-            {
-                return temp;
-            }
-            return new TimeSpan();
-        }
-
-        private static EasingMode ManualUpdateEase(string v)
-        {
-            switch (v)
-            {
-                case "In":
-                    return EasingMode.EaseIn;
-                case "Out":
-                    return EasingMode.EaseOut;
-                case "InOut":
-                    return EasingMode.EaseInOut;
-            }
-
-            return EasingMode.EaseInOut;
         }
     }
 }

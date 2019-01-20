@@ -8,14 +8,14 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines.Shapes
 {
-    public class TimeLineShape : IGraphicElement
+    public class AnimationElementShape : IGraphicElement
     {
-        public TimeLineShape()
+        public AnimationElementShape()
         {
 
         }
 
-        public TimeLineShape(string name)
+        public AnimationElementShape(string name)
         {
             TypeName = name;
         }

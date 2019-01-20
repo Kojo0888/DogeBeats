@@ -11,17 +11,17 @@ namespace DogeBeats.EngineSections.TimeLineEditing
 {
     public class ManualUpdater
     {
-        public AnimationElement Create(NameValueCollection values)
+        public AnimationSingleElement Create(NameValueCollection values)
         {
-            AnimationElement element = new AnimationElement();
+            AnimationSingleElement element = new AnimationSingleElement();
             if (!string.IsNullOrEmpty(values.Get("ElementName")))
             {
-                element.Shape = new TimeLineShape(values["ElementName"]);
+                element.Shape = new AnimationElementShape(values["ElementName"]);
             }
             return element;
         }
 
-        internal void UpdateManual(AnimationElement element, NameValueCollection values)
+        internal void UpdateManual(AnimationSingleElement element, NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
                 element.Prediction = ManualUpdateBool(values["Prediction"]);
@@ -29,9 +29,9 @@ namespace DogeBeats.EngineSections.TimeLineEditing
                 element.Shape = ManualUpdateShape(values["Shape"]);
         }
 
-        private TimeLineShape ManualUpdateShape(string v)
+        private AnimationElementShape ManualUpdateShape(string v)
         {
-            TimeLineShape shape = new TimeLineShape(v);
+            AnimationElementShape shape = new AnimationElementShape(v);
             return shape;
         }
 

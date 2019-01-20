@@ -53,14 +53,14 @@ namespace DogeBeats.Model.Tests
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationElement.Create(values);
+            var aElem = AnimationSingleElement.Create(values);
             manager.SaveSerializedObject(aElem, "TestSerialization", "TestSerialization");
         }
 
         [TestMethod()]
         public void GetSerializedObjectTest()
         {
-            var obj = manager.GetSerializedObject<AnimationElement>("TestSerialization", "TestSerialization");
+            var obj = manager.GetSerializedObject<AnimationSingleElement>("TestSerialization", "TestSerialization");
             if (obj == null)
                 Assert.Fail();
         }
@@ -71,11 +71,11 @@ namespace DogeBeats.Model.Tests
             var aElem = MockObjects.GetAnimationElement();
             var aElem2 = MockObjects.GetAnimationElement2();
 
-            var dic = new Dictionary<string, AnimationElement>();
+            var dic = new Dictionary<string, AnimationSingleElement>();
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SaveAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
+            manager.SaveAllOfSerializedObjects<AnimationSingleElement>("TestSerialization", dic);
         }
 
         [TestMethod()]
@@ -84,13 +84,13 @@ namespace DogeBeats.Model.Tests
             var aElem = MockObjects.GetAnimationElement();
             var aElem2 = MockObjects.GetAnimationElement2();
 
-            var dic = new Dictionary<string, AnimationElement>();
+            var dic = new Dictionary<string, AnimationSingleElement>();
             dic.Add("test AnimationELement1", aElem);
             dic.Add("test AnimationELement2", aElem2);
 
-            manager.SaveAllOfSerializedObjects<AnimationElement>("TestSerialization", dic);
+            manager.SaveAllOfSerializedObjects<AnimationSingleElement>("TestSerialization", dic);
 
-            var dic2 = manager.GetAllOfSerializedObjects<AnimationElement>("TestSerialization");
+            var dic2 = manager.GetAllOfSerializedObjects<AnimationSingleElement>("TestSerialization");
             if (dic2 == null || dic2.Count == 0)
                 Assert.Fail();
         }
@@ -99,7 +99,7 @@ namespace DogeBeats.Model.Tests
         public void GetResourceNameWithExtensionTest()
         {
             var aElem = MockObjects.GetAnimationElement();
-            manager.SaveSerializedObject<AnimationElement>(aElem, "TimeLines", aElem.Name);
+            manager.SaveSerializedObject<AnimationSingleElement>(aElem, "TimeLines", aElem.Name);
 
             var filenameWithExtension = manager.GetResourceNameWithExtension("TimeLines", aElem.Name);
             if (filenameWithExtension != aElem.Name + ".json")

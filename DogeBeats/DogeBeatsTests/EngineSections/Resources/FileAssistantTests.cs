@@ -63,7 +63,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
                 Assert.Fail();
 
-            var aElem2 = fileAssistant.Deserialize<AnimationElement>(bytes);
+            var aElem2 = fileAssistant.Deserialize<AnimationSingleElement>(bytes);
             if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
                 Assert.Fail();
         }
@@ -81,7 +81,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
                 Assert.Fail();
 
-            var aElem2 = fileAssistant.Deserialize<AnimationElement>(bytes);
+            var aElem2 = fileAssistant.Deserialize<AnimationSingleElement>(bytes);
             if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
                 Assert.Fail();
         }

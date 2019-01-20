@@ -18,7 +18,7 @@ namespace DogeBeats.Modules
         public static TimeLine TimeLine { get; set; }
 
         public static AnimationGroupElement SelectedGroup { get; set; }
-        public static AnimationElement SelectedElement { get; set; }
+        public static AnimationSingleElement SelectedElement { get; set; }
 
         public static TLEPanel PanelGroup { get; set; }
         public static TLEPanel PanelElement { get; set; }
@@ -89,7 +89,7 @@ namespace DogeBeats.Modules
             PanelRoute.Width = Width;
         }
 
-        private static void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationElement element)
+        private static void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationSingleElement element)
         {
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
@@ -127,7 +127,7 @@ namespace DogeBeats.Modules
 
         internal static void AddNewAnimationElement(string graphicGroupName)
         {
-            AnimationElement element = new AnimationElement();
+            AnimationSingleElement element = new AnimationSingleElement();
             ITLEPanelElement panelElement = PanelGroup.GetObjectFromCellElementName(graphicGroupName);
             if (panelElement as AnimationGroupElement != null)
             {
@@ -177,9 +177,9 @@ namespace DogeBeats.Modules
                     group.UpdateManual(values);
                 }
             }
-            else if (refferencedObject as AnimationElement != null)
+            else if (refferencedObject as AnimationSingleElement != null)
             {
-                AnimationElement element = refferencedObject as AnimationElement;
+                AnimationSingleElement element = refferencedObject as AnimationSingleElement;
                 if (element != null)
                 {
                     Placement placement = element.InitPlacement;
@@ -264,10 +264,10 @@ namespace DogeBeats.Modules
         public static void UpdateElementPlacement(string graphicName, Placement placement)
         {
             var refferencedObject = PanelElement.GetObjectFromCellElementName(graphicName);
-            if (refferencedObject as AnimationElement == null)
+            if (refferencedObject as AnimationSingleElement == null)
                 return;
 
-            AnimationElement element = refferencedObject as AnimationElement;
+            AnimationSingleElement element = refferencedObject as AnimationSingleElement;
             element.InitPlacement = placement;
         }
 
@@ -311,9 +311,9 @@ namespace DogeBeats.Modules
                     TimeLine.AnimationGroupElementsAll.Remove(group);
                 }
             }
-            else if (elementToRemove as AnimationElement != null)
+            else if (elementToRemove as AnimationSingleElement != null)
             {
-                var element = elementToRemove as AnimationElement;
+                var element = elementToRemove as AnimationSingleElement;
                 if (element != null)
                 {
                     foreach (var group in TimeLine.AnimationGroupElementsAll)
@@ -413,10 +413,10 @@ namespace DogeBeats.Modules
                 keys.AddRange(Placement.GetKeysManualUpdate());
                 keys.AddRange(AnimationGroupElement.GetKeysManualUpdate());
             }
-            else if (type == typeof(AnimationElement))
+            else if (type == typeof(AnimationSingleElement))
             {
                 keys.AddRange(Placement.GetKeysManualUpdate());
-                keys.AddRange(AnimationElement.GetKeysManualUpdate());
+                keys.AddRange(AnimationSingleElement.GetKeysManualUpdate());
             }
             else if (type == typeof(AnimationRouteFrame))
             {
