@@ -122,7 +122,13 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	AnimationElementGroupElement
 ℗	AnimationElementElement
 
-
+22_01_2018: 1h
+√	Think - About Merging AnimaationRouteGroup with AnimationRoute
+	AnimaationRouteGroup out!
+℗	AnimationElementRoute
+℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
+℗	Think - Placement reorganization (AnimationElemnts)
+℗	ITLEPanelElement update
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -142,9 +148,13 @@ TODO Notes:
 ○	Logging
 ℗	TimeLine
 ○	SoundItem Sound playing implementation
-√	AnimationElementRouteFrame
-℗	AnimationElementRoute
+√	AnimationRouteFrame
+℗	AnimationRoute
 ℗	AnimationElementSingleElement
 ℗	AnimationElementGroupElement
 ℗	AnimationElementElement
-○	Think - About Merging AnimaationRouteGroup with AnimationRoute
+○	AnimationRoute - PositionUpdateCalculations
+℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
+℗	Think - Placement reorganization (AnimationElemnts)
+℗	ITLEPanelElement update
+○	Think - Placement Update method (with group placement or without)

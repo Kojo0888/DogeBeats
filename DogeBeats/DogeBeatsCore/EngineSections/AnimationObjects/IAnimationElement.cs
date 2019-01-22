@@ -8,7 +8,7 @@ using Testowy.Model;
 
 namespace DogeBeats.EngineSections.AnimationObjects
 {
-    interface IAnimationElement
+    public interface IAnimationElement
     {
         AnimationRoute Route { get; set; }
 
@@ -18,7 +18,7 @@ namespace DogeBeats.EngineSections.AnimationObjects
 
         string Name { get; set; }
 
-        void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement);
+        void Update(TimeSpan currentStopperTimeRaw);
 
         void Render();
     }

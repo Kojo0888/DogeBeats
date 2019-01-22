@@ -76,7 +76,6 @@
     <Compile Include="EngineSections\TimeLineEditing\BeatGuider.cs" />
     <Compile Include="EngineSections\TimeLineEditing\EditAnimationElementType.cs" />
     <Compile Include="EngineSections\TimeLineEditing\TLEPanel\ITLEPanelElement.cs" />
-    <Compile Include="EngineSections\AnimationObjects\Route\AnimationGroupRoute.cs" />
     <Compile Include="EngineSections\AnimationObjects\Route\AnimationRoute.cs" />
     <Compile Include="EngineSections\AnimationObjects\Route\AnimationRouteFrame.cs" />
     <Compile Include="EngineSections\AnimationObjects\Route\AnimationRouteFrameSlider.cs" />

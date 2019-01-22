@@ -8,7 +8,7 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines.Shapes
 {
-    public class AnimationElementShape : IGraphicElement
+    public class AnimationElementShape
     {
         public AnimationElementShape()
         {
@@ -21,9 +21,5 @@ namespace DogeBeats.Modules.TimeLines.Shapes
         }
 
         public string TypeName { get; set; }
-
-        public Placement Placement { get; set; }
-
-        public string GraphicName { get; set; }
     }
 }

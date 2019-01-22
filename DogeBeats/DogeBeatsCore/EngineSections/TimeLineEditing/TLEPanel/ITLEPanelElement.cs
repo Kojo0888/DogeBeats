@@ -8,6 +8,6 @@ namespace DogeBeats.Modules.TimeLines
 {
     public interface ITLEPanelElement
     {
-
+        TimeSpan GetDurationTime();
     }
 }

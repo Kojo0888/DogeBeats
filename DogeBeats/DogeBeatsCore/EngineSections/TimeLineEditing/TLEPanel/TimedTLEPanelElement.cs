@@ -1,4 +1,5 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,32 @@ namespace DogeBeats.Modules.TimeLines
     {
         public TimeSpan Timestamp { get; set; }
         public ITLEPanelElement Object { get; set; }
+
+        public static List<TimedTLEPanelElement> Parse(List<ITLEPanelElement> elements)
+        {
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
+            foreach (var element in elements)
+            {
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
+                timedElem.Object = element;
+                timedElem.Timestamp = element.Route.AnimationStartTime;
+                timedElements.Add(timedElem);
+            }
+            return timedElements;
+        }
+
+        public static List<TimedTLEPanelElement> Parse(List<IAnimationElement> elements)
+        {
+            List<TimedTLEPanelElement> timedElements = new List<TimedTLEPanelElement>();
+            foreach (var element in elements)
+            {
+                TimedTLEPanelElement timedElem = new TimedTLEPanelElement();
+                timedElem.Object = element;
+                timedElem.Timestamp = element.Route.AnimationStartTime;
+                timedElements.Add(timedElem);
+            }
+            return timedElements;
+        }
 
         public static List<TimedTLEPanelElement> Parse(List<AnimationGroupElement> elements)
         {

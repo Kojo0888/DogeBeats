@@ -1,7 +1,6 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.Model;
-using DogeBeats.Model.Route;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
@@ -17,7 +16,7 @@ namespace Testowy.Model
     public class AnimationGroupElement : ITLEPanelElement, INamedElement, IAnimationElement
     {
         public List<AnimationSingleElement> Elements { get; set; }
-        public AnimationGroupRoute GroupRoute { get; set; }
+        public AnimationRoute GroupRoute { get; set; }
         public Placement InitPlacement { get; set; }
         public string Name { get; set; }
 
@@ -59,16 +58,14 @@ namespace Testowy.Model
             }
         }
 
-        public static AnimationGroupElement Create(NameValueCollection values)
+        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
         {
-            AnimationGroupElement element = new AnimationGroupElement();
+            throw new NotImplementedException();
+        }
 
-            string groupName = "ElementGroupName";
-
-            if (!string.IsNullOrEmpty(values.Get(groupName)))
-                element.Name = values[groupName];
-
-            return element;
+        public TimeSpan GetDurationTime()
+        {
+            return Route.CalculateAnimationTime();
         }
 
         public void UpdateManual(NameValueCollection values)
@@ -82,11 +79,6 @@ namespace Testowy.Model
             List<string> keys = new List<string>();
             keys.Add("GroupName");
             return keys;
-        }
-
-        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
-        {
-            throw new NotImplementedException();
         }
     }
 }

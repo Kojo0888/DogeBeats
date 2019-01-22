@@ -1,4 +1,5 @@
-﻿using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.Misc;
 using DogeBeats.Modules.TimeLines;
 using System;
@@ -18,13 +19,13 @@ namespace Testowy.Model
         public DStopper Stopper = new DStopper();
 
         [NonSerialized]
-        public Queue<AnimationGroupElement> Storyboard = new Queue<AnimationGroupElement>();
+        public Queue<IAnimationElement> Storyboard = new Queue<IAnimationElement>();
 
-        public List<AnimationGroupElement> CurrentlyAnimatingGroups = new List<AnimationGroupElement>();
+        public List<IAnimationElement> CurrentlyAnimatingGroups = new List<IAnimationElement>();
 
-        public List<AnimationGroupElement> PassedAnimationGroups = new List<AnimationGroupElement>();
+        public List<IAnimationElement> PassedAnimationGroups = new List<IAnimationElement>();
 
-        public List<AnimationGroupElement> AnimationGroupElementsAll  = new List<AnimationGroupElement>();
+        public List<IAnimationElement> AnimationGroupElementsAll  = new List<IAnimationElement>();
 
         public TimeSpan LoopTime;
 
@@ -113,13 +114,13 @@ namespace Testowy.Model
 
         private void MovePassedElements()
         {
-            PassedAnimationGroups.AddRange(CurrentlyAnimatingGroups.Where(w => w.GroupRoute.AnimationEndTime < Stopper.Elapsed).ToList());
-            CurrentlyAnimatingGroups.RemoveAll(r => r.GroupRoute.AnimationEndTime < Stopper.Elapsed);
+            PassedAnimationGroups.AddRange(CurrentlyAnimatingGroups.Where(w => w.Route.AnimationEndTime < Stopper.Elapsed).ToList());
+            CurrentlyAnimatingGroups.RemoveAll(r => r.Route.AnimationEndTime < Stopper.Elapsed);
         }
 
         private void CheckStoryboard()
         {
-            while (Storyboard.Peek().GroupRoute.AnimationStartTime < Stopper.Elapsed)
+            while (Storyboard.Peek().Route.AnimationStartTime < Stopper.Elapsed)
             {
                 var element = Storyboard.Dequeue();
                 CurrentlyAnimatingGroups.Add(element);
@@ -128,8 +129,8 @@ namespace Testowy.Model
 
         public void InitializeStoryboardQueue()
         {
-            Storyboard = new Queue<AnimationGroupElement>();
-            foreach (var element in AnimationGroupElementsAll.OrderBy(o => o.GroupRoute.AnimationStartTime))
+            Storyboard = new Queue<IAnimationElement>();
+            foreach (var element in AnimationGroupElementsAll.OrderBy(o => o.Route.AnimationStartTime))
             {
                 Storyboard.Enqueue(element);
             }
@@ -153,7 +154,7 @@ namespace Testowy.Model
 
         public void OrderAllAnimationElements()
         {
-            AnimationGroupElementsAll = AnimationGroupElementsAll.OrderBy(o => o.GroupRoute.AnimationStartTime).ToList();
+            AnimationGroupElementsAll = AnimationGroupElementsAll.OrderBy(o => o.Route.AnimationStartTime).ToList();
         }
 
         internal void RegisterPlayToTimeSpan(TimeSpan to)

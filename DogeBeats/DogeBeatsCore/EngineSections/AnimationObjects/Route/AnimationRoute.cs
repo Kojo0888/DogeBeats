@@ -17,50 +17,26 @@ namespace Testowy.Model
 
         public string Name { get; set; }
 
-        private TimeSpan _animationTime;
-        public TimeSpan AnimationTime
+        public TimeSpan AnimationStartTime { get; set; }//relative
+
+        public TimeSpan AnimationEndTime
         {
             get
             {
-                if(_animationTime == null)
-                    _animationTime = CalculateAnimationTime();
-                return _animationTime;
+                return AnimationStartTime.Add(CalculateAnimationTime());
             }
         }
 
-        internal Placement CalculatePlacement(TimeSpan currentStopperTime, Placement shapePlacement)
+        internal Placement CalculatePlacement(TimeSpan currentStopperTime, Placement elementPlacement)
         {
             var frameSlider = GetFrameSlider(currentStopperTime);
             Placement newPlacement = new Placement();
 
             //TODO: Remake is needed
-            //float easeMultiplier = CalculateEaseMultiplier(frameSlider, currentStopperTime);
-
-            //newPlacement.X = frameSlider.PreviousFrame.Placement.X + (easeMultiplier * frameSlider.CurrentFrame.Placement.X);
-
-            //newPlacement.Y = frameSlider.PreviousFrame.Placement.Y + (easeMultiplier * frameSlider.CurrentFrame.Placement.Y);
-
-            //newPlacement.Width = frameSlider.PreviousFrame.Placement.Width + (easeMultiplier * frameSlider.CurrentFrame.Placement.Width);
-
-            //newPlacement.Height = frameSlider.PreviousFrame.Placement.Height + (easeMultiplier * frameSlider.CurrentFrame.Placement.Height);
-
-            //newPlacement.Rotation = frameSlider.PreviousFrame.Placement.Rotation + (easeMultiplier * frameSlider.CurrentFrame.Placement.Rotation);
+            //newPlacement.X += 
             
-            return newPlacement;
+            return frameSlider.CurrentFrame.CheckpointPosition;
         }
-
-        //private float CalculateEaseMultiplier(AnimationRouteFrameSlider pair, TimeSpan currentStopperTime)
-        //{
-        //    var diffTicks = pair.CurrentFrame.FrameTime.Ticks;
-        //    var progressTime = diffTicks / currentStopperTime.Ticks;
-        //    if (progressTime > 1)
-        //        throw new Exception("Nesu: Ease value is greater than 1");
-
-        //    QuadraticEase ease = new QuadraticEase();//NO!
-        //    //ease.EasingMode = pair.CurrentFrame.Ease;
-        //    var multiplier = ease.Ease(progressTime);
-        //    return (float)multiplier;
-        //}
 
         public TimeSpan CalculateAnimationTime()
         {
@@ -97,6 +73,7 @@ namespace Testowy.Model
         {
             List<string> keys = new List<string>();
             keys.Add("Name");
+            keys.Add("AnimationStartTime");
             keys.Add("StartPlacement.X");
             keys.Add("StartPlacement.Y");
             keys.Add("StartPlacement.Width");
@@ -119,6 +96,8 @@ namespace Testowy.Model
                 StartPlacement.Height = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Height"]);
             else if (!string.IsNullOrEmpty(values["CheckpointPosition.Rotation"].ToString()))
                 StartPlacement.Rotation = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Rotation"]);
+            else if (!string.IsNullOrEmpty(values["AnimationStartTime"].ToString()))
+                AnimationStartTime = ManualUpdaterParser.ParseTimeSpan(values["AnimationStartTime"]);
         }
     }
 }

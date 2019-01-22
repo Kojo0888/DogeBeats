@@ -13,17 +13,21 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationSingleElement : ITLEPanelElement, INamedElement, IAnimationElement
+    public class AnimationSingleElement : ITLEPanelElement, INamedElement, IAnimationElement, IGraphicElement
     {
         public AnimationElementShape Shape { get; set; }
 
         public AnimationRoute Route { get; set; }
+
+        public Placement Placement { get; set; }
 
         public Placement InitPlacement { get; set; }
 
         public bool Prediction { get; set; }
 
         public string Name { get; set; }
+
+        public string GraphicName { get; set; }
 
         public AnimationSingleElement()
         {
@@ -35,18 +39,19 @@ namespace Testowy.Model
             TimeSpan currentStopperTime = VerifyStopperTime(currentStopperTimeRaw);
 
             var frameCarrier = Route.GetFrameSlider(currentStopperTime);
+
             //Route.UpdatePlacemenet(Shape.Placement, currentStopperTime);
-            Placement parsedPlacement = Route.CalculatePlacement(currentStopperTime, Shape.Placement);
-            Shape.Placement.X = InitPlacement.X + parsedPlacement.X + groupPlacement.X;
-            Shape.Placement.Y = InitPlacement.Y + parsedPlacement.Y + groupPlacement.Y;
-            Shape.Placement.Width = InitPlacement.Width + parsedPlacement.Width + groupPlacement.Width;
-            Shape.Placement.Height = InitPlacement.Height + parsedPlacement.Height + groupPlacement.Height;
-            Shape.Placement.Rotation = InitPlacement.Rotation + parsedPlacement.Rotation + groupPlacement.Rotation;
+            Placement = Route.CalculatePlacement(currentStopperTime, Placement);
+            //Placement.X = InitPlacement.X + parsedPlacement.X + groupPlacement.X;
+            //Placement.Y = InitPlacement.Y + parsedPlacement.Y + groupPlacement.Y;
+            //Placement.Width = InitPlacement.Width + parsedPlacement.Width + groupPlacement.Width;
+            //Placement.Height = InitPlacement.Height + parsedPlacement.Height + groupPlacement.Height;
+            //Placement.Rotation = InitPlacement.Rotation + parsedPlacement.Rotation + groupPlacement.Rotation;
         }
 
         private TimeSpan VerifyStopperTime(TimeSpan currentStopperTime)
         {
-            var ticks = currentStopperTime.Ticks % Route.AnimationTime.Ticks;
+            var ticks = currentStopperTime.Ticks % Route.CalculateAnimationTime().Ticks;
             return new TimeSpan(ticks);
         }
 
@@ -54,18 +59,17 @@ namespace Testowy.Model
         {
             //TODO: Attaching Graphic Engine
             //throw new NotImplementedException();
-            GraphicProxy.TranslateObject(Shape.Placement);
+            GraphicProxy.TranslateObject(Placement);
         }
 
-        public static AnimationSingleElement Create(NameValueCollection values)
+        public void Update(TimeSpan currentStopperTimeRaw)
         {
-            AnimationSingleElement element = new AnimationSingleElement();
-            if (!string.IsNullOrEmpty(values.Get("ShapeTypeName")))
-                element.Shape = new AnimationElementShape(values["ShapeTypeName"]);
-            if (!string.IsNullOrEmpty(values.Get("Name")))
-                element.Name = values["Name"];
+            throw new NotImplementedException();
+        }
 
-            return element;
+        public TimeSpan GetDurationTime()
+        {
+            return Route.CalculateAnimationTime();
         }
 
         public void UpdateManual(NameValueCollection values)
