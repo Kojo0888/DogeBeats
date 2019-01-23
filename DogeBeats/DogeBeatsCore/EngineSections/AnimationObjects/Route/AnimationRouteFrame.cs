@@ -1,5 +1,4 @@
-﻿using DogeBeats.EngineSections.AnimationObjects.Route;
-using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.Shared;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Other;
 using System;
@@ -44,6 +43,11 @@ namespace Testowy.Model
             keys.Add("CheckpointPosition.Height");
             keys.Add("CheckpointPosition.Rotation");
             return keys;
+        }
+
+        public TimeSpan GetDurationTime()
+        {
+            return FrameTime;
         }
 
         public void ManualUpdate(NameValueCollection values)

@@ -15,6 +15,11 @@ namespace DogeBeats.EngineSections.Resources
 
         public DDictionary<string, T> CentreElements { get; set; }
 
+        public CentreSerializationBase(string type)
+        {
+            ResourceType = type;
+        }
+
         public void LoadAll()
         {
             CentreElements = StaticHub.ResourceManager.GetAllOfSerializedObjects<T>(ResourceType);

@@ -1,4 +1,6 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.EngineSections.Shared;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,8 @@ namespace DogeBeats.Modules.TimeLines.Shapes
 {
     public class AnimationElementShape
     {
+        public string TypeName { get; set; }
+
         public AnimationElementShape()
         {
 
@@ -20,6 +24,9 @@ namespace DogeBeats.Modules.TimeLines.Shapes
             TypeName = name;
         }
 
-        public string TypeName { get; set; }
+        public ImageItem GetResource()
+        {
+            return StaticHub.ImageCentre.Get(TypeName);
+        }
     }
 }

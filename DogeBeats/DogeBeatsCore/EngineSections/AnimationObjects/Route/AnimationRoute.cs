@@ -27,7 +27,7 @@ namespace Testowy.Model
             }
         }
 
-        internal Placement CalculatePlacement(TimeSpan currentStopperTime, Placement elementPlacement)
+        internal Placement CalculatePlacement(TimeSpan currentStopperTime)
         {
             var frameSlider = GetFrameSlider(currentStopperTime);
             Placement newPlacement = new Placement();

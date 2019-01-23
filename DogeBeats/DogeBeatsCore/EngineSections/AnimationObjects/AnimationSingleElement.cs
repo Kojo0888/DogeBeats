@@ -21,8 +21,6 @@ namespace Testowy.Model
 
         public Placement Placement { get; set; }
 
-        public Placement InitPlacement { get; set; }
-
         public bool Prediction { get; set; }
 
         public string Name { get; set; }
@@ -34,19 +32,19 @@ namespace Testowy.Model
             //GraphicName = GraphicProxy.GenerateElementName(this);
         }
 
-        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
+        public void Update(TimeSpan currentStopperTimeRaw, Placement parentPlacement)
         {
             TimeSpan currentStopperTime = VerifyStopperTime(currentStopperTimeRaw);
 
             var frameCarrier = Route.GetFrameSlider(currentStopperTime);
 
             //Route.UpdatePlacemenet(Shape.Placement, currentStopperTime);
-            Placement = Route.CalculatePlacement(currentStopperTime, Placement);
-            //Placement.X = InitPlacement.X + parsedPlacement.X + groupPlacement.X;
-            //Placement.Y = InitPlacement.Y + parsedPlacement.Y + groupPlacement.Y;
-            //Placement.Width = InitPlacement.Width + parsedPlacement.Width + groupPlacement.Width;
-            //Placement.Height = InitPlacement.Height + parsedPlacement.Height + groupPlacement.Height;
-            //Placement.Rotation = InitPlacement.Rotation + parsedPlacement.Rotation + groupPlacement.Rotation;
+            Placement = Route.CalculatePlacement(currentStopperTime);
+            Placement.X = Route.StartPlacement.X + parentPlacement.X;
+            Placement.Y = Route.StartPlacement.Y + parentPlacement.Y;
+            //Placement.Width //No support
+            //Placement.Height //No support
+            //Placement.Rotation = InitPlacement.Rotation + groupPlacement.Rotation;//TODO
         }
 
         private TimeSpan VerifyStopperTime(TimeSpan currentStopperTime)
@@ -60,11 +58,6 @@ namespace Testowy.Model
             //TODO: Attaching Graphic Engine
             //throw new NotImplementedException();
             GraphicProxy.TranslateObject(Placement);
-        }
-
-        public void Update(TimeSpan currentStopperTimeRaw)
-        {
-            throw new NotImplementedException();
         }
 
         public TimeSpan GetDurationTime()

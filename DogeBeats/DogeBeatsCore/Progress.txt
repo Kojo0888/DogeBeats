@@ -122,13 +122,20 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	AnimationElementGroupElement
 ℗	AnimationElementElement
 
-22_01_2018: 1h
+22_01_2019: 1h
 √	Think - About Merging AnimaationRouteGroup with AnimationRoute
 	AnimaationRouteGroup out!
 ℗	AnimationElementRoute
 ℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
 ℗	Think - Placement reorganization (AnimationElemnts)
 ℗	ITLEPanelElement update
+
+23_01_2019: 1h
+℗	Think - Placement Update method (with group placement or without) - With. Or is it...
+℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
+	ImageItem & ImageCentre
+	CentreFileBase fixes
+	AnimationElements & Routes should be now finished. No Tests yet.
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -157,4 +164,6 @@ TODO Notes:
 ℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
 ℗	Think - Placement reorganization (AnimationElemnts)
 ℗	ITLEPanelElement update
-○	Think - Placement Update method (with group placement or without)
+○	AnimationElement Placement parent rotation update 
+○	TimelineCenter needs fix fot Getting all elements. Probably method rework.
+○	TimeLine Editor fixes for System rework v2

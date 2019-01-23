@@ -15,6 +15,11 @@ namespace DogeBeats.EngineSections.Resources.Centres
 
         public DDictionary<string, T> CentreElements { get; set; }
 
+        public CentreFileBase(string type)
+        {
+            ResourceType = type;
+        }
+
         public void LoadAll()
         {
             CentreElements = new DDictionary<string, T>();

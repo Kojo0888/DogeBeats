@@ -81,7 +81,7 @@ namespace DogeBeats.Modules
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
-            var timedElements = TimedTLEPanelElement.Parse(group.GroupRoute.Frames, group.GroupRoute.AnimationStartTime);
+            var timedElements = TimedTLEPanelElement.Parse(group.Route.Frames, group.Route.AnimationStartTime);
             PanelRoute.InitialineElements(timedElements);
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
@@ -93,7 +93,7 @@ namespace DogeBeats.Modules
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
-            var timedElements = TimedTLEPanelElement.Parse(element.Route.Frames, group.GroupRoute.AnimationStartTime);
+            var timedElements = TimedTLEPanelElement.Parse(element.Route.Frames, group.Route.AnimationStartTime);
             PanelRoute.InitialineElements(timedElements);
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
@@ -344,7 +344,7 @@ namespace DogeBeats.Modules
 
         //    foreach (var animationGroup in TimeLine.AnimationGroupElements)
         //    {
-        //        var slider = animationGroup.GroupRoute.GetFrameSlider(timestamp);
+        //        var slider = animationGroup.Route.GetFrameSlider(timestamp);
         //        if (slider.NextFrame != null && slider.PreviousFrame != null)
         //            groups.Add(animationGroup);
         //    }

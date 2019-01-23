@@ -100,7 +100,7 @@ namespace Testowy.Model
         {
             foreach (var element in CurrentlyAnimatingGroups)
             {
-                element.Update(Stopper.Elapsed);
+                element.Update(Stopper.Elapsed, new Placement());
             }
         }
 

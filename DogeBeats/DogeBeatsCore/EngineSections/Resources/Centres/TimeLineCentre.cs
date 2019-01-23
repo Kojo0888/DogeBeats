@@ -10,9 +10,8 @@ namespace DogeBeats.EngineSections.Resources
 {
     public class TimeLineCentre : CentreSerializationBase<TimeLine>
     {
-        public TimeLineCentre()
+        public TimeLineCentre() : base ("TimeLines")
         {
-            ResourceType = "TimeLines";
         }
 
         public DDictionary<string, AnimationGroupElement> GetAllAnimationGroupElements()

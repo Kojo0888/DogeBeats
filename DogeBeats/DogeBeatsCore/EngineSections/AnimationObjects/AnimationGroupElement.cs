@@ -16,13 +16,14 @@ namespace Testowy.Model
     public class AnimationGroupElement : ITLEPanelElement, INamedElement, IAnimationElement
     {
         public List<AnimationSingleElement> Elements { get; set; }
-        public AnimationRoute GroupRoute { get; set; }
-        public Placement InitPlacement { get; set; }
+
         public string Name { get; set; }
 
         public AnimationRoute Route { get; set; }
 
         public bool Prediction { get; set; }
+
+        public Placement Placement { get; set; }
 
         public AnimationGroupElement()
         {
@@ -34,22 +35,6 @@ namespace Testowy.Model
             Name = groupName;
         }
 
-        public void Update(TimeSpan currentStopperTime)
-        {
-            TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);
-            UpdateElementPlacements(elementTime);
-        }
-
-        private void UpdateElementPlacements(TimeSpan currentStopperTime)
-        {
-            var groupPlacement = GroupRoute.CalculatePlacement(currentStopperTime, InitPlacement);
-            foreach (var element in Elements)
-            {
-                TimeSpan elementTime = GroupRoute.AnimationStartTime.Subtract(currentStopperTime);
-                element.Update(elementTime, groupPlacement);
-            }
-        }
-
         public void Render()
         {
             foreach (var element in Elements)
@@ -58,9 +43,17 @@ namespace Testowy.Model
             }
         }
 
-        public void Update(TimeSpan currentStopperTimeRaw, Placement groupPlacement)
+        public void Update(TimeSpan currentStopperTime, Placement parentPlacement)
         {
-            throw new NotImplementedException();
+            TimeSpan elementTime = Route.AnimationStartTime.Subtract(currentStopperTime);
+            //TODO Verify this timeSpan. Probably some if sstatements needed
+
+            Placement = Route.CalculatePlacement(currentStopperTime);
+
+            foreach (var element in Elements)
+            {
+                element.Update(elementTime, Placement);
+            }
         }
 
         public TimeSpan GetDurationTime()
