@@ -1,4 +1,5 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,11 @@ namespace DogeBeats.EngineSections.Resources
             DDictionary<string, AnimationGroupElement> dic = new DDictionary<string, AnimationGroupElement>();
             foreach (var TimeLine in base.CentreElements)
             {
-                var AnimationGroupElements = TimeLine.Value.AnimationGroupElementsAll;
+
+                var AnimationGroupElements = TimeLine.Value.GetAllAnimationGroupElements();
                 if (AnimationGroupElements == null)
                     continue;
+
                 dic.AddRange(AnimationGroupElements.Where(w => !string.IsNullOrEmpty(w.Name)).ToDictionary(d => d.Name));
             }
             return dic;

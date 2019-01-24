@@ -53,7 +53,8 @@ namespace DogeBeats.Model.Tests
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeName", "IdkYet");
-            var aElem = AnimationSingleElement.Create(values);
+            var aElem = new AnimationSingleElement();
+            aElem.UpdateManual(values);
             manager.SaveSerializedObject(aElem, "TestSerialization", "TestSerialization");
         }
 

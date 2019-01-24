@@ -25,7 +25,7 @@ namespace Testowy.Model
 
         public List<IAnimationElement> PassedAnimationGroups = new List<IAnimationElement>();
 
-        public List<IAnimationElement> AnimationGroupElementsAll  = new List<IAnimationElement>();
+        public List<IAnimationElement> AnimationElements  = new List<IAnimationElement>();
 
         public TimeSpan LoopTime;
 
@@ -130,10 +130,30 @@ namespace Testowy.Model
         public void InitializeStoryboardQueue()
         {
             Storyboard = new Queue<IAnimationElement>();
-            foreach (var element in AnimationGroupElementsAll.OrderBy(o => o.Route.AnimationStartTime))
+            foreach (var element in AnimationElements.OrderBy(o => o.Route.AnimationStartTime))
             {
                 Storyboard.Enqueue(element);
             }
+        }
+
+        public List<AnimationGroupElement> GetAllAnimationGroupElements()
+        {
+            List<AnimationGroupElement> toReturn = new List<AnimationGroupElement>();
+
+            foreach (var animationElemnt in AnimationElements)
+            {
+                if(animationElemnt is AnimationGroupElement)
+                {
+                    var aGroupElem = animationElemnt as AnimationGroupElement;
+                    if(aGroupElem != null)
+                    {
+                        toReturn.Add(aGroupElem);
+                        toReturn.AddRange(aGroupElem.GetAnimationGroupElements());
+                    }
+                }
+            }
+
+            return toReturn;
         }
 
         public void RefreshCurrentlyAnimatingElementList()
@@ -154,7 +174,7 @@ namespace Testowy.Model
 
         public void OrderAllAnimationElements()
         {
-            AnimationGroupElementsAll = AnimationGroupElementsAll.OrderBy(o => o.Route.AnimationStartTime).ToList();
+            AnimationElements = AnimationElements.OrderBy(o => o.Route.AnimationStartTime).ToList();
         }
 
         internal void RegisterPlayToTimeSpan(TimeSpan to)

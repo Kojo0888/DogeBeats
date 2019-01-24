@@ -160,7 +160,7 @@ namespace DogeBeats.Modules.TimeLines
             if(frame != null)
             {
                 var diffTime = EndTime - StartTime;
-                var cellWidth = ((float)frame.TimeLength.Ticks / diffTime.Ticks) * Width;
+                var cellWidth = ((float)frame.FrameTime.Ticks / diffTime.Ticks) * Width;
                 return cellWidth;
             }
 

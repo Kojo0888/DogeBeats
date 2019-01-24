@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,8 @@ namespace DogeBeatsTests
             values.Add("Prediction", "False");
             values.Add("ShapeTypeName", "IdkYet");
             values.Add("Name", "TestName");
-            var aElem = AnimationSingleElement.Create(values);
+            var aElem = new AnimationSingleElement();
+            aElem.UpdateManual(values);
             return aElem;
         }
 
@@ -24,14 +26,15 @@ namespace DogeBeatsTests
             var values = new System.Collections.Specialized.NameValueCollection();
             values.Add("Prediction", "False");
             values.Add("ShapeTypeName", "IdkYet32");
-            var aElem = AnimationSingleElement.Create(values);
+            var aElem = new AnimationSingleElement();
+            aElem.UpdateManual(values);
             return aElem;
         }
 
         public static TimeLine GetTimeLine()
         {
             TimeLine timeLine = new TimeLine();
-            timeLine.AnimationGroupElementsAll = new List<AnimationGroupElement>() { new AnimationGroupElement("TestGroup1") };
+            timeLine.AnimationElements = new List<IAnimationElement>() { new AnimationGroupElement("TestGroup1") };
             timeLine.Name = "TEstLimeLint1";
             return timeLine;
         }

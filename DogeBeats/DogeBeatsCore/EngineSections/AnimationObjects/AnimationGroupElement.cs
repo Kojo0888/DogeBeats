@@ -15,7 +15,7 @@ namespace Testowy.Model
 {
     public class AnimationGroupElement : ITLEPanelElement, INamedElement, IAnimationElement
     {
-        public List<AnimationSingleElement> Elements { get; set; }
+        public List<IAnimationElement> Elements { get; set; }
 
         public string Name { get; set; }
 
@@ -59,6 +59,23 @@ namespace Testowy.Model
         public TimeSpan GetDurationTime()
         {
             return Route.CalculateAnimationTime();
+        }
+
+        public List<AnimationGroupElement> GetAnimationGroupElements()
+        {
+            List<AnimationGroupElement> toReturn = new List<AnimationGroupElement>();
+
+            foreach (var element in Elements)
+            {
+                if(element is AnimationGroupElement)
+                {
+                    var group = element as AnimationGroupElement;
+                    toReturn.Add(group);
+                    toReturn.AddRange(group.GetAnimationGroupElements());
+                }
+            }
+
+            return toReturn;
         }
 
         public void UpdateManual(NameValueCollection values)

@@ -13,13 +13,13 @@ namespace DogeBeats.EngineSections.Resources.Tests
     [TestClass()]
     public class CentreSerializationBaseTests
     {
-        CentreSerializationBase<AnimationSingleElement> centreSerializationBase = new CentreSerializationBase<AnimationSingleElement>();
+        CentreSerializationBase<AnimationSingleElement> centreSerializationBase = new CentreSerializationBase<AnimationSingleElement>("TestCentreSerializationBase");
 
         [TestInitialize]
         public void Init()
         {
             StaticHub.ResourceManager.LoadAllResources();
-            centreSerializationBase.ResourceType = "TestCentreSerializationBase";
+            //centreSerializationBase.ResourceType = "TestCentreSerializationBase";
         }
 
         [TestMethod()]

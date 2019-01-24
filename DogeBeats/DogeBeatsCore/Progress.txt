@@ -136,6 +136,15 @@ x  Think - if the GameGlobal class idea is better than static classes.
 	ImageItem & ImageCentre
 	CentreFileBase fixes
 	AnimationElements & Routes should be now finished. No Tests yet.
+
+24_01_2019: 1h
+℗	System rework v2 (Merged AnimationElements & ManualUpdate aftermatch fixes[TimeLineEditor, panels, elements])
+√	TimelineCenter needs fix fot Getting all elements. Probably method rework.
+℗	TimeLine Editor fixes for System rework v2
+	Trying to fix all compilation issues (Left ones are for: "Panel Parsing")
+
+
+
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -165,5 +174,6 @@ TODO Notes:
 ℗	Think - Placement reorganization (AnimationElemnts)
 ℗	ITLEPanelElement update
 ○	AnimationElement Placement parent rotation update 
-○	TimelineCenter needs fix fot Getting all elements. Probably method rework.
-○	TimeLine Editor fixes for System rework v2
+℗	TimeLine Editor fixes for System rework v2
+○	AnimationElementCreation Centre
+○	Analyze & Think - Better way for TimeLineEditor panel implementation (Parsing Specifically)

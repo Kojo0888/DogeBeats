@@ -8,9 +8,22 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class Beat : ITLEPanelElement
+    public class Beat : ITLEPanelElement, IGraphicElement
     {
-        public string GraphicName { get; set; }
         public TimeSpan Timestamp { get; set; }
+        public static TimeSpan DurationTime {get;set;}
+
+        public string GraphicName { get; set; }
+        public Placement Placement { get; set; }
+
+        static Beat()
+        {
+            DurationTime = new TimeSpan(0, 0, 0, 0, 50);
+        }
+
+        public TimeSpan GetDurationTime()
+        {
+            return DurationTime;
+        }
     }
 }

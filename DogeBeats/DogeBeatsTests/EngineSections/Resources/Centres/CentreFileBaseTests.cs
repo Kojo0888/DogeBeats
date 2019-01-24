@@ -13,12 +13,12 @@ namespace DogeBeats.EngineSections.Resources.Centres.Tests
     [TestClass()]
     public class CentreFileBaseTests
     {
-        CentreFileBase<SoundItem> centreFileBase = new CentreFileBase<SoundItem>();
+        CentreFileBase<SoundItem> centreFileBase = new CentreFileBase<SoundItem>("FileCentreTest");
 
         [TestInitialize]
         public void Init()
         {
-            centreFileBase.ResourceType = "FileCentreTest";
+            //centreFileBase.ResourceType = "FileCentreTest";
             FileTestHelper.CreateFolder("Data\\Resources\\"+centreFileBase.ResourceType);
             StaticHub.ResourceManager.LoadAllResources();
         }

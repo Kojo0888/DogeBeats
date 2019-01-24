@@ -8,11 +8,11 @@ namespace DogeBeats.Modules.TimeLines
 {
     public class BeatGuider
     {
-        public List<TimedTLEPanelElement> Beats { get; set; } = new List<TimedTLEPanelElement>();
+        public List<Beat> Beats { get; set; } = new List<Beat>();
 
         public void RegisterBeat(TimeSpan span)
         {
-            Beats.Add(new TimedTLEPanelElement() { Timestamp = span, Object = new Beat()});
+            Beats.Add(new Beat() { Timestamp = span});
         }
     }
 }
