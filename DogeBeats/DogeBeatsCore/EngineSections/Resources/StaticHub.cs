@@ -1,6 +1,5 @@
 ﻿using DogeBeats.EngineSections.Resources.Centres;
 using DogeBeats.EngineSections.Shared;
-using DogeBeats.EngineSections.TimeLineEditing;
 using DogeBeats.Model;
 using DogeBeats.Modules.Centers;
 using DogeBeats.Modules.Music;

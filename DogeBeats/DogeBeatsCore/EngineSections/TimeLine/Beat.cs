@@ -8,7 +8,7 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class Beat : ITLEPanelElement, IGraphicElement
+    public class Beat : ITLEPanelCellElement, IGraphicElement
     {
         public TimeSpan Timestamp { get; set; }
         public static TimeSpan DurationTime {get;set;}
@@ -24,6 +24,16 @@ namespace DogeBeats.Modules.TimeLines
         public TimeSpan GetDurationTime()
         {
             return DurationTime;
+        }
+
+        public TimeSpan GetStartTime()
+        {
+            return Timestamp;
+        }
+
+        public void SetStartTime(TimeSpan timeSpan)
+        {
+            Timestamp = timeSpan;
         }
     }
 }

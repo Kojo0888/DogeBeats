@@ -27,18 +27,6 @@ namespace Testowy.Model.Tests
         }
 
         [TestMethod()]
-        public void CreateTest()
-        {
-            var values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("Prediction", "False");
-            values.Add("ShapeName", "IdkYet");
-            var aElem = new AnimationSingleElement();
-            aElem.UpdateManual(values);
-            if(aElem == null)
-                Assert.Fail();
-        }
-
-        [TestMethod()]
         public void GetKeysManualUpdateTest()
         {
             var keys = AnimationSingleElement.GetKeysManualUpdate();

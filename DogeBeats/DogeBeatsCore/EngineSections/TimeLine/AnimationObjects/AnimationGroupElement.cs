@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationGroupElement : ITLEPanelElement, INamedElement, IAnimationElement
+    public class AnimationGroupElement : ITLEPanelCellElement, INamedElement, IAnimationElement
     {
         public List<IAnimationElement> Elements { get; set; }
 
@@ -61,9 +61,21 @@ namespace Testowy.Model
             return Route.CalculateAnimationTime();
         }
 
+        public TimeSpan GetStartTime()
+        {
+            return Route.AnimationStartTime;
+        }
+
+        public void SetStartTime(TimeSpan timeSpan)
+        {
+            Route.AnimationStartTime = timeSpan;
+        }
+
         public List<AnimationGroupElement> GetAnimationGroupElements()
         {
             List<AnimationGroupElement> toReturn = new List<AnimationGroupElement>();
+            if (Elements == null)
+                return toReturn;
 
             foreach (var element in Elements)
             {

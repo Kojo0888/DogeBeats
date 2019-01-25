@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogeBeats.EngineSections.Shared;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -15,24 +16,29 @@ namespace Testowy.Model
         public float Height { get; set; }
         public float Rotation { get; set; }
 
-        public static void UpdateManual(Placement placement, NameValueCollection values)
+        public void UpdateManual(NameValueCollection values)
         {
-            float tempfloat;
-            if (!string.IsNullOrEmpty(values["X"]) && float.TryParse(values["X"], out tempfloat))
-                placement.X = tempfloat;
-            if (!string.IsNullOrEmpty(values["Y"]) && float.TryParse(values["Y"], out tempfloat))
-                placement.Y = tempfloat;
-            if (!string.IsNullOrEmpty(values["Width"]) && float.TryParse(values["Width"], out tempfloat))
-                placement.Width = tempfloat;
-            if (!string.IsNullOrEmpty(values["Height"]) && float.TryParse(values["Height"], out tempfloat))
-                placement.Height = tempfloat;
-            if (!string.IsNullOrEmpty(values["Rotation"]) && float.TryParse(values["Rotation"], out tempfloat))
-                placement.Rotation = tempfloat;
+            if (!string.IsNullOrEmpty(values["X"].ToString()))
+                X = ManualUpdaterParser.ParseFloat(values["X"]);
+            else if (!string.IsNullOrEmpty(values["Y"].ToString()))
+                Y = ManualUpdaterParser.ParseFloat(values["Y"]);
+            else if (!string.IsNullOrEmpty(values["Width"].ToString()))
+                Width = ManualUpdaterParser.ParseFloat(values["Width"]);
+            else if (!string.IsNullOrEmpty(values["Height"].ToString()))
+                Height = ManualUpdaterParser.ParseFloat(values["Height"]);
+            else if (!string.IsNullOrEmpty(values["Rotation"].ToString()))
+                Rotation = ManualUpdaterParser.ParseFloat(values["Rotation"]);
         }
 
         public static List<string> GetKeysManualUpdate()
         {
-            return new List<string>() { "X", "Y", "Width", "Height", "Rotation"};
+            return new List<string>() {
+                "X",
+                "Y",
+                "Width",
+                "Height",
+                "Rotation"
+            };
         }
 
         public static Placement operator+ (Placement p1, Placement p2)

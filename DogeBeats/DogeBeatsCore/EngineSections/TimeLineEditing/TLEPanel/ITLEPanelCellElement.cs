@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public interface ITLEPanelElement
+    public interface ITLEPanelCellElement
     {
         TimeSpan GetDurationTime();
+
+        TimeSpan GetStartTime();
+
+        void SetStartTime(TimeSpan timeSpan);
     }
 }

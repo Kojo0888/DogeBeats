@@ -12,7 +12,7 @@ using System.Windows.Media.Animation;
 namespace Testowy.Model
 {
     //struct candidate
-    public class AnimationRouteFrame : ITLEPanelElement
+    public class AnimationRouteFrame : ITLEPanelCellElement
     {
         public float Amplitude { get; set; }
 
@@ -27,6 +27,28 @@ namespace Testowy.Model
         public TimeSpan FrameTime { get; set; }
 
         public Placement CheckpointPosition { get; set; }
+
+        public static TimeSpan DurationTime { get; set; }
+
+        static AnimationRouteFrame()
+        {
+            DurationTime = new TimeSpan(0, 0, 0, 0, 50);
+        }
+
+        public TimeSpan GetDurationTime()
+        {
+            return FrameTime;
+        }
+
+        public TimeSpan GetStartTime()
+        {
+            return FrameTime;
+        }
+
+        public void SetStartTime(TimeSpan timeSpan)
+        {
+            FrameTime = timeSpan;
+        }
 
         internal static IEnumerable<string> GetKeysManualUpdate()
         {
@@ -43,11 +65,6 @@ namespace Testowy.Model
             keys.Add("CheckpointPosition.Height");
             keys.Add("CheckpointPosition.Rotation");
             return keys;
-        }
-
-        public TimeSpan GetDurationTime()
-        {
-            return FrameTime;
         }
 
         public void ManualUpdate(NameValueCollection values)

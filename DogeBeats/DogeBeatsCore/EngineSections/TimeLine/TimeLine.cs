@@ -29,7 +29,7 @@ namespace Testowy.Model
 
         public TimeSpan LoopTime;
 
-        public BeatGuider BeatGuider { get; set; } = new BeatGuider();
+        public BeatGuide BeatGuider { get; set; } = new BeatGuide();
 
         public string Name { get; set; }
 

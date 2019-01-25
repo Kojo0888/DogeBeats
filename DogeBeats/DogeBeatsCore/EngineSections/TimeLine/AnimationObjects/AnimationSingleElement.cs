@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationSingleElement : ITLEPanelElement, INamedElement, IAnimationElement, IGraphicElement
+    public class AnimationSingleElement : ITLEPanelCellElement, INamedElement, IAnimationElement, IGraphicElement
     {
         public AnimationElementShape Shape { get; set; }
 
@@ -63,6 +63,16 @@ namespace Testowy.Model
         public TimeSpan GetDurationTime()
         {
             return Route.CalculateAnimationTime();
+        }
+
+        public TimeSpan GetStartTime()
+        {
+            return Route.AnimationStartTime;
+        }
+
+        public void SetStartTime(TimeSpan timeSpan)
+        {
+            Route.AnimationStartTime = timeSpan;
         }
 
         public void UpdateManual(NameValueCollection values)

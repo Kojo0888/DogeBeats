@@ -50,7 +50,7 @@ namespace DogeBeats.Modules
             PanelGroup.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
             PanelGroup.StartTime = PanelOffsetTime;
             PanelGroup.EndTime = PanelOffsetTime + PanelWidthTime;
-            List<TimedTLEPanelElement> timedElements = TimedTLEPanelElement.Parse(timeline.AnimationElements);
+            List<TLEPanelCell> timedElements = TLEPanelCell.Parse(timeline.AnimationElements);
             PanelGroup.InitialineElements(timedElements);
             PanelGroup.Height = 100;
             PanelGroup.OffsetHeight = 0;
@@ -60,7 +60,7 @@ namespace DogeBeats.Modules
             PanelBeat.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
             PanelBeat.StartTime = PanelOffsetTime;
             PanelBeat.EndTime = PanelOffsetTime + PanelWidthTime;
-            timedElements = timeline.BeatGuider.Beats;
+            timedElements = TLEPanelCell.Parse(timeline.BeatGuider.Beats);
             PanelBeat.InitialineElements(timedElements);
             PanelBeat.Height = 40;
             PanelBeat.OffsetHeight = 220;
@@ -81,7 +81,7 @@ namespace DogeBeats.Modules
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
-            var timedElements = TimedTLEPanelElement.Parse(group.Route.Frames, group.Route.AnimationStartTime);
+            var timedElements = TLEPanelCell.Parse(group.Route.Frames);
             PanelRoute.InitialineElements(timedElements);
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
@@ -93,7 +93,7 @@ namespace DogeBeats.Modules
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
-            var timedElements = TimedTLEPanelElement.Parse(element.Route.Frames, group.Route.AnimationStartTime);
+            var timedElements = TLEPanelCell.Parse(element.Route.Frames);
             PanelRoute.InitialineElements(timedElements);
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
@@ -105,7 +105,7 @@ namespace DogeBeats.Modules
             PanelElement = new TLEPanel();
             if (group != null)
             {
-                var timedElements = TimedTLEPanelElement.Parse(group.Elements);
+                var timedElements = TLEPanelCell.Parse(group.Elements);
                 PanelElement.InitialineElements(timedElements);
             }
             PanelElement.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
@@ -127,7 +127,7 @@ namespace DogeBeats.Modules
         public static void AddNewAnimationElement(string graphicGroupName)
         {
             AnimationSingleElement element = new AnimationSingleElement();
-            ITLEPanelElement panelElement = PanelGroup.GetObjectFromCellElementName(graphicGroupName);
+            ITLEPanelCellElement panelElement = PanelGroup.GetObjectFromCellElementName(graphicGroupName);
             if (panelElement as AnimationGroupElement != null)
             {
                 AnimationGroupElement group = panelElement as AnimationGroupElement;
@@ -137,7 +137,7 @@ namespace DogeBeats.Modules
                 throw new Exception("Nesu... zjebales");
 
             TimeLine.RefreshCurrentlyAnimatingElementList();
-            PanelElement.RefreshPanelCells();
+            //PanelElement.RefreshPanelCells();
         }
 
         public static void AddNewAnimationGroup(string groupName)
@@ -145,11 +145,11 @@ namespace DogeBeats.Modules
             AnimationGroupElement group = new AnimationGroupElement();
             TimeLine.AnimationElements.Add(group);
 
-            TimedTLEPanelElement timedElement = TimedTLEPanelElement.Parse(group);
+            TLEPanelCell timedElement = TLEPanelCell.Parse(group);
             PanelGroup.AllElements.Add(timedElement);
 
             TimeLine.RefreshCurrentlyAnimatingElementList();
-            PanelGroup.RefreshPanelCells();
+            //PanelGroup.RefreshPanelCells();
         }
 
         public static void SetTimeCursorToPrecentage(float precentage)
@@ -164,7 +164,7 @@ namespace DogeBeats.Modules
 
         public static void UpdateManual(string graphicName, NameValueCollection values)
         {
-            ITLEPanelElement refferencedObject = GetObjectFromAllPanelCellElementName(graphicName);
+            ITLEPanelCellElement refferencedObject = GetObjectFromAllPanelCellElementName(graphicName);
 
             if (refferencedObject as AnimationGroupElement != null)
             {
@@ -202,7 +202,7 @@ namespace DogeBeats.Modules
             }
         }
 
-        private static ITLEPanelElement GetObjectFromAllPanelCellElementName(string graphicName)
+        private static ITLEPanelCellElement GetObjectFromAllPanelCellElementName(string graphicName)
         {
             return PanelGroup.GetObjectFromCellElementName(graphicName) ??
                 PanelElement.GetObjectFromCellElementName(graphicName) ??
@@ -222,12 +222,12 @@ namespace DogeBeats.Modules
                 AttachTimeLineToEditor(timeline);
         }
 
-        private static void RefreshAllPanelCells()
-        {
-            PanelGroup.RefreshPanelCells();
-            PanelElement.RefreshPanelCells();
-            PanelBeat.RefreshPanelCells();
-        }
+        //private static void RefreshAllPanelCells()
+        //{
+        //    PanelGroup.RefreshPanelCells();
+        //    PanelElement.RefreshPanelCells();
+        //    PanelBeat.RefreshPanelCells();
+        //}
 
         public static void UpdateRoutePlacement(string graphicName, Placement placement)
         {
@@ -282,13 +282,13 @@ namespace DogeBeats.Modules
         public static void AddNewBeat()
         {
             TimeLine.BeatGuider.RegisterBeat(TimeLine.Stopper.Elapsed);
-            PanelBeat.RefreshPanelCells();
+            //PanelBeat.RefreshPanelCells();
         }
 
         //No intel about succesful removal
         public static void RemovePanelElement(string graphicName)
         {
-            ITLEPanelElement elementToRemove = GetObjectFromAllPanelCellElementName(graphicName);
+            ITLEPanelCellElement elementToRemove = GetObjectFromAllPanelCellElementName(graphicName);
             RemoveTimeLineElement(elementToRemove);
 
             PanelElement.RemovePanelCell(graphicName);
@@ -300,7 +300,7 @@ namespace DogeBeats.Modules
         }
 
         //temporary... To be decided if removal should go to TimeLine class
-        private static void RemoveTimeLineElement(ITLEPanelElement elementToRemove)
+        private static void RemoveTimeLineElement(ITLEPanelCellElement elementToRemove)
         {
             if (elementToRemove as AnimationGroupElement != null)
             {
