@@ -150,6 +150,14 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	System rework v2 (Merged AnimationElements & ManualUpdate aftermatch fixes[TimeLineEditor, panels, elements])
 	CompilationIssues are now fixed
 
+26_01_2019: 
+	All tests passing
+√	There could be issue with serialization to JSON via IAnimationElement interface
+	Fixed problem with TimeLine serialization (Added $type to file)
+╦	AnimationRoute - Unit tests
+
+
+
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -170,10 +178,10 @@ TODO Notes:
 ℗	TimeLine
 ○	SoundItem Sound playing implementation
 √	AnimationRouteFrame
-℗	AnimationRoute
 ℗	AnimationElementSingleElement
 ℗	AnimationElementGroupElement
 ℗	AnimationElementElement
+○	Placement
 ○	AnimationRoute - PositionUpdateCalculations
 ℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
 ℗	Think - Placement reorganization (AnimationElemnts)
@@ -183,4 +191,3 @@ TODO Notes:
 ○	AnimationElementCreation Centre
 ○	Analyze & Think - Better way for TimeLineEditor panel implementation (Parsing Specifically)
 ○	Think - Selector
-○	There could be issue with serialization to JSON via IAnimationElement interface

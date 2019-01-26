@@ -77,10 +77,12 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["Prediction"].ToString()))
-                Prediction = values["Prediction"].ToString().ToLower() == "true" ? true : false;
-            if (!string.IsNullOrEmpty(values["ShapeTypeName"].ToString()))
+            if (!string.IsNullOrEmpty(values["Prediction"]))
+                Prediction = ManualUpdaterParser.ParseBoolean(values["Prediction"]);
+            if (!string.IsNullOrEmpty(values["ShapeTypeName"]))
                 Shape = new AnimationElementShape(values["ShapeTypeName"]);
+            if (!string.IsNullOrEmpty(values["Name"]))
+                Name = ManualUpdaterParser.ParseString(values["Name"]);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()
@@ -88,6 +90,7 @@ namespace Testowy.Model
             List<string> keys = new List<string>();
             keys.Add("Prediction");
             keys.Add("ShapeTypeName");
+            keys.Add("Name");
             return keys;
         }
     }

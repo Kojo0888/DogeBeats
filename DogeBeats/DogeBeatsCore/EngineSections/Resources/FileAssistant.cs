@@ -111,8 +111,11 @@ namespace DogeBeats.EngineSections.Resources
 
         private T DeserializeJSON<T>(byte[] resourceBytes) where T : class
         {
+            var settings = new JsonSerializerSettings();
+            settings.TypeNameHandling = TypeNameHandling.Auto;
+
             string json = new string (Encoding.UTF8.GetChars(resourceBytes));
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, settings);
         }
 
         public byte[] Serialize<T>(T obj) where T : class
@@ -127,7 +130,10 @@ namespace DogeBeats.EngineSections.Resources
 
         private byte[] SerializeJSON<T>(T obj) where T : class
         {
-            string json = JsonConvert.SerializeObject(obj);
+            var settings = new JsonSerializerSettings();
+            settings.TypeNameHandling = TypeNameHandling.Auto;
+
+            string json = JsonConvert.SerializeObject(obj, settings);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
             return bytes;
         }

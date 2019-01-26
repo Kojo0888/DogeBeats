@@ -51,17 +51,29 @@ namespace Testowy.Model
         public AnimationRouteFrameSlider GetFrameSlider(TimeSpan currentStopperTime)
         {
             AnimationRouteFrameSlider slider = new AnimationRouteFrameSlider();
+            if(currentStopperTime < AnimationStartTime)
+            {
+                if(Frames != null && Frames.Count > 0)
+                    slider.NextFrame = Frames[0];
+                return slider;
+            }
+
+            TimeSpan time = currentStopperTime - AnimationStartTime;//lub odwrotnie
 
             for (int i = 0; i < Frames.Count; i++)
             {
                 var frame = Frames[i];
-                if (currentStopperTime < frame.FrameTime)
+                if (time < frame.FrameTime)
                 {
-                    if (i - 1 > 0)
+                    if (i - 1 >= 0)
                         slider.PreviousFrame = Frames[i - 1];
                     slider.CurrentFrame = frame;
                     if (i + 1 < Frames.Count)
                         slider.NextFrame = Frames[i + 1];
+                }
+                else
+                {
+                    time -= frame.FrameTime;
                 }
             }
 
@@ -84,19 +96,9 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.X"].ToString()))
+            if (!string.IsNullOrEmpty(values["Name"].ToString()))
                 Name = ManualUpdaterParser.ParseString(values["Name"]);
-            else if (!string.IsNullOrEmpty(values["CheckpointPosition.X"].ToString()))
-                StartPlacement.X = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.X"]);
-            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Y"].ToString()))
-                StartPlacement.Y = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Y"]);
-            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Width"].ToString()))
-                StartPlacement.Width = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Width"]);
-            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Height"].ToString()))
-                StartPlacement.Height = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Height"]);
-            else if (!string.IsNullOrEmpty(values["CheckpointPosition.Rotation"].ToString()))
-                StartPlacement.Rotation = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Rotation"]);
-            else if (!string.IsNullOrEmpty(values["AnimationStartTime"].ToString()))
+            if (!string.IsNullOrEmpty(values["AnimationStartTime"].ToString()))
                 AnimationStartTime = ManualUpdaterParser.ParseTimeSpan(values["AnimationStartTime"]);
         }
     }

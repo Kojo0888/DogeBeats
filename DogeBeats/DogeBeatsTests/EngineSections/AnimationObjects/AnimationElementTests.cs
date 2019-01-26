@@ -56,6 +56,7 @@ namespace Testowy.Model.Tests
             var values2 = new System.Collections.Specialized.NameValueCollection();
             values2.Add("Prediction", "False");
             values2.Add("ShapeTypeName", "IdkYet3");
+            values2.Add("Name", "IdkYet1233");
             aElem.UpdateManual(values2);
             if (aElem.Shape.TypeName != "IdkYet3")
                 Assert.Fail();

@@ -68,5 +68,15 @@ namespace DogeBeats.EngineSections.Shared
                 return new TimeSpan();
         }
 
+        public static bool ParseBoolean(string value)
+        {
+            bool temp = false;
+            if (bool.TryParse(value, out temp))
+            {
+                return temp;
+            }
+            else
+                return false;
+        }
     }
 }

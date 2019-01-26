@@ -20,13 +20,13 @@ namespace Testowy.Model
         {
             if (!string.IsNullOrEmpty(values["X"].ToString()))
                 X = ManualUpdaterParser.ParseFloat(values["X"]);
-            else if (!string.IsNullOrEmpty(values["Y"].ToString()))
+            if (!string.IsNullOrEmpty(values["Y"].ToString()))
                 Y = ManualUpdaterParser.ParseFloat(values["Y"]);
-            else if (!string.IsNullOrEmpty(values["Width"].ToString()))
+            if (!string.IsNullOrEmpty(values["Width"].ToString()))
                 Width = ManualUpdaterParser.ParseFloat(values["Width"]);
-            else if (!string.IsNullOrEmpty(values["Height"].ToString()))
+            if (!string.IsNullOrEmpty(values["Height"].ToString()))
                 Height = ManualUpdaterParser.ParseFloat(values["Height"]);
-            else if (!string.IsNullOrEmpty(values["Rotation"].ToString()))
+            if (!string.IsNullOrEmpty(values["Rotation"].ToString()))
                 Rotation = ManualUpdaterParser.ParseFloat(values["Rotation"]);
         }
 
