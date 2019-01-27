@@ -27,7 +27,9 @@ namespace Testowy.Model
 
         public AnimationGroupElement()
         {
-
+            Placement = new Placement();
+            Route = new AnimationRoute();
+            Elements = new List<IAnimationElement>();
         }
 
         public AnimationGroupElement(string groupName)
@@ -92,14 +94,13 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["GroupName"].ToString()))
-                Name = values["GroupName"];
+            Name = ManualUpdaterParser.Parse(values["Name"], Name);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
-            keys.Add("GroupName");
+            keys.Add("Name");
             return keys;
         }
     }

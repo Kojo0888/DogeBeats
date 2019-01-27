@@ -59,20 +59,15 @@ namespace Testowy.Model
             keys.Add("SpeedPhase");
             keys.Add("SpeedCycles");
             keys.Add("FrameTime");
-            keys.Add("CheckpointPosition.X");
-            keys.Add("CheckpointPosition.Y");
-            keys.Add("CheckpointPosition.Width");
-            keys.Add("CheckpointPosition.Height");
-            keys.Add("CheckpointPosition.Rotation");
             return keys;
         }
 
         public void ManualUpdate(NameValueCollection values)
         {
             if (!string.IsNullOrEmpty(values["Amplitude"].ToString()))
-                Amplitude = ManualUpdaterParser.ParseFloat(values["Ease"]);
+                Amplitude = ManualUpdaterParser.ParseFloat(values["Amplitude"]);
             if (!string.IsNullOrEmpty(values["Cycles"].ToString()))
-                Cycles = ManualUpdaterParser.ParseInt(values["RunningTime"]);
+                Cycles = ManualUpdaterParser.ParseInt(values["Cycles"]);
             if (!string.IsNullOrEmpty(values["SpeedAmplitude"].ToString()))
                 SpeedAmplitude = ManualUpdaterParser.ParseFloat(values["SpeedAmplitude"]);
             if (!string.IsNullOrEmpty(values["SpeedPhase"].ToString()))
@@ -81,17 +76,6 @@ namespace Testowy.Model
                 SpeedCycles = ManualUpdaterParser.ParseFloat(values["SpeedCycles"]);
             if (!string.IsNullOrEmpty(values["FrameTime"].ToString()))
                 FrameTime = ManualUpdaterParser.ParseTimeSpan(values["FrameTime"]);
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.X"].ToString()))
-                CheckpointPosition.X = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.X"]);
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.Y"].ToString()))
-                CheckpointPosition.Y = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Y"]);
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.Width"].ToString()))
-                CheckpointPosition.Width = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Width"]);
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.Height"].ToString()))
-                CheckpointPosition.Height = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Height"]);
-            if (!string.IsNullOrEmpty(values["CheckpointPosition.Rotation"].ToString()))
-                CheckpointPosition.Rotation = ManualUpdaterParser.ParseFloat(values["CheckpointPosition.Rotation"]);
-
         }
     }
 }

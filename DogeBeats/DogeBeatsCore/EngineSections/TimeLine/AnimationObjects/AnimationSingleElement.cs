@@ -32,9 +32,10 @@ namespace Testowy.Model
             //GraphicName = GraphicProxy.GenerateElementName(this);
         }
 
+        //TODO
         public void Update(TimeSpan currentStopperTimeRaw, Placement parentPlacement)
         {
-            TimeSpan currentStopperTime = VerifyStopperTime(currentStopperTimeRaw);
+            TimeSpan currentStopperTime = TrimTimeSpan(currentStopperTimeRaw);
 
             var frameCarrier = Route.GetFrameSlider(currentStopperTime);
 
@@ -42,17 +43,12 @@ namespace Testowy.Model
             Placement = Route.CalculatePlacement(currentStopperTime);
             Placement.X = Route.StartPlacement.X + parentPlacement.X;
             Placement.Y = Route.StartPlacement.Y + parentPlacement.Y;
-            //Placement.Width //No support
-            //Placement.Height //No support
+            //Placement.Width //No support //scale?
+            //Placement.Height //No support //scale?
             //Placement.Rotation = InitPlacement.Rotation + groupPlacement.Rotation;//TODO
         }
 
-        private TimeSpan VerifyStopperTime(TimeSpan currentStopperTime)
-        {
-            var ticks = currentStopperTime.Ticks % Route.CalculateAnimationTime().Ticks;
-            return new TimeSpan(ticks);
-        }
-
+        //TODO
         public void Render()
         {
             //TODO: Attaching Graphic Engine
@@ -92,6 +88,12 @@ namespace Testowy.Model
             keys.Add("ShapeTypeName");
             keys.Add("Name");
             return keys;
+        }
+
+        private TimeSpan TrimTimeSpan(TimeSpan currentStopperTime)
+        {
+            var ticks = currentStopperTime.Ticks % Route.CalculateAnimationTime().Ticks;
+            return new TimeSpan(ticks);
         }
     }
 }

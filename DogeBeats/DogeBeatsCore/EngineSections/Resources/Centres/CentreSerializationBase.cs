@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DogeBeats.EngineSections.Resources
 {
-    public class CentreSerializationBase<T> : ICentreBase<T> where T : class, INamedElement
+    public class CentreSerializationBase<T> : ICentreBase<T> where T : class, INamedElement, new()
     {
         public string ResourceType { get; set; }
 
@@ -18,6 +18,7 @@ namespace DogeBeats.EngineSections.Resources
         public CentreSerializationBase(string type)
         {
             ResourceType = type;
+            CentreElements = new DDictionary<string, T>();
         }
 
         public void LoadAll()
@@ -56,6 +57,34 @@ namespace DogeBeats.EngineSections.Resources
         public DDictionary<string, T> GetAll()
         {
             return CentreElements;
+        }
+
+        public T CreateElement(string name)
+        {
+            T element = new T();
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (CentreElements.ContainsKey(name))
+                    name = name + " _ " + new Random().Next();
+                element.Name = name;
+                CentreElements.Add(name, element);
+            }
+            return element;
+        }
+
+        public T RenameElement(T element, string oldName, string newName)
+        {
+            if (CentreElements.Keys.Contains(oldName))
+                CentreElements.Remove(oldName);
+
+            if (!string.IsNullOrEmpty(newName))
+            {
+                if (CentreElements.ContainsKey(newName))
+                    newName = newName + " _ " + new Random().Next();
+                element.Name = newName;
+                CentreElements.Add(newName, element);
+            }
+            return element;
         }
     }
 }

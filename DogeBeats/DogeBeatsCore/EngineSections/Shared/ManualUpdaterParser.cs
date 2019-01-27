@@ -13,6 +13,15 @@ namespace DogeBeats.EngineSections.Shared
             return value;
         }
 
+        public static string Parse(string value, string original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseString(value);
+            else
+                return original;
+            
+        }
+
         public static int ParseInt(string value)
         {
             int temp = 0;
@@ -22,6 +31,14 @@ namespace DogeBeats.EngineSections.Shared
             }
             else
                 return -1;
+        }
+
+        public static int Parse(string value, int original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseInt(value);
+            else
+                return original;
         }
 
         public static float ParseFloat(string value)
@@ -35,6 +52,14 @@ namespace DogeBeats.EngineSections.Shared
                 return -1;
         }
 
+        public static float Parse(string value, float original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseFloat(value);
+            else
+                return original;
+        }
+
         public static double ParseDouble(string value)
         {
             double temp = 0;
@@ -44,6 +69,14 @@ namespace DogeBeats.EngineSections.Shared
             }
             else
                 return -1;
+        }
+
+        public static double Parse(string value, double original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseDouble(value);
+            else
+                return original;
         }
 
         public static decimal ParseDecimal(string value)
@@ -57,6 +90,14 @@ namespace DogeBeats.EngineSections.Shared
                 return -1;
         }
 
+        public static decimal Parse(string value, decimal original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseDecimal(value);
+            else
+                return original;
+        }
+
         public static TimeSpan ParseTimeSpan(string value)
         {
             TimeSpan temp = new TimeSpan();
@@ -68,6 +109,14 @@ namespace DogeBeats.EngineSections.Shared
                 return new TimeSpan();
         }
 
+        public static TimeSpan Parse(string value, TimeSpan original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseTimeSpan(value);
+            else
+                return original;
+        }
+
         public static bool ParseBoolean(string value)
         {
             bool temp = false;
@@ -77,6 +126,14 @@ namespace DogeBeats.EngineSections.Shared
             }
             else
                 return false;
+        }
+
+        public static bool Parse(string value, bool original)
+        {
+            if (!string.IsNullOrEmpty(value))
+                return ParseBoolean(value);
+            else
+                return original;
         }
     }
 }

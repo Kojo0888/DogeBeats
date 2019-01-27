@@ -90,5 +90,35 @@ namespace DogeBeats.EngineSections.Resources.Tests
             if (results.Count == 0)
                 Assert.Fail();
         }
+
+        [TestMethod()]
+        public void CreateElementTest()
+        {
+            string name = "TEst636asd3635";
+            this.centreSerializationBase.CreateElement(name);
+            if (centreSerializationBase.CentreElements.Count() == 0)
+                Assert.Fail();
+            var element = centreSerializationBase.Get(name);
+            if (centreSerializationBase.CentreElements.ElementAt(0).Key != name || element.Name != name)
+                Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void RenameElementTest()
+        {
+            string name = "TEst6363635";
+            this.centreSerializationBase.CreateElement(name);
+            if (centreSerializationBase.CentreElements.Count() == 0)
+                Assert.Fail();
+            var element = centreSerializationBase.Get(name);
+            if (centreSerializationBase.CentreElements.ElementAt(0).Key != name || element.Name != name)
+                Assert.Fail();
+
+            string newName = "TEST2323";
+            centreSerializationBase.RenameElement(element, name, newName);
+            element = centreSerializationBase.Get(newName);
+            if (centreSerializationBase.CentreElements.ElementAt(0).Key != newName || element.Name != newName)
+                Assert.Fail();
+        }
     }
 }

@@ -156,7 +156,13 @@ x  Think - if the GameGlobal class idea is better than static classes.
 	Fixed problem with TimeLine serialization (Added $type to file)
 ╦	AnimationRoute - Unit tests
 
-
+27_01_2019:
+╦	BeatGuider - unit tests
+╦	AnimationRouteFrame
+╦	AnimationElementSingleElement
+╦	AnimationElementGroupElement
+╦	AnimationElementElement
+╦	CentreSerializationBase -  new Methods: CreateElement, RenameElement (Test covered)
 
 _________________________________________________________________________________________________
 
@@ -177,10 +183,6 @@ TODO Notes:
 ○	Logging
 ℗	TimeLine
 ○	SoundItem Sound playing implementation
-√	AnimationRouteFrame
-℗	AnimationElementSingleElement
-℗	AnimationElementGroupElement
-℗	AnimationElementElement
 ○	Placement
 ○	AnimationRoute - PositionUpdateCalculations
 ℗	System rework v2 (Trigonometric Movement, Merged AnimationElements & AnimationRoute, ManualUpdate)
@@ -191,3 +193,11 @@ TODO Notes:
 ○	AnimationElementCreation Centre
 ○	Analyze & Think - Better way for TimeLineEditor panel implementation (Parsing Specifically)
 ○	Think - Selector
+○	Think - Group Placement Width & Heigth (interpreted as scale)?
+○	
+○	
+○	
+○	
+○	
+○	
+○	
