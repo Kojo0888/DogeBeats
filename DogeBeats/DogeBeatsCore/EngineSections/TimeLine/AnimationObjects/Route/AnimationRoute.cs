@@ -27,6 +27,12 @@ namespace Testowy.Model
             }
         }
 
+        public AnimationRoute()
+        {
+            Frames = new List<AnimationRouteFrame>();
+            StartPlacement = new Placement();
+        }
+
         internal Placement CalculatePlacement(TimeSpan currentStopperTime)
         {
             var frameSlider = GetFrameSlider(currentStopperTime);
@@ -86,20 +92,13 @@ namespace Testowy.Model
             List<string> keys = new List<string>();
             keys.Add("Name");
             keys.Add("AnimationStartTime");
-            keys.Add("StartPlacement.X");
-            keys.Add("StartPlacement.Y");
-            keys.Add("StartPlacement.Width");
-            keys.Add("StartPlacement.Height");
-            keys.Add("StartPlacement.Rotation");
             return keys;
         }
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["Name"].ToString()))
-                Name = ManualUpdaterParser.ParseString(values["Name"]);
-            if (!string.IsNullOrEmpty(values["AnimationStartTime"].ToString()))
-                AnimationStartTime = ManualUpdaterParser.ParseTimeSpan(values["AnimationStartTime"]);
+            Name = ManualUpdaterParser.Parse(values["Name"], Name);
+            AnimationStartTime = ManualUpdaterParser.Parse(values["AnimationStartTime"], AnimationStartTime);
         }
     }
 }

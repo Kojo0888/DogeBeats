@@ -80,7 +80,7 @@
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRoute.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRouteFrame.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRouteFrameSlider.cs" />
-    <Compile Include="EngineSections\Shared\Placement.cs" />
+    <Compile Include="EngineSections\TimeLine\Placement.cs" />
     <Compile Include="EngineSections\TimeLine\TimeLine.cs" />
     <Compile Include="EngineSections\TimeLineEditing\TimeLineEditor.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\IGraphicElement.cs" />

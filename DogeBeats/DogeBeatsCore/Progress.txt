@@ -164,6 +164,12 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ╦	AnimationElementElement
 ╦	CentreSerializationBase -  new Methods: CreateElement, RenameElement (Test covered)
 
+28_01_2019:
+	Moving to XUnit testing framework. Better information (ex. StackOverflow exception visibility). Console + VS support.
+	All tests passed
+
+29_01_2019:
+
 _________________________________________________________________________________________________
 
 TODO Legend:

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DogeBeats.EngineSections.Resources.Centres;
+﻿using DogeBeats.EngineSections.Resources.Centres;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,40 +6,39 @@ using System.Text;
 using System.Threading.Tasks;
 using DogeBeats.Modules.Music;
 using DogeBeatsTests.Data;
+using Xunit;
 
 namespace DogeBeats.EngineSections.Resources.Centres.Tests
 {
-    [TestClass()]
     public class CentreFileBaseTests
     {
         CentreFileBase<SoundItem> centreFileBase = new CentreFileBase<SoundItem>("FileCentreTest");
 
-        [TestInitialize]
-        public void Init()
+        public CentreFileBaseTests()
         {
             //centreFileBase.ResourceType = "FileCentreTest";
             FileTestHelper.CreateFolder("Data\\Resources\\"+centreFileBase.ResourceType);
             StaticHub.ResourceManager.LoadAllResources();
         }
 
-        [TestMethod()]
+        [Fact]
         public void LoadAllTest()
         {
             FileTestHelper.CreateDummyFile(centreFileBase.ResourceType, "test1.txt");
             centreFileBase.LoadAll();
             var results = centreFileBase.GetAll();
             if (results.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void SaveAllTest()
         {
             FileTestHelper.CreateDummyFile(centreFileBase.ResourceType, "test2.txt");
             centreFileBase.LoadAll();
             var results = centreFileBase.GetAll();
             if (results.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var bytes = new byte[] { 1, 3, 2, 2, 3, 2 };
             string key = results.Keys.FirstOrDefault();
@@ -51,14 +49,14 @@ namespace DogeBeats.EngineSections.Resources.Centres.Tests
 
             var results2 = centreFileBase.GetAll();
             if (results2.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var bytes2 = results2[key].GetBytes();
 
-            CollectionAssert.AreEqual(bytes2, bytes);
+            Assert.Equal(bytes2, bytes);
         }
 
-        [TestMethod()]
+        [Fact]
         public void SaveTest()
         {
             FileTestHelper.CreateDummyFile(centreFileBase.ResourceType, "test3.txt");
@@ -66,7 +64,7 @@ namespace DogeBeats.EngineSections.Resources.Centres.Tests
             centreFileBase.LoadAll();
             var results = centreFileBase.GetAll();
             if (results.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var bytes = new byte[] { 1, 3, 2, 2, 3, 2 };
             string key = "test3.txt";
@@ -77,31 +75,31 @@ namespace DogeBeats.EngineSections.Resources.Centres.Tests
 
             var results2 = centreFileBase.GetAll();
             if (results2.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var bytes2 = results2[key].GetBytes();
 
-            CollectionAssert.AreEqual(bytes2, bytes);
+            Assert.Equal(bytes2, bytes);
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetTest()
         {
             FileTestHelper.CreateDummyFile(centreFileBase.ResourceType, "test3.txt");
             centreFileBase.LoadAll();
             var results = centreFileBase.Get("test3.txt");//TO NIE ZADZIALA (samo: test3)
             if (results == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetAllTest()
         {
             FileTestHelper.CreateDummyFile(centreFileBase.ResourceType, "test3.txt");
             centreFileBase.LoadAll();
             var results = centreFileBase.GetAll();
             if (results.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
     }
 }

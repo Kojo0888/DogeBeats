@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Resources;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.Model;
 using DogeBeats.Modules.TimeLines;
@@ -32,7 +33,7 @@ namespace Testowy.Model
             Elements = new List<IAnimationElement>();
         }
 
-        public AnimationGroupElement(string groupName)
+        public AnimationGroupElement(string groupName) : this()
         {
             Name = groupName;
         }
@@ -94,13 +95,17 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
+            StaticHub.AnimationGroupCentre.RenameElement(this, values["Name"], Name);
             Name = ManualUpdaterParser.Parse(values["Name"], Name);
+
+            Prediction = ManualUpdaterParser.Parse(values["Prediction"], Prediction);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();
             keys.Add("Name");
+            keys.Add("Prediction");
             return keys;
         }
     }

@@ -1,31 +1,29 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Testowy.Model;
+﻿using Testowy.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Testowy.Model.Tests
 {
-    [TestClass()]
     public class AnimationSingleElementTests
     {
         private AnimationSingleElement element;
 
-        [TestInitialize]
-        public void Init()
+        public AnimationSingleElementTests()
         {
             element = new AnimationSingleElement();
         }
 
-        [TestMethod()]
+        [Fact]
         public void UpdateTest()
         {
             //nothing yet to test
         }
 
-        [TestMethod()]
+        [Fact]
         public void RenderTest()
         {
             //nothing yet to test

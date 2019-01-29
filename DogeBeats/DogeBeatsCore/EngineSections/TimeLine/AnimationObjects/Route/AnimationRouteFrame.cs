@@ -64,18 +64,12 @@ namespace Testowy.Model
 
         public void ManualUpdate(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["Amplitude"].ToString()))
-                Amplitude = ManualUpdaterParser.ParseFloat(values["Amplitude"]);
-            if (!string.IsNullOrEmpty(values["Cycles"].ToString()))
-                Cycles = ManualUpdaterParser.ParseInt(values["Cycles"]);
-            if (!string.IsNullOrEmpty(values["SpeedAmplitude"].ToString()))
-                SpeedAmplitude = ManualUpdaterParser.ParseFloat(values["SpeedAmplitude"]);
-            if (!string.IsNullOrEmpty(values["SpeedPhase"].ToString()))
-                SpeedPhase = ManualUpdaterParser.ParseFloat(values["SpeedPhase"]);
-            if (!string.IsNullOrEmpty(values["SpeedCycles"].ToString()))
-                SpeedCycles = ManualUpdaterParser.ParseFloat(values["SpeedCycles"]);
-            if (!string.IsNullOrEmpty(values["FrameTime"].ToString()))
-                FrameTime = ManualUpdaterParser.ParseTimeSpan(values["FrameTime"]);
+            Amplitude = ManualUpdaterParser.Parse(values["Amplitude"], Amplitude);
+            Cycles = ManualUpdaterParser.Parse(values["Cycles"], Cycles);
+            SpeedAmplitude = ManualUpdaterParser.Parse(values["SpeedAmplitude"], SpeedAmplitude);
+            SpeedPhase = ManualUpdaterParser.Parse(values["SpeedPhase"], SpeedPhase);
+            SpeedCycles = ManualUpdaterParser.Parse(values["SpeedCycles"], SpeedCycles);
+            FrameTime = ManualUpdaterParser.Parse(values["FrameTime"], FrameTime);
         }
     }
 }

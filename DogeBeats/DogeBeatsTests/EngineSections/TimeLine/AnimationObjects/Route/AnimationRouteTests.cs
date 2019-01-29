@@ -1,21 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Testowy.Model;
+﻿using Testowy.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using Xunit;
 
 namespace Testowy.Model.Tests
 {
-    [TestClass()]
     public class AnimationRouteTests
     {
         AnimationRoute route = new AnimationRoute();
 
-        [TestInitialize]
-        public void Init()
+        public AnimationRouteTests()
         {
             route.AnimationStartTime = new TimeSpan(0,0,20);
             route.Frames = new List<AnimationRouteFrame>() {
@@ -25,33 +23,33 @@ namespace Testowy.Model.Tests
             };
         }
 
-        [TestMethod()]
+        [Fact]
         public void CalculateAnimationTimeTest()
         {
             var ts = route.CalculateAnimationTime();
             if(ts != new TimeSpan(0,0,17))
-            Assert.Fail();
+            throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void AnimationEndTimeTest()
         {
             TimeSpan ts = route.CalculateAnimationTime();
             if (ts + route.AnimationStartTime != route.AnimationEndTime)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetFrameSliderTest()
         {
             var slider = route.GetFrameSlider(new TimeSpan(0,0,30));
             if (slider.PreviousFrame != route.Frames.ElementAt(0) ||
                 slider.CurrentFrame != route.Frames.ElementAt(1) ||
                 slider.NextFrame != route.Frames.ElementAt(2))
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void UpdateManualTest()
         {
             NameValueCollection values = new NameValueCollection();
@@ -60,7 +58,7 @@ namespace Testowy.Model.Tests
             route.UpdateManual(values);
             if (route.Name != values["Name"] ||
                 route.AnimationStartTime.ToString() != values["AnimationStartTime"])
-                Assert.Fail();
+                throw new Exception("Assert Fails");
             //values.Add("");
         }
     }

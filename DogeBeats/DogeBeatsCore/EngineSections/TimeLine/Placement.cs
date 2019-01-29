@@ -18,16 +18,11 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["X"].ToString()))
-                X = ManualUpdaterParser.ParseFloat(values["X"]);
-            if (!string.IsNullOrEmpty(values["Y"].ToString()))
-                Y = ManualUpdaterParser.ParseFloat(values["Y"]);
-            if (!string.IsNullOrEmpty(values["Width"].ToString()))
-                Width = ManualUpdaterParser.ParseFloat(values["Width"]);
-            if (!string.IsNullOrEmpty(values["Height"].ToString()))
-                Height = ManualUpdaterParser.ParseFloat(values["Height"]);
-            if (!string.IsNullOrEmpty(values["Rotation"].ToString()))
-                Rotation = ManualUpdaterParser.ParseFloat(values["Rotation"]);
+            X = ManualUpdaterParser.Parse(values["X"], X);
+            Y = ManualUpdaterParser.Parse(values["Y"], Y);
+            Width = ManualUpdaterParser.Parse(values["Width"], Width);
+            Height = ManualUpdaterParser.Parse(values["Height"], Height);
+            Rotation = ManualUpdaterParser.Parse(values["Rotation"], Rotation);
         }
 
         public static List<string> GetKeysManualUpdate()

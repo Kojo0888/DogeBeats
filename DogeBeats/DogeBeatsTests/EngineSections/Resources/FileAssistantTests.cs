@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DogeBeats.EngineSections.Resources;
+﻿using DogeBeats.EngineSections.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,47 +9,46 @@ using System.Xml.Linq;
 using DogeBeatsTests;
 using DogeBeatsTests.Data;
 using System.IO;
+using Xunit;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
-    [TestClass()]
     public class FileAssistantTests
     {
         FileAssistant fileAssistant = new FileAssistant();
 
-        [TestInitialize()]
-        public void Init()
+        public FileAssistantTests()
         {
             FileTestHelper.Init();
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetFilesFromFolderTest()
         {
             FileTestHelper.CreateDummyFile("Shapes", "whatever");
 
             var files = fileAssistant.GetFilesFromFolder(@"Data\Resources\Shapes");
             if (files == null || files.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetFullPathForFolderNameTest()
         {
             var path = fileAssistant.GetFullPathForFolderName("Shapes", "Data");
             if (!(!string.IsNullOrEmpty(path) && path.EndsWith("Shapes") && path.Contains("\\")))
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetAllResourceFilesFromFolderTest()
         {
             var dic = fileAssistant.GetAllResourceFilesFromFolder(@"Data\Resources");
             if (dic == null || dic.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void DeserializeXMLTest()
         {
             fileAssistant = new FileAssistant();
@@ -61,14 +59,14 @@ namespace DogeBeats.EngineSections.Resources.Tests
             byte[] bytes = fileAssistant.Serialize(aElem);
             string xml = new string(Encoding.Unicode.GetChars(bytes));
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var aElem2 = fileAssistant.Deserialize<AnimationSingleElement>(bytes);
             if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void DeserializeJSONTest()
         {
             fileAssistant = new FileAssistant();
@@ -79,14 +77,14 @@ namespace DogeBeats.EngineSections.Resources.Tests
             byte[] bytes = fileAssistant.Serialize(aElem);
             string xml = new string(Encoding.Unicode.GetChars(bytes));
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
 
             var aElem2 = fileAssistant.Deserialize<AnimationSingleElement>(bytes);
             if (aElem.Shape.TypeName != aElem2.Shape.TypeName)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void SerializeJSONTest()
         {
             fileAssistant = new FileAssistant();
@@ -96,10 +94,10 @@ namespace DogeBeats.EngineSections.Resources.Tests
             byte[] bytes = fileAssistant.Serialize(aElem);
             string xml = new string(Encoding.Unicode.GetChars(bytes));
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void SerializeXMLTest()
         {
             fileAssistant = new FileAssistant();
@@ -109,10 +107,10 @@ namespace DogeBeats.EngineSections.Resources.Tests
             byte[] bytes = fileAssistant.Serialize(aElem);
             string xml = new string(Encoding.Unicode.GetChars(bytes));
             if (bytes == null || bytes.Length == 0 && XDocument.Parse(xml) == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void SaveFileTest()
         {
             //FileTestHelper.CreateDummyFile("Test\\TEst2323","asd.txt");
@@ -120,7 +118,7 @@ namespace DogeBeats.EngineSections.Resources.Tests
             string path = "Data\\testSave.txt";
             fileAssistant.SaveFile(path, bytes);
             byte[] bytes2 = File.ReadAllBytes(path);
-            CollectionAssert.AreEqual(bytes, bytes2);
+            Assert.Equal(bytes, bytes2);
         }
     }
 }

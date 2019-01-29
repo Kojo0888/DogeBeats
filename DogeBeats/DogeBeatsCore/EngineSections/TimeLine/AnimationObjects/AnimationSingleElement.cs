@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Resources;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
@@ -29,7 +30,15 @@ namespace Testowy.Model
 
         public AnimationSingleElement()
         {
+            Placement = new Placement();
+            Route = new AnimationRoute();
             //GraphicName = GraphicProxy.GenerateElementName(this);
+        }
+
+        public AnimationSingleElement(string name) : this()
+        {
+            Name = name;
+            //StaticHub.AnimationSingleCentre.RenameElement(this, "", name);
         }
 
         //TODO
@@ -73,12 +82,11 @@ namespace Testowy.Model
 
         public void UpdateManual(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["Prediction"]))
-                Prediction = ManualUpdaterParser.ParseBoolean(values["Prediction"]);
-            if (!string.IsNullOrEmpty(values["ShapeTypeName"]))
-                Shape = new AnimationElementShape(values["ShapeTypeName"]);
-            if (!string.IsNullOrEmpty(values["Name"]))
-                Name = ManualUpdaterParser.ParseString(values["Name"]);
+            StaticHub.AnimationSingleCentre.RenameElement(this, values["Name"], Name);
+            Name = ManualUpdaterParser.Parse(values["Name"], Name);
+
+            Prediction = ManualUpdaterParser.Parse(values["Prediction"], Prediction);
+            Shape = new AnimationElementShape(values["ShapeTypeName"]);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()

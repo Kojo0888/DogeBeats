@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DogeBeats.EngineSections.Resources;
+﻿using DogeBeats.EngineSections.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +7,16 @@ using System.Threading.Tasks;
 using Testowy.Model;
 using DogeBeatsTests;
 using DogeBeatsTests.Data;
+using Xunit;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
-    [TestClass()]
+    [Collection("Synchronical")]
     public class TimeLineCentreTests
     {
         private TimeLineCentre TimeLineCentre { get; set; }
 
-        [TestInitialize]
-        public void Init()
+        public TimeLineCentreTests()
         {
             TimeLineCentre = new TimeLineCentre();
             TimeLineCentre.LoadAll();
@@ -25,20 +24,20 @@ namespace DogeBeats.EngineSections.Resources.Tests
             StaticHub.ResourceManager.LoadAllResources();
         }
 
-        [TestMethod()]
+        [Fact]
         public void LoadAllTimeLinesTest()
         {
             TimeLineCentre = new TimeLineCentre();
             TimeLineCentre.LoadAll();
         }
 
-        [TestMethod()]
+        [Fact]
         public void SaveAllTimeLinesTest()
         {
             TimeLineCentre.SaveAll();
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetAllAnimationGroupElementsTest()//Fix this test
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
@@ -46,20 +45,20 @@ namespace DogeBeats.EngineSections.Resources.Tests
 
             var groups = TimeLineCentre.GetAllAnimationGroupElements();
             if (groups == null || groups.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void SaveTimeLineTest()
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
             TimeLineCentre.Save(timeLine);
 
             if (StaticHub.ResourceManager.GetResource("TimeLines", timeLine.Name) == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetTimeLineTest()
         {
             TimeLine timeLine = MockObjects.GetTimeLine();
@@ -67,16 +66,16 @@ namespace DogeBeats.EngineSections.Resources.Tests
 
             TimeLine timeLine2 = TimeLineCentre.Get(timeLine.Name);
             if (timeLine2 == null)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
 
-        [TestMethod()]
+        [Fact]
         public void GetAllTimeLinesTest()
         {
             TimeLineCentre.LoadAll();
             var timeLine = TimeLineCentre.GetAll();
             if (timeLine == null || timeLine.Count == 0)
-                Assert.Fail();
+                throw new Exception("Assert Fails");
         }
     }
 }

@@ -74,8 +74,11 @@ namespace DogeBeats.EngineSections.Resources
 
         public T RenameElement(T element, string oldName, string newName)
         {
-            if (CentreElements.Keys.Contains(oldName))
-                CentreElements.Remove(oldName);
+            if (!string.IsNullOrEmpty(oldName))
+            {
+                if (CentreElements.Keys.Contains(oldName))
+                    CentreElements.Remove(oldName);
+            }
 
             if (!string.IsNullOrEmpty(newName))
             {
