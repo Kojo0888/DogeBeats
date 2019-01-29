@@ -1,6 +1,7 @@
 ﻿using DogeBeats.EngineSections.Resources.Centres;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.Model;
+using DogeBeats.Modules;
 using DogeBeats.Modules.Centers;
 using DogeBeats.Modules.Music;
 using System;
@@ -27,6 +28,8 @@ namespace DogeBeats.EngineSections.Resources
         public static CentreFileBase<SoundItem> SoundCentre { get; set; } = new CentreFileBase<SoundItem>("Sounds");
 
         public static CentreFileBase<ImageItem> ImageCentre { get; set; } = new CentreFileBase<ImageItem>("Images");
+
+        public static TimeLineEditor TimeLineEditor { get; set; } = new TimeLineEditor();
 
         //public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
     }

@@ -13,6 +13,7 @@ using Xunit;
 
 namespace DogeBeats.EngineSections.Resources.Tests
 {
+    [Collection("Synchronical")]
     public class FileAssistantTests
     {
         FileAssistant fileAssistant = new FileAssistant();

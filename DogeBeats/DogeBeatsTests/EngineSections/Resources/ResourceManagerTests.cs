@@ -12,7 +12,7 @@ using Xunit;
 
 namespace DogeBeats.Model.Tests
 {
-    
+    [Collection("Synchronical")]
     public class ResourceManagerTests
     {
         ResourceManager manager = new ResourceManager();

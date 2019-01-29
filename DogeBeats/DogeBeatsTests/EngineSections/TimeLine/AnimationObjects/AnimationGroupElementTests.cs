@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Testowy.Model.Tests
 {
+    [Collection("Synchronical")]
     public class AnimationGroupElementTests
     {
         public AnimationGroupElement element = new AnimationGroupElement();

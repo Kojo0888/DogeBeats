@@ -1,6 +1,8 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Resources;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.Misc;
+using DogeBeats.Modules.Music;
 using DogeBeats.Modules.TimeLines;
 using Newtonsoft.Json;
 using System;
@@ -19,12 +21,12 @@ namespace Testowy.Model
     {
         public DStopper Stopper = new DStopper();
 
-        [NonSerialized]
-        public Queue<IAnimationElement> Storyboard = new Queue<IAnimationElement>();
-
-        public List<IAnimationElement> CurrentlyAnimatingGroups = new List<IAnimationElement>();
-
-        public List<IAnimationElement> PassedAnimationGroups = new List<IAnimationElement>();
+        [JsonIgnore]
+        private Queue<IAnimationElement> StoryboardQueue = new Queue<IAnimationElement>();
+        [JsonIgnore]
+        private List<IAnimationElement> CurrentlyAnimatingElements = new List<IAnimationElement>();
+        [JsonIgnore]
+        private List<IAnimationElement> PassedAnimationElements = new List<IAnimationElement>();
 
         public List<IAnimationElement> AnimationElements  = new List<IAnimationElement>();
 
@@ -38,20 +40,25 @@ namespace Testowy.Model
 
         public string MusicName { get; set; }
 
-        public static void ManualUpdate(TimeLine timeline, NameValueCollection values)
+        [JsonIgnore]
+        public SoundItem MusicTrack { get; set; }
+
+        public void ManualUpdate(NameValueCollection values)
         {
-            if (!string.IsNullOrEmpty(values["TimeLineName"].ToString()))
-                timeline.Name = values["TimeLineName"].ToString();
-            if (!string.IsNullOrEmpty(values["MusicName"].ToString()))
-                timeline.MusicName = values["MusicName"].ToString();
+            Name = ManualUpdaterParser.Parse(values["Name"], Name);
+            MusicName = ManualUpdaterParser.Parse(values["MusicName"], MusicName);
+            MusicTrack = StaticHub.SoundCentre.Get(MusicName);
         }
 
         public static List<string> GetKeysManualUpdate()
         {
-            return new List<string>() { "MusicName", "TimeLineName" };
+            return new List<string>() {
+                "MusicName",
+                "TimeLineName"
+            };
         }
 
-        public void StartStoryboardAnimation()
+        public void StartStoryboard()
         {
             if (Stopper.IsRunning)
                 Stopper.Stop();
@@ -59,12 +66,12 @@ namespace Testowy.Model
             Stopper.Start();
         }
 
-        public void ResumeStoryboardAnimation()
+        public void ResumeStoryboard()
         {
             Stopper.Start();
         }
 
-        public void PauseStoryboardAnimation(bool resetStoryboard = true)
+        public void PauseStoryboard(bool resetStoryboard = true)
         {
             Stopper.Stop();
             if (resetStoryboard)
@@ -74,24 +81,25 @@ namespace Testowy.Model
         public void ResetStoryboard()
         {
             InitializeStoryboardQueue();
+            ProgressStoryboard();
         }
 
-        public void ProgressStoryboardAnimation()
+        public void ProgressStoryboard()
         {
-            CheckPlayEnd();
-
             if (!Stopper.IsRunning)
                 return;
 
-            //this could be invoked once a time
-            MovePassedElements();
+            CheckEndPlayTime();
 
-            //this could be invoked every time
-            CheckStoryboard();
+            //should run every frame
+            PushAwaitingAnimationElements();
             UpdateAnimationElements();
+
+            //can run once a time
+            PushPassedElements();
         }
 
-        private void CheckPlayEnd()
+        private void CheckEndPlayTime()
         {
             if (Stopper.Elapsed > _playToTimeSpan)
                 Stopper.Stop();
@@ -99,7 +107,7 @@ namespace Testowy.Model
 
         private void UpdateAnimationElements()
         {
-            foreach (var element in CurrentlyAnimatingGroups)
+            foreach (var element in CurrentlyAnimatingElements)
             {
                 element.Update(Stopper.Elapsed, new Placement());
             }
@@ -107,33 +115,18 @@ namespace Testowy.Model
 
         public void RenderStoryboardAnimation()
         {
-            foreach (var group in CurrentlyAnimatingGroups)
+            foreach (var group in CurrentlyAnimatingElements)
             {
                 group.Render();
             }
         }
 
-        private void MovePassedElements()
-        {
-            PassedAnimationGroups.AddRange(CurrentlyAnimatingGroups.Where(w => w.Route.AnimationEndTime < Stopper.Elapsed).ToList());
-            CurrentlyAnimatingGroups.RemoveAll(r => r.Route.AnimationEndTime < Stopper.Elapsed);
-        }
-
-        private void CheckStoryboard()
-        {
-            while (Storyboard.Peek().Route.AnimationStartTime < Stopper.Elapsed)
-            {
-                var element = Storyboard.Dequeue();
-                CurrentlyAnimatingGroups.Add(element);
-            }
-        }
-
         public void InitializeStoryboardQueue()
         {
-            Storyboard = new Queue<IAnimationElement>();
+            StoryboardQueue = new Queue<IAnimationElement>();
             foreach (var element in AnimationElements.OrderBy(o => o.Route.AnimationStartTime))
             {
-                Storyboard.Enqueue(element);
+                StoryboardQueue.Enqueue(element);
             }
         }
 
@@ -157,30 +150,41 @@ namespace Testowy.Model
             return toReturn;
         }
 
-        public void RefreshCurrentlyAnimatingElementList()
+        public void Refresh()
         {
-            Stopper.Stop();
+            //Stopper.Stop();
 
             InitializeStoryboardQueue();
 
-            ProgressStoryboardAnimation();
+            ProgressStoryboard();
             //ProgressStoryboardAnimation();//you could be used again to improve performance
 
-            //CurrentlyAnimatingGroups = new List<AnimationGroupElement>();
-            //CurrentlyAnimatingGroups = AnimationGroupElements.Where(w => w.GroupRoute.AnimationStartTime >= Stopper.Elapsed && w.GroupRoute.AnimationEndTime <= Stopper.Elapsed).ToList();
-            //PassedAnimationGroups = new List<AnimationGroupElement>();
-
-            Stopper.Start();
+            //Stopper.Start();
         }
 
-        public void OrderAllAnimationElements()
-        {
-            AnimationElements = AnimationElements.OrderBy(o => o.Route.AnimationStartTime).ToList();
-        }
-
-        internal void RegisterPlayToTimeSpan(TimeSpan to)
+        public void RegisterPlayToTimeSpan(TimeSpan to)
         {
             _playToTimeSpan = to;
+        }
+
+        private void PushPassedElements()
+        {
+            PassedAnimationElements.AddRange(CurrentlyAnimatingElements.Where(w => w.Route.AnimationEndTime < Stopper.Elapsed).ToList());
+            CurrentlyAnimatingElements.RemoveAll(r => r.Route.AnimationEndTime < Stopper.Elapsed);
+        }
+
+        private void PushAwaitingAnimationElements()
+        {
+            while (StoryboardQueue.Peek().Route.AnimationStartTime < Stopper.Elapsed)
+            {
+                var element = StoryboardQueue.Dequeue();
+                CurrentlyAnimatingElements.Add(element);
+            }
+        }
+
+        private void OrderAnimationElements()
+        {
+            AnimationElements = AnimationElements.OrderBy(o => o.Route.AnimationStartTime).ToList();
         }
 
         //internal AnimationGroupElement SearchForAnimationGroupElement(string graphicName)

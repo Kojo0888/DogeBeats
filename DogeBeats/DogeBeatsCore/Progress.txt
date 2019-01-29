@@ -168,7 +168,12 @@ x  Think - if the GameGlobal class idea is better than static classes.
 	Moving to XUnit testing framework. Better information (ex. StackOverflow exception visibility). Console + VS support.
 	All tests passed
 
-29_01_2019:
+29_01_2019: (Late work)
+	TimeLine renaming & little fixes (Nothing to test in Overall yet)
+	TimeLine Panel implemeentation looks terrible.
+	Static hubed TimeLineEditor
+℗	TimeLine
+℗	TimeLineEditor
 
 _________________________________________________________________________________________________
 
@@ -188,6 +193,7 @@ TODO Notes:
 	℗	Triangle
 ○	Logging
 ℗	TimeLine
+℗	TimeLineEditor
 ○	SoundItem Sound playing implementation
 ○	Placement
 ○	AnimationRoute - PositionUpdateCalculations
@@ -200,7 +206,7 @@ TODO Notes:
 ○	Analyze & Think - Better way for TimeLineEditor panel implementation (Parsing Specifically)
 ○	Think - Selector
 ○	Think - Group Placement Width & Heigth (interpreted as scale)?
-○	
+○	Think - Creating PanelContainer for TimeLineEditor
 ○	
 ○	
 ○	

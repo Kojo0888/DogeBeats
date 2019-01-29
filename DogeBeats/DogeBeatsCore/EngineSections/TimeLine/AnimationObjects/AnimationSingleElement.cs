@@ -5,6 +5,7 @@ using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
 using DogeBeats.Other;
 using DogeBeats.Renderer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -26,6 +27,7 @@ namespace Testowy.Model
 
         public string Name { get; set; }
 
+        [JsonIgnore]
         public string GraphicName { get; set; }
 
         public AnimationSingleElement()

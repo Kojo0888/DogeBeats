@@ -10,6 +10,7 @@ using Xunit;
 
 namespace DogeBeats.EngineSections.Resources.Centres.Tests
 {
+    [Collection("Synchronical")]
     public class CentreFileBaseTests
     {
         CentreFileBase<SoundItem> centreFileBase = new CentreFileBase<SoundItem>("FileCentreTest");
