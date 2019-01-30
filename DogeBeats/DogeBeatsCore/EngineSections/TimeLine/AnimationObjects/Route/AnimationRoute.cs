@@ -38,6 +38,8 @@ namespace Testowy.Model
             var frameSlider = GetFrameSlider(currentStopperTime);
             Placement newPlacement = new Placement();
 
+            if (frameSlider.NextFrame == null && currentStopperTime > CalculateAnimationTime())
+                throw new Exception("Nesu Out of Animation Duration Time (Parent probably)");
             //TODO: Remake is needed
             //newPlacement.X += 
             
@@ -57,14 +59,14 @@ namespace Testowy.Model
         public AnimationRouteFrameSlider GetFrameSlider(TimeSpan currentStopperTime)
         {
             AnimationRouteFrameSlider slider = new AnimationRouteFrameSlider();
-            if(currentStopperTime < AnimationStartTime)
-            {
-                if(Frames != null && Frames.Count > 0)
-                    slider.NextFrame = Frames[0];
-                return slider;
-            }
+            //if(currentStopperTime < AnimationStartTime)
+            //{
+            //    if(Frames != null && Frames.Count > 0)
+            //        slider.NextFrame = Frames[0];
+            //    return slider;
+            //}
 
-            TimeSpan time = currentStopperTime - AnimationStartTime;//lub odwrotnie
+            TimeSpan time = currentStopperTime;// - AnimationStartTime;//lub odwrotnie
 
             for (int i = 0; i < Frames.Count; i++)
             {

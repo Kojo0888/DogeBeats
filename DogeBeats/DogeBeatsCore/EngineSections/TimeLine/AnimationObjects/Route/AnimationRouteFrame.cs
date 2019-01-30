@@ -35,6 +35,11 @@ namespace Testowy.Model
             DurationTime = new TimeSpan(0, 0, 0, 0, 50);
         }
 
+        public AnimationRouteFrame()
+        {
+            CheckpointPosition = new Placement();
+        }
+
         public TimeSpan GetDurationTime()
         {
             return FrameTime;

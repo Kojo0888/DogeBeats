@@ -175,6 +175,10 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	TimeLine
 ℗	TimeLineEditor
 
+30_01_2019: (Late work)
+℗	TimeLine - Integration Tests & fixes (Preparing test obejct) 
+	- one issue left: Increaasing Animation Group Element Animation time, based on child Animation element times
+
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -207,7 +211,7 @@ TODO Notes:
 ○	Think - Selector
 ○	Think - Group Placement Width & Heigth (interpreted as scale)?
 ○	Think - Creating PanelContainer for TimeLineEditor
-○	
+○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
 ○	
 ○	
 ○	

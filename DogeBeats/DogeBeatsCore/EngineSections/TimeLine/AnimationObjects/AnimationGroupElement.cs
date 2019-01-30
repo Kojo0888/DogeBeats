@@ -48,7 +48,7 @@ namespace Testowy.Model
 
         public void Update(TimeSpan currentStopperTime, Placement parentPlacement)
         {
-            TimeSpan elementTime = Route.AnimationStartTime.Subtract(currentStopperTime);
+            TimeSpan elementTime = currentStopperTime.Subtract(Route.AnimationStartTime);
             //TODO Verify this timeSpan. Probably some if sstatements needed
 
             Placement = Route.CalculatePlacement(currentStopperTime);

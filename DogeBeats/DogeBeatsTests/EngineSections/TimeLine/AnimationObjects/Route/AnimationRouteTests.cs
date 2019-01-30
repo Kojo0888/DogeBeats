@@ -43,7 +43,7 @@ namespace Testowy.Model.Tests
         [Fact]
         public void GetFrameSliderTest()
         {
-            var slider = route.GetFrameSlider(new TimeSpan(0,0,30));
+            var slider = route.GetFrameSlider(new TimeSpan(0,0,7));
             if (slider.PreviousFrame != route.Frames.ElementAt(0) ||
                 slider.CurrentFrame != route.Frames.ElementAt(1) ||
                 slider.NextFrame != route.Frames.ElementAt(2))

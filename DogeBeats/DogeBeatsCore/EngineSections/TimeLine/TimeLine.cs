@@ -19,14 +19,15 @@ namespace Testowy.Model
 {
     public class TimeLine : INamedElement
     {
+        [JsonIgnore]
         public DStopper Stopper = new DStopper();
 
         [JsonIgnore]
-        private Queue<IAnimationElement> StoryboardQueue = new Queue<IAnimationElement>();
+        public Queue<IAnimationElement> StoryboardQueue = new Queue<IAnimationElement>();
         [JsonIgnore]
-        private List<IAnimationElement> CurrentlyAnimatingElements = new List<IAnimationElement>();
+        public List<IAnimationElement> CurrentlyAnimatingElements = new List<IAnimationElement>();
         [JsonIgnore]
-        private List<IAnimationElement> PassedAnimationElements = new List<IAnimationElement>();
+        public List<IAnimationElement> PassedAnimationElements = new List<IAnimationElement>();
 
         public List<IAnimationElement> AnimationElements  = new List<IAnimationElement>();
 
@@ -45,7 +46,9 @@ namespace Testowy.Model
 
         public void ManualUpdate(NameValueCollection values)
         {
+            StaticHub.TimeLineCentre.RenameElement(this, Name, values["Name"]);
             Name = ManualUpdaterParser.Parse(values["Name"], Name);
+
             MusicName = ManualUpdaterParser.Parse(values["MusicName"], MusicName);
             MusicTrack = StaticHub.SoundCentre.Get(MusicName);
         }
@@ -53,8 +56,8 @@ namespace Testowy.Model
         public static List<string> GetKeysManualUpdate()
         {
             return new List<string>() {
+                "Name",
                 "MusicName",
-                "TimeLineName"
             };
         }
 
@@ -175,10 +178,16 @@ namespace Testowy.Model
 
         private void PushAwaitingAnimationElements()
         {
-            while (StoryboardQueue.Peek().Route.AnimationStartTime < Stopper.Elapsed)
+            if(StoryboardQueue.Count > 0)
             {
-                var element = StoryboardQueue.Dequeue();
-                CurrentlyAnimatingElements.Add(element);
+                while (StoryboardQueue.Peek().Route.AnimationStartTime < Stopper.Elapsed)
+                {
+                    var element = StoryboardQueue.Dequeue();
+                    CurrentlyAnimatingElements.Add(element);
+
+                    if (StoryboardQueue.Count == 0)
+                        break;
+                }
             }
         }
 
