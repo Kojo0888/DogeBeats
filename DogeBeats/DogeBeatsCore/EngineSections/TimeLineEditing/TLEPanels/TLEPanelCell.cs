@@ -25,12 +25,12 @@ namespace DogeBeats.Modules.TimeLines
         public Placement Placement { get; set; }
         public string GraphicName { get; set; }
 
-        public bool Selected { get; set; }
+        //public bool Selected { get; set; }
 
         internal static TLEPanelCell Parse(ITLEPanelCellElement element)
         {
             TLEPanelCell cell = new TLEPanelCell();
-            cell.GraphicName = GraphicProxy.GenerateElementName();
+            cell.GraphicName = GraphicProxy.GenerateGraphicName();
             cell.AnimationElement = element;
             cell.Placement = new Placement();
             return cell;

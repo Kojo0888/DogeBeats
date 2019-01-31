@@ -31,17 +31,18 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void NextPanelSection()
         {
-            StaticHub.TimeLineEditor.MoveForwardPanelTimeSection();
+            //StaticHub.TimeLineEditor.MoveForwardPanelTimeSection();
         }
 
         public void PreviousPanelSection()
         {
-            StaticHub.TimeLineEditor.MoveBackPanelTimeSection();
+            //StaticHub.TimeLineEditor.MoveBackPanelTimeSection();
         }
 
         public TLEPanel GetPanel(string panelName)
         {
-            return StaticHub.TimeLineEditor.GetPanel(panelName);
+            //return StaticHub.TimeLineEditor.GetPanel(panelName);
+            throw new NotImplementedException();
         }
 
         public void LeftMouseClickOnPanelElement(string elementName)
@@ -56,7 +57,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void LeftMouseOnDropClickOnPanelElement(string elementName, float wayPrecentage)
         {
-            StaticHub.TimeLineEditor.MoveTimeForPanelElement(elementName, wayPrecentage);
+            //StaticHub.TimeLineEditor.MoveTimeForPanelElement(elementName, wayPrecentage);
         }
 
         public void RightMouseClickOnPanelElement(string elementName)
@@ -66,14 +67,14 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void UpdatePlacement(string graphicName, Placement placement)
         {
-            StaticHub.TimeLineEditor.UpdatePlacement(graphicName, placement);
-            GraphicProxy.UpdatePlacement(graphicName, placement);
+            //StaticHub.TimeLineEditor.UpdatePlacement(graphicName, placement);
+            //GraphicProxy.UpdatePlacement(graphicName, placement);
         }
 
         public void UpdateRoutePlacement(string graphicName, Placement placement)
         {
-            StaticHub.TimeLineEditor.UpdateRoutePlacement(graphicName, placement);
-            GraphicProxy.UpdatePlacement(graphicName, placement);
+            //StaticHub.TimeLineEditor.UpdateRoutePlacement(graphicName, placement);
+            //GraphicProxy.UpdatePlacement(graphicName, placement);
         }
 
         public void AddAnimationElement(string graphicGroupName)
@@ -118,7 +119,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void UpdateAnimationElementManual(string graphicName, NameValueCollection values)
         {
-            StaticHub.TimeLineEditor.UpdateManual(graphicName, values);
+            //StaticHub.TimeLineEditor.UpdateManual(graphicName, values);
         }
 
         //public List<string> GetKeysForManualUpdate(Type type)

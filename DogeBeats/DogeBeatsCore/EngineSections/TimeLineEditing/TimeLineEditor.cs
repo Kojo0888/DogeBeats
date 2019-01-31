@@ -2,6 +2,7 @@
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using DogeBeats.Model;
 using DogeBeats.Modules.TimeLines;
+using DogeBeats.Renderer;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -62,12 +63,13 @@ namespace DogeBeats.Modules
             {
                 AnimationGroupElement group = panelElement as AnimationGroupElement;
                 group.Elements.Add(element);
+                PanelHub.InitializeAnimationElementPanel(group);
+                TimeLine.Refresh();
             }
             else
                 throw new Exception("Nesu... zjebales");
 
-            TimeLine.Refresh();
-            //PanelElement.RefreshPanelCells();
+            //PanelHub.Refresh();
         }
 
         public void AddNewAnimationGroup(string groupName, string parentGroupName = "")
@@ -84,7 +86,7 @@ namespace DogeBeats.Modules
             }
 
             TLEPanelCell timedElement = TLEPanelCell.Parse(element);
-            PanelHub.PanelGroup.AllElements.Add(timedElement);
+            PanelHub.PanelGroup.Elements.Add(timedElement);
 
             TimeLine.Refresh();
             //PanelGroup.RefreshPanelCells();
@@ -101,6 +103,35 @@ namespace DogeBeats.Modules
                     TimeLine.AnimationElements.Remove(group);
                 }
             }
+        }
+
+        public void RemovePanelElement(string graphicName)
+        {
+            var elementToRemove = PanelHub.RemovePanelElement(graphicName);
+            RemoveTimeLineElement(elementToRemove);
+            TimeLine.Refresh();
+        }
+
+        public void SetTimeCursorToPrecentage(float precentage)
+        {
+            var time = PanelHub.SetTimeCursorToPrecentage(precentage);
+            bool running = TimeLine.Stopper.IsRunning;
+            TimeLine.Stopper.Stop();
+            TimeLine.Stopper.Elapsed = time;
+            if (running)
+                TimeLine.Stopper.Start();
+        }
+
+        public void SaveTimeLine()
+        {
+            StaticHub.TimeLineCentre.Save(TimeLine);
+        }
+
+        public void LoadTimeLine(string timelineName)
+        {
+            TimeLine timeline = StaticHub.TimeLineCentre.Get(timelineName);
+            if (timeline != null)
+                AttachTimeLineToEditor(timeline);
         }
 
         //public  List<string> GetKeysForManualUpdate(Type type)

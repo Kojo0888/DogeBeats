@@ -24,7 +24,7 @@ namespace DogeBeats.Renderer
 
         }
 
-        internal static string GenerateElementName(AnimationSingleElement animationElement)
+        internal static string GenerateGraphicName(AnimationSingleElement animationElement)
         {
             string name = animationElement.Shape.GetType().Name.ToString() + "_" + (GraphicElementNameIndex++);
             if (animationElement.Prediction)
@@ -33,13 +33,13 @@ namespace DogeBeats.Renderer
                 return "EAE_" + name;
         }
 
-        internal static string GenerateElementName(AnimationGroupElement animationElement)
+        internal static string GenerateGraphicName(AnimationGroupElement animationElement)
         {
             string name = animationElement.GetType().Name.ToString() + "_" + (GraphicElementNameIndex++);
             return "GE_" + name;
         }
 
-        internal static string GenerateElementName()
+        internal static string GenerateGraphicName()
         {
             return "Object_" + (GraphicElementNameIndex++);
         }
@@ -48,7 +48,7 @@ namespace DogeBeats.Renderer
         {
             string shapeName = element.GetType().Name;
             byte[] resourceBytes = StaticHub.ResourceManager.GetResource(element.Shape.GetType().Name, shapeName);
-            string gameObjectName = GenerateElementName(element);
+            string gameObjectName = GenerateGraphicName(element);
 
             GameObject gameObject = PrepareGameObject(gameObjectName);
             ShapesOnScreen.Add(gameObjectName, gameObject);

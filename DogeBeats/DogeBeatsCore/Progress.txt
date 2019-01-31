@@ -186,7 +186,13 @@ x  Think - if the GameGlobal class idea is better than static classes.
 	℗	Splitting Panel logic from TimeLineEditor
 	Minor Architecture change
 
-
+1_02_2019:
+	Fixed compilation issues
+℗	TimeLineEditor - Adding new Elements
+℗	Verify TLEPanel Selection mechanism
+℗	Review TLEPanel logic
+℗	TLEPanel System rework v2 
+℗	TLEPanelCells - Moving on Panel (Time related) 
 
 _________________________________________________________________________________________________
 
@@ -221,8 +227,31 @@ TODO Notes:
 ○	Think - Group Placement Width & Heigth (interpreted as scale)?
 ○	Think - Creating PanelContainer for TimeLineEditor
 ○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
-○	
-○	
-○	
+
+○	TimeLineEditor
+○	TimeLineEditor - Adding new Elements
+	○	Group
+	○	Element
+	○	Route
+	○	Beat
+○	TimeLineEditor - Updating elements
+	○	Group
+	○	Element
+	○	Route
+	○	Beat
+○	TimeLineEditor - Removing elements
+	○	Group
+	○	Element
+	○	Route
+	○	Beat
+○	TimeLineEditor - Integration Tests
+○	TimeLineEditor - Unit Tests
+○	TimeLineEditor Panel - Unit Tests
+○	TLEPanel Refresh Method
+○	Verify Graphic TimeIndicator functionality
+○	Verify TLEPanel Selection mechanism
+○	Review TLEPanel logic
+○	TLEPanel System rework v2 
+○	TLEPanelCells - Moving on Panel (Time related) 
 ○	
 ○	

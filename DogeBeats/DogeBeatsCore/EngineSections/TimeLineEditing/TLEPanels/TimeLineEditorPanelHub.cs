@@ -61,25 +61,30 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
-        private void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationSingleElement element)
+        internal void Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationSingleElement element)
         {
             PanelRoute = new TLEPanel();
             PanelRoute.StartTime = PanelOffsetTime;
             PanelRoute.EndTime = PanelOffsetTime + PanelWidthTime;
             var timedElements = TLEPanelCell.Parse(element.Route.Frames);
-            PanelRoute.InitialineElements(timedElements);
+            PanelRoute.PanelCells = timedElements;
             PanelRoute.Height = 20;
             PanelRoute.OffsetHeight = 200;
             PanelRoute.Width = Width;
         }
 
-        private void InitializeAnimationElementPanel(AnimationGroupElement group)
+        public void InitializeAnimationElementPanel(AnimationGroupElement group)
         {
             PanelElement = new TLEPanel();
             if (group != null)
             {
                 var timedElements = TLEPanelCell.Parse(group.Elements);
-                PanelElement.InitialineElements(timedElements);
+                PanelElement.PanelCells = timedElements;
             }
             PanelElement.TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
             PanelElement.StartTime = PanelOffsetTime;
@@ -125,14 +130,10 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         //    //PanelGroup.RefreshPanelCells();
         //}
 
-        public void SetTimeCursorToPrecentage(float precentage)
+        public TimeSpan SetTimeCursorToPrecentage(float precentage)
         {
             TimeSpan time = new TimeSpan(PanelOffsetTime.Ticks + (long)(PanelWidthTime.Ticks * precentage));
-            bool running = TimeLine.Stopper.IsRunning;
-            TimeLine.Stopper.Stop();
-            TimeLine.Stopper.Elapsed = time;
-            if (running)
-                TimeLine.Stopper.Start();
+            return time;
         }
 
         public void UpdateManual(string graphicName, NameValueCollection values)
@@ -183,18 +184,6 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 PanelBeat.GetCellElementBasedOnGraphicName(graphicName);
         }
 
-        public void SaveTimeLine()
-        {
-            StaticHub.TimeLineCentre.Save(TimeLine);
-        }
-
-        public void LoadTimeLine(string timelineName)
-        {
-            TimeLine timeline = StaticHub.TimeLineCentre.Get(timelineName);
-            if (timeline != null)
-                AttachTimeLineToEditor(timeline);
-        }
-
         //private  void RefreshAllPanelCells()
         //{
         //    PanelGroup.RefreshPanelCells();
@@ -202,26 +191,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         //    PanelBeat.RefreshPanelCells();
         //}
 
-        public void UpdateRoutePlacement(string graphicName, Placement placement)
-        {
-            var refferencedObject = PanelElement.GetCellElementBasedOnGraphicName(graphicName);
-            if (refferencedObject as AnimationRouteFrame == null)
-                return;
-
-            AnimationRouteFrame element = refferencedObject as AnimationRouteFrame;
-            element.CheckpointPosition = placement;
-
-            TimeLine.Refresh();
-        }
-
-        public void UpdatePlacement(string graphicName, Placement placement)
-        {
-            //UpdateGroupPlacement(graphicName, placement);
-            //UpdateElementPlacement(graphicName, placement);
-            UpdateRoutePlacement(graphicName, placement);
-
-            TimeLine.Refresh();
-        }
+   
 
         //public  void UpdateGroupPlacement(string graphicName, Placement placement)
         //{
@@ -270,17 +240,14 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         //}
 
         //No intel about succesful removal
-        public void RemovePanelElement(string graphicName)
+        public ITLEPanelCellElement RemovePanelElement(string graphicName)
         {
             ITLEPanelCellElement elementToRemove = GetObjectFromAllPanelCellElementName(graphicName);
-            RemoveTimeLineElement(elementToRemove);
-
             PanelElement.RemovePanelCell(graphicName);
             PanelGroup.RemovePanelCell(graphicName);
             PanelBeat.RemovePanelCell(graphicName);
             PanelRoute.RemovePanelCell(graphicName);
-
-            TimeLine.Refresh();
+            return elementToRemove;
         }
 
 

@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="EngineSections\Resources\Centres\CentreFileBaseTests.cs" />
     <Compile Include="EngineSections\Resources\Centres\CentreSerializationBaseTests.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TLEPanelTests.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\AnimationGroupElementTests.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\AnimationSingleElementTests.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRouteTests.cs" />
