@@ -147,9 +147,12 @@ namespace DogeBeats.Modules.TimeLines
             return new KeyValuePair<TimeSpan, List<TLEPanelCell>>(timespanKey, GrouppedElements[timespanKey]);
         }
 
-        public ITLEPanelCellElement GetObjectFromCellElementName(string elementName)
+        public ITLEPanelCellElement GetCellElementBasedOnGraphicName(string graphicName)
         {
-            TLEPanelCell cell = PanelCells.Where(w => w.GraphicName == elementName).FirstOrDefault();
+            if (!string.IsNullOrEmpty(graphicName))
+                return null;
+
+            TLEPanelCell cell = PanelCells.Where(w => w.GraphicName == graphicName).FirstOrDefault();
             if (cell != null)
             {
                 return cell.AnimationElement;
@@ -157,9 +160,12 @@ namespace DogeBeats.Modules.TimeLines
             return null;
         }
 
-        public TLEPanelCell GetCell(string elementName)
+        public TLEPanelCell GetCell(string graphicName)
         {
-            return PanelCells.FirstOrDefault(f => f.GraphicName == elementName);
+            if (!string.IsNullOrEmpty(graphicName))
+                return null;
+
+            return PanelCells.FirstOrDefault(f => f.GraphicName == graphicName);
         }
 
         public void SelectPanelCell(string elementName)

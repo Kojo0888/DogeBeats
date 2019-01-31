@@ -87,6 +87,23 @@ namespace Testowy.Model
             ProgressStoryboard();
         }
 
+        public void Verify()
+        {
+            FixGroupAnimationTime();
+        }
+
+        public void FixGroupAnimationTime()
+        {
+            foreach (var animationElement in AnimationElements)
+            {
+                if(animationElement is AnimationGroupElement)
+                {
+                    var group = animationElement as AnimationGroupElement;
+                    group.FixParentAnimationTime();
+                }
+            }
+        }
+
         public void ProgressStoryboard()
         {
             if (!Stopper.IsRunning)

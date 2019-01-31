@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EngineSections\Shared\NesuException.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TimeLineEditorPanelHub.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\IAnimationElement.cs" />
     <Compile Include="EngineSections\Resources\Centres\CentreFileBase.cs" />
     <Compile Include="EngineSections\Resources\Centres\CentreSerializationBase.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="EngineSections\TimeLine\Beat.cs" />
     <Compile Include="EngineSections\TimeLine\BeatGuide.cs" />
     <Compile Include="EngineSections\TimeLineEditing\EditAnimationElementType.cs" />
-    <Compile Include="EngineSections\TimeLineEditing\TLEPanel\ITLEPanelCellElement.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\ITLEPanelCellElement.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRoute.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRouteFrame.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\Route\AnimationRouteFrameSlider.cs" />
@@ -84,9 +85,9 @@
     <Compile Include="EngineSections\TimeLine\TimeLine.cs" />
     <Compile Include="EngineSections\TimeLineEditing\TimeLineEditor.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\IGraphicElement.cs" />
-    <Compile Include="EngineSections\TimeLineEditing\TLEPanel\TLEPanel.cs" />
-    <Compile Include="EngineSections\TimeLineEditing\TLEPanel\TLEPanelCell.cs" />
-    <Compile Include="EngineSections\TimeLineEditing\TLEPanel\TLEPanelTimeGraphicIndicator.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TLEPanel.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TLEPanelCell.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TLEPanelTimeGraphicIndicator.cs" />
     <Compile Include="Misc\DDictionary.cs" />
     <Compile Include="Scripts\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

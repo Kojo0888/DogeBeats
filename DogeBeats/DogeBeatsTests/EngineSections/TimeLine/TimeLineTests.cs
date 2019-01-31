@@ -122,6 +122,7 @@ namespace DogeBeatsTests.EngineSections.TimeLine
             timeLine.Stopper.Elapsed = new TimeSpan(0,0,0, sec);
             timeLine.StartStoryboard();
 
+            timeLine.Verify();
             timeLine.ProgressStoryboard();
 
             timeLine.PauseStoryboard(false);

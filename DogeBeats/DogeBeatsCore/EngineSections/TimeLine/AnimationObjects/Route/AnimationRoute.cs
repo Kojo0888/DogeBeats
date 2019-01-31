@@ -33,6 +33,20 @@ namespace Testowy.Model
             StartPlacement = new Placement();
         }
 
+        public static IEnumerable<string> GetKeysManualUpdate()
+        {
+            List<string> keys = new List<string>();
+            keys.Add("Name");
+            keys.Add("AnimationStartTime");
+            return keys;
+        }
+
+        public void UpdateManual(NameValueCollection values)
+        {
+            Name = ManualUpdaterParser.Parse(values["Name"], Name);
+            AnimationStartTime = ManualUpdaterParser.Parse(values["AnimationStartTime"], AnimationStartTime);
+        }
+
         internal Placement CalculatePlacement(TimeSpan currentStopperTime)
         {
             var frameSlider = GetFrameSlider(currentStopperTime);
@@ -67,7 +81,7 @@ namespace Testowy.Model
             //}
 
             TimeSpan time = currentStopperTime;// - AnimationStartTime;//lub odwrotnie
-
+            bool breaked = false;
             for (int i = 0; i < Frames.Count; i++)
             {
                 var frame = Frames[i];
@@ -78,6 +92,9 @@ namespace Testowy.Model
                     slider.CurrentFrame = frame;
                     if (i + 1 < Frames.Count)
                         slider.NextFrame = Frames[i + 1];
+
+                    breaked = true;
+                    break;
                 }
                 else
                 {
@@ -85,22 +102,24 @@ namespace Testowy.Model
                 }
             }
 
+            if (!breaked)
+                slider.PreviousFrame = Frames.LastOrDefault();
+
             return slider;
         }
 
-
-        public static IEnumerable<string> GetKeysManualUpdate()
+        public void DuplicateLastFrame(TimeSpan ts)
         {
-            List<string> keys = new List<string>();
-            keys.Add("Name");
-            keys.Add("AnimationStartTime");
-            return keys;
-        }
-
-        public void UpdateManual(NameValueCollection values)
-        {
-            Name = ManualUpdaterParser.Parse(values["Name"], Name);
-            AnimationStartTime = ManualUpdaterParser.Parse(values["AnimationStartTime"], AnimationStartTime);
+            var slider = GetFrameSlider(ts);
+            var newLastFrame = new AnimationRouteFrame();
+            newLastFrame.Amplitude = slider.PreviousFrame.Amplitude;
+            newLastFrame.CheckpointPosition = slider.PreviousFrame.CheckpointPosition;
+            newLastFrame.Cycles = slider.PreviousFrame.Cycles;
+            newLastFrame.SpeedAmplitude = slider.PreviousFrame.SpeedAmplitude;
+            newLastFrame.SpeedCycles = slider.PreviousFrame.SpeedCycles;
+            newLastFrame.FrameTime = ts;
+            newLastFrame.SpeedPhase = slider.PreviousFrame.SpeedPhase;
+            Frames.Add(newLastFrame);
         }
     }
 }

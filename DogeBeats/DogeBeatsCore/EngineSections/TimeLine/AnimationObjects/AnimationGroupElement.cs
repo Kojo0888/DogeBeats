@@ -101,6 +101,18 @@ namespace Testowy.Model
             Prediction = ManualUpdaterParser.Parse(values["Prediction"], Prediction);
         }
 
+        public void FixParentAnimationTime()
+        {
+            TimeSpan ts = Route.AnimationStartTime;
+            foreach (var element in Elements)
+            {
+                ts += element.GetDurationTime();
+            }
+
+            if (Route.CalculateAnimationTime() < ts)
+                Route.DuplicateLastFrame(ts);
+        }
+
         public static IEnumerable<string> GetKeysManualUpdate()
         {
             List<string> keys = new List<string>();

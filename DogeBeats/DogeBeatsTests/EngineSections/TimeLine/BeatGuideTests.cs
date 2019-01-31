@@ -56,5 +56,14 @@ namespace DogeBeats.Modules.TimeLines.Tests
             if (guide.Beats.Count > 0)
                 throw new Exception("Assert Fails");
         }
+
+        //[Fact]
+        //public void GetTLECellElementsTest()
+        //{
+        //    var ts = new TimeSpan(0, 0, 0, 1);
+        //    guide.RegisterBeat(ts);
+        //    var TLEBeats = guide.GetTLECellElements();
+        //    Assert.Single(TLEBeats);
+        //}
     }
 }

@@ -21,5 +21,15 @@ namespace DogeBeats.Modules.TimeLines
             if (beat != null)
                 Beats.Remove(beat);
         }
+
+        public List<ITLEPanelCellElement> GetTLECellElements()
+        {
+            List<ITLEPanelCellElement> toReturn = new List<ITLEPanelCellElement>();
+            foreach (var beat in Beats)
+            {
+                toReturn.Add(beat as ITLEPanelCellElement);
+            }
+            return toReturn;
+        }
     }
 }

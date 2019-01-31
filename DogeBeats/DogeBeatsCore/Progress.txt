@@ -179,6 +179,15 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	TimeLine - Integration Tests & fixes (Preparing test obejct) 
 	- one issue left: Increaasing Animation Group Element Animation time, based on child Animation element times
 
+31_01_2019:
+╦	TimeLine - Structure Verification [All green]
+℗	TimeLineEditor [Uncompillable]
+	℗	Applysing System rework v2 
+	℗	Splitting Panel logic from TimeLineEditor
+	Minor Architecture change
+
+
+
 _________________________________________________________________________________________________
 
 TODO Legend:
