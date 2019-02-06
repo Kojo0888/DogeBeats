@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DogeBeats.Other;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using Testowy.Model;
 
 namespace DogeBeats.Modules.TimeLines
 {
-    public class TLEPanel
+    public class TLEPanel : IGraphicElement
     {
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
@@ -16,9 +17,6 @@ namespace DogeBeats.Modules.TimeLines
         //public List<TLEPanelCell> Elements { get; set; } = new List<TLEPanelCell>();
         public Dictionary<TimeSpan, List<TLEPanelCell>> StackedElements { get; set; } = new Dictionary<TimeSpan, List<TLEPanelCell>>();
 
-        public float Height { get; set; }
-        public float OffsetHeight { get; set; }
-        public float Width { get; set; }
         public string PanelName { get; set; }
 
         public List<TLEPanelCell> PanelCells { get; set; }
@@ -26,6 +24,8 @@ namespace DogeBeats.Modules.TimeLines
         public TLEPanelCell SelectedPanelCell { get; set; }
 
         public bool Selected { get; set; }
+        public string GraphicName { get; set; }
+        public Placement Placement { get; set; }
 
         public void Refresh()
         {
@@ -104,7 +104,7 @@ namespace DogeBeats.Modules.TimeLines
             {
                 var diffticks = EndTime.Ticks - StartTime.Ticks;
                 var numberOfPossibleCellsOnWidth = (((float)diffticks) / TimeCellWidth.Ticks);
-                cellWidth = Width / numberOfPossibleCellsOnWidth;
+                cellWidth = Placement.Width / numberOfPossibleCellsOnWidth;
             }
 
             var timestampWithGroup = GetElementGroupForTimeSpan(element.AnimationElement.GetStartTime());
@@ -115,8 +115,8 @@ namespace DogeBeats.Modules.TimeLines
 
             Placement placement = new Placement();
             placement.X = orderInderForGroupKey * cellWidth;
-            placement.Height = Height / timestampWithGroup.Value.Count;
-            placement.Y = OffsetHeight + Height - (Height * indexInGroup);
+            placement.Height = Placement.Height / timestampWithGroup.Value.Count;
+            placement.Y = Placement.Y + Placement.Height - (Placement.Height * indexInGroup);
             placement.Width = cellWidth;
             placement.Rotation = 0;
 
@@ -129,7 +129,7 @@ namespace DogeBeats.Modules.TimeLines
             if(frame != null)
             {
                 var diffTime = EndTime - StartTime;
-                var cellWidth = ((float)frame.FrameTime.Ticks / diffTime.Ticks) * Width;
+                var cellWidth = ((float)frame.FrameTime.Ticks / diffTime.Ticks) * Placement.Width;
                 return cellWidth;
             }
 

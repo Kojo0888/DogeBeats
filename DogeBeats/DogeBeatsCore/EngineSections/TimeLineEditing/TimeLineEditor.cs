@@ -58,7 +58,7 @@ namespace DogeBeats.Modules
         public void AddNewAnimationElement(string graphicGroupName)
         {
             AnimationSingleElement element = new AnimationSingleElement();
-            ITLEPanelCellElement panelElement = PanelHub.PanelGroup.GetCellElementBasedOnGraphicName(graphicGroupName);
+            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().GetCellElementBasedOnGraphicName(graphicGroupName);
             if (panelElement as AnimationGroupElement != null)
             {
                 AnimationGroupElement group = panelElement as AnimationGroupElement;
@@ -76,7 +76,7 @@ namespace DogeBeats.Modules
         {
             AnimationGroupElement element = new AnimationGroupElement();
             //TODO this crap
-            ITLEPanelCellElement panelElement = PanelHub.PanelGroup.GetCellElementBasedOnGraphicName (parentGroupName);
+            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().GetCellElementBasedOnGraphicName (parentGroupName);
             if(panelElement == null)
                TimeLine.AnimationElements.Add(element);
             else
@@ -86,7 +86,8 @@ namespace DogeBeats.Modules
             }
 
             TLEPanelCell timedElement = TLEPanelCell.Parse(element);
-            PanelHub.PanelGroup.Elements.Add(timedElement);
+            PanelHub.Refresh();
+            //PanelHub.PanelGroup.Elements.Add(timedElement);
 
             TimeLine.Refresh();
             //PanelGroup.RefreshPanelCells();
@@ -107,7 +108,7 @@ namespace DogeBeats.Modules
 
         public void RemovePanelElement(string graphicName)
         {
-            var elementToRemove = PanelHub.RemovePanelElement(graphicName);
+            var elementToRemove = PanelHub.RemovePanelsElement(graphicName);
             RemoveTimeLineElement(elementToRemove);
             TimeLine.Refresh();
         }

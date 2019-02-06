@@ -194,6 +194,16 @@ x  Think - if the GameGlobal class idea is better than static classes.
 ℗	TLEPanel System rework v2 
 ℗	TLEPanelCells - Moving on Panel (Time related) 
 
+weekend nothing done.
+
+long break... Sleepless mode...
+
+06_02_2019:
+	Code is compillable now.
+	Changing Panel vars to dictionary type
+	Allowing for multiple GroupPanel creations (group selection queue)
+	Removed all Panels["Group"] from TLEPanelHub
+
 _________________________________________________________________________________________________
 
 TODO Legend:
