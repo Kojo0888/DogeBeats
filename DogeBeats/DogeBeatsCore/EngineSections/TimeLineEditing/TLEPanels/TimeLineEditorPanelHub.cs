@@ -117,9 +117,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 AnimationGroupElement group = refferencedObject as AnimationGroupElement;
                 if (group != null)
                 {
-                    //Placement placement = group.InitPlacement;
-                    //Placement.UpdateManual(placement, values);
-                    //group.UpdateManual(values);
+                    group.UpdateManual(values);
                 }
             }
             else if (refferencedObject as AnimationSingleElement != null)
@@ -127,9 +125,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 AnimationSingleElement element = refferencedObject as AnimationSingleElement;
                 if (element != null)
                 {
-                    //Placement placement = element.InitPlacement;
-                    //Placement.UpdateManual(placement, values);
-                    //element.UpdateManual(values);
+                    element.UpdateManual(values);
                 }
             }
             else if (refferencedObject as AnimationRouteFrame != null)
@@ -137,9 +133,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 AnimationRouteFrame route = refferencedObject as AnimationRouteFrame;
                 if (route != null)
                 {
-                    //Placement placement = route.Placement;
-                    //Placement.UpdateManual(placement, values);
-                    //AnimationRoute.UpdateManual(route, values);
+                    route.UpdateManual(values);
                 }
             }
             else if (refferencedObject as Beat != null)

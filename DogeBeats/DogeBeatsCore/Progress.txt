@@ -204,6 +204,9 @@ long break... Sleepless mode...
 	Allowing for multiple GroupPanel creations (group selection queue)
 	Removed all Panels["Group"] from TLEPanelHub
 
+7_02_2019 30mn
+	REvieving TLEPanel methods & applying fixes for logic.
+
 _________________________________________________________________________________________________
 
 TODO Legend:

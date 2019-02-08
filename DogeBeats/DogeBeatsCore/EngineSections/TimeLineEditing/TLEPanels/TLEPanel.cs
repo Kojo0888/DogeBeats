@@ -17,6 +17,8 @@ namespace DogeBeats.Modules.TimeLines
         //public List<TLEPanelCell> Elements { get; set; } = new List<TLEPanelCell>();
         public Dictionary<TimeSpan, List<TLEPanelCell>> StackedElements { get; set; } = new Dictionary<TimeSpan, List<TLEPanelCell>>();
 
+        public int PANEL_CELL_WIDTH = 10;
+
         public string PanelName { get; set; }
 
         public List<TLEPanelCell> PanelCells { get; set; }
@@ -99,7 +101,7 @@ namespace DogeBeats.Modules.TimeLines
         {
             float cellWidth = 0;
             if (TimeCellWidth == null)
-                cellWidth = CalculateDynamicCellWidth(element);
+                cellWidth = PANEL_CELL_WIDTH;//CalculateDynamicCellWidth(element);
             else
             {
                 var diffticks = EndTime.Ticks - StartTime.Ticks;
@@ -107,7 +109,8 @@ namespace DogeBeats.Modules.TimeLines
                 cellWidth = Placement.Width / numberOfPossibleCellsOnWidth;
             }
 
-            var timestampWithGroup = GetElementGroupForTimeSpan(element.AnimationElement.GetStartTime());
+            var timestampWithGroup = GetStackedElementsForTimeSpan(element.AnimationElement.GetStartTime());
+            //TODO Leaving here this needs to change
             var orderInderForGroupKey = StackedElements.Keys.ToList().IndexOf(timestampWithGroup.Key);
             var indexInGroup = timestampWithGroup.Value.IndexOf(element);
             if (indexInGroup == -1)
@@ -123,20 +126,20 @@ namespace DogeBeats.Modules.TimeLines
             return placement;
         }
 
-        public float CalculateDynamicCellWidth(TLEPanelCell element)
-        {
-            var frame = element.AnimationElement as AnimationRouteFrame;
-            if(frame != null)
-            {
-                var diffTime = EndTime - StartTime;
-                var cellWidth = ((float)frame.FrameTime.Ticks / diffTime.Ticks) * Placement.Width;
-                return cellWidth;
-            }
+        //public float CalculateDynamicCellWidth(TLEPanelCell element)
+        //{
+        //    var frame = element.AnimationElement as AnimationRouteFrame;
+        //    if(frame != null)
+        //    {
+        //        var diffTime = EndTime - StartTime;
+        //        var cellWidth = ((float)frame.FrameTime.Ticks / diffTime.Ticks) * Placement.Width;
+        //        return cellWidth;
+        //    }
 
-            throw new Exception("Nesu: Unable to calculate dynamic cell width");
-        }
+        //    throw new Exception("Nesu: Unable to calculate dynamic cell width");
+        //}
 
-        public KeyValuePair<TimeSpan, List<TLEPanelCell>> GetElementGroupForTimeSpan(TimeSpan timespan)
+        public KeyValuePair<TimeSpan, List<TLEPanelCell>> GetStackedElementsForTimeSpan(TimeSpan timespan)
         {
             var timespanKey = StackedElements.Where(w => w.Key < timespan).Max(m => m.Key);
 

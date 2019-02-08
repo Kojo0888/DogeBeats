@@ -45,6 +45,7 @@ namespace Testowy.Model
         {
             Name = ManualUpdaterParser.Parse(values["Name"], Name);
             AnimationStartTime = ManualUpdaterParser.Parse(values["AnimationStartTime"], AnimationStartTime);
+            StartPlacement.UpdateManual(values);
         }
 
         internal Placement CalculatePlacement(TimeSpan currentStopperTime)

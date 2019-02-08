@@ -89,6 +89,8 @@ namespace Testowy.Model
 
             Prediction = ManualUpdaterParser.Parse(values["Prediction"], Prediction);
             Shape = new AnimationElementShape(values["ShapeTypeName"]);
+
+            Placement.UpdateManual(values);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()

@@ -67,8 +67,9 @@ namespace Testowy.Model
             return keys;
         }
 
-        public void ManualUpdate(NameValueCollection values)
+        public void UpdateManual(NameValueCollection values)
         {
+            CheckpointPosition.UpdateManual(values);
             Amplitude = ManualUpdaterParser.Parse(values["Amplitude"], Amplitude);
             Cycles = ManualUpdaterParser.Parse(values["Cycles"], Cycles);
             SpeedAmplitude = ManualUpdaterParser.Parse(values["SpeedAmplitude"], SpeedAmplitude);

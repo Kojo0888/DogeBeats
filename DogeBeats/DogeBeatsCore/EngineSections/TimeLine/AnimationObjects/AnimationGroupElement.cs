@@ -99,6 +99,7 @@ namespace Testowy.Model
             Name = ManualUpdaterParser.Parse(values["Name"], Name);
 
             Prediction = ManualUpdaterParser.Parse(values["Prediction"], Prediction);
+            Placement.UpdateManual(values);
         }
 
         public void FixParentAnimationTime()
