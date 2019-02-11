@@ -50,6 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EngineSections\Resources\EnvironmentVariables.cs" />
     <Compile Include="EngineSections\Shared\NesuException.cs" />
     <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TimeLineEditorPanelHub.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\IAnimationElement.cs" />

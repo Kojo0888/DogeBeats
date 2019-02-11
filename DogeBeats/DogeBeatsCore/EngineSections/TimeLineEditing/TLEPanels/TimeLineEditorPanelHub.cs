@@ -57,7 +57,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         public void InitializeGraphicIdentyficator()
         {
             float panelHeight = GetAllPanelsHeight();
-            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
+            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, StaticHub.EnvironmentVariables.MainWindowWidth, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         internal void Refresh()

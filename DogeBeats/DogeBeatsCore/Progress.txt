@@ -207,6 +207,13 @@ long break... Sleepless mode...
 7_02_2019 30mn
 	REvieving TLEPanel methods & applying fixes for logic.
 
+9_02_2019: I'mm fcked up... -.-
+
+11_02_2019: (0.5h) I need to do something with myself...
+TLEPanelTimeGraphicIndicator - Review methods & applying missing ones
+Environment Variables implementation - nothing much
+
+
 _________________________________________________________________________________________________
 
 TODO Legend:

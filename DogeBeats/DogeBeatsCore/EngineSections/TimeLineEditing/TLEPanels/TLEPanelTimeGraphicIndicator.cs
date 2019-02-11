@@ -1,4 +1,5 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,15 @@ namespace DogeBeats.Modules.TimeLines
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
 
+        public float SelectedPrecentage { get; set; }
+        public TimeSpan SelectedTime { get; private set; }
+
         public float MaxWidth { get; set; }
 
-        public TLEPanelTimeGraphicIndicator(float identificatorHeight, TimeSpan startTime, TimeSpan endTime)
+        public TLEPanelTimeGraphicIndicator(float identificatorHeight, int maxWidth, TimeSpan startTime, TimeSpan endTime)
         {
+            MaxWidth = maxWidth;
+
             StartTime = startTime;
             EndTime = endTime;
             Placement = new Placement()
@@ -32,20 +38,40 @@ namespace DogeBeats.Modules.TimeLines
             };
         }
 
-        public void Move(float x)
+        public void UpdateHeight(float height)
         {
-            if (x > MaxWidth - Placement.Width)
-                x = MaxWidth - Placement.Width;
-
-            Placement.X = x;
+            Placement.Height = height;
         }
 
-        public TimeSpan GetTime()
+        public void UpdateTimeScope(TimeSpan startTime, TimeSpan endTime)
         {
-            float precentage = Placement.X * MaxWidth;
-            var diffTicks = EndTime.Ticks - StartTime.Ticks;
-            var allTicks = StartTime.Ticks + (long)(diffTicks * precentage);
-            return new TimeSpan(allTicks);
+            StartTime = startTime;
+            EndTime = endTime;
+        }
+
+        public void MoveTimeScope(TimeSpan timeDuration)
+        {
+            StartTime += timeDuration;
+            EndTime += timeDuration;
+        }
+
+        public void MovePrecentage(float precentage)//0.12
+        {
+            SelectedPrecentage = precentage;
+            var ticks = (EndTime.Ticks - StartTime.Ticks);
+            SelectedTime = new TimeSpan((long)(ticks * (double)precentage));
+
+            Placement.X = precentage * MaxWidth;
+        }
+
+        public void MovePosition(float x)
+        {
+            if (x < 0 || x > MaxWidth)
+                return;
+
+            var precentage = x / MaxWidth;
+
+            MovePrecentage(precentage);
         }
     }
 }

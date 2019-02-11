@@ -31,6 +31,8 @@ namespace DogeBeats.EngineSections.Resources
 
         public static TimeLineEditor TimeLineEditor { get; set; } = new TimeLineEditor();
 
+        public static EnvironmentVariables EnvironmentVariables = new EnvironmentVariables();
+
         //public static ManualUpdater ManualUpdater { get; set; } = new ManualUpdater();
     }
 }
