@@ -60,11 +60,6 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, StaticHub.EnvironmentVariables.MainWindowWidth, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
-        internal void Refresh()
-        {
-            //throw new NotImplementedException();
-        }
-
         public void InitializeAnimationRoutePanel(AnimationGroupElement group, AnimationSingleElement element)
         {
             Panels["Route"] = InitializePanelWidthDefaultSettings();
@@ -74,12 +69,24 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             Panels["Route"].Placement.Y = 200;
         }
 
-        public void InitializeAnimationElementPanel(AnimationGroupElement group)
+        //public void InitializeAnimationElementPanel(AnimationGroupElement group)
+        //{
+        //    Panels["Element"] = InitializePanelWidthDefaultSettings();
+        //    if (group != null)
+        //    {
+        //        var timedElements = TLEPanelCell.Parse(group.Elements);
+        //        Panels["Element"].PanelCells = timedElements;
+        //    }
+        //    Panels["Element"].TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
+        //    Panels["Element"].Placement.Y = 100;
+        //}
+
+        public void InitializeAnimationElementPanel(List<AnimationSingleElement> elements)
         {
             Panels["Element"] = InitializePanelWidthDefaultSettings();
-            if (group != null)
+            if (elements != null)
             {
-                var timedElements = TLEPanelCell.Parse(group.Elements);
+                var timedElements = TLEPanelCell.Parse(elements.OfType<ITLEPanelCellElement>().ToList());
                 Panels["Element"].PanelCells = timedElements;
             }
             Panels["Element"].TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
@@ -282,7 +289,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             }
         }
 
-        private void InitializeBeatPanel(List<ITLEPanelCellElement> beats)
+        public void InitializeBeatPanel(List<ITLEPanelCellElement> beats)
         {
             Panels["Beat"] = InitializePanelWidthDefaultSettings();
             Panels["Beat"].TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);
@@ -292,7 +299,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             Panels["Beat"].Placement.Y = 220;
         }
 
-        private void InitializeNewElementGroupPanel(List<IAnimationElement> elements)
+        public void InitializeNewElementGroupPanel(List<IAnimationElement> elements)
         {
             GroupPanels[GroupPanels.Count.ToString()] = InitializePanelWidthDefaultSettings();
             GroupPanels[GroupPanels.Count.ToString()].TimeCellWidth = new TimeSpan(0, 0, 0, 1, 0);

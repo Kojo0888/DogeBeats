@@ -29,11 +29,6 @@ namespace DogeBeats.Modules.TimeLines
         public string GraphicName { get; set; }
         public Placement Placement { get; set; }
 
-        public void Refresh()
-        {
-
-        }
-
         public void InitializeGrouppedElements()
         {
             StackedElements = new Dictionary<TimeSpan, List<TLEPanelCell>>();
@@ -114,7 +109,7 @@ namespace DogeBeats.Modules.TimeLines
             var orderInderForGroupKey = StackedElements.Keys.ToList().IndexOf(timestampWithGroup.Key);
             var indexInGroup = timestampWithGroup.Value.IndexOf(element);
             if (indexInGroup == -1)
-                throw new Exception("NEsu: -1 for " + nameof(indexInGroup));
+                throw new Exception("Nesu: -1 for " + nameof(indexInGroup));
 
             Placement placement = new Placement();
             placement.X = orderInderForGroupKey * cellWidth;

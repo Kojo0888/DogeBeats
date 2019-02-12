@@ -213,6 +213,22 @@ long break... Sleepless mode...
 TLEPanelTimeGraphicIndicator - Review methods & applying missing ones
 Environment Variables implementation - nothing much
 
+12_02_2019: 1h (BAck on track [New after work time managememnt patent])
+℗	Review TLEPanel logic
+℗	TLEPanel System rework v2 
+℗	TimeLineEditor
+℗	TimeLineEditor - Adding new Elements
+	√	Element
+	√	Beat
+℗	TimeLineEditor - Removing elements
+	√	Beat
+℗	TimeLineEditor - Moving elements
+	√	Beat
+℗	Review TLEPanel logic
+℗	TLEPanel System rework v2 
+
+
+
 
 _________________________________________________________________________________________________
 
@@ -248,30 +264,42 @@ TODO Notes:
 ○	Think - Creating PanelContainer for TimeLineEditor
 ○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
 
-○	TimeLineEditor
-○	TimeLineEditor - Adding new Elements
+℗	TimeLineEditor
+℗	TimeLineEditor - Adding new Elements
 	○	Group
-	○	Element
+	√	Element
 	○	Route
-	○	Beat
+	√	Beat
 ○	TimeLineEditor - Updating elements
 	○	Group
 	○	Element
 	○	Route
 	○	Beat
-○	TimeLineEditor - Removing elements
+℗	TimeLineEditor - Removing elements
 	○	Group
 	○	Element
 	○	Route
-	○	Beat
+	√	Beat
+℗	TimeLineEditor - Moving elements
+	○	Group
+	○	Element
+	○	Route
+	√	Beat
+○	TimeLineEditor - Panel Management
+	○	Initial state
+	○	Selecting AnimationElement Panel
+	○	Selecting AnimationGroupElement Panel
+	○	Updating Height of time indicator
+	○	Time scope update & element reinit after moving to next time scope section
+
 ○	TimeLineEditor - Integration Tests
 ○	TimeLineEditor - Unit Tests
 ○	TimeLineEditor Panel - Unit Tests
-○	TLEPanel Refresh Method
+x	TLEPanel Refresh Method
 ○	Verify Graphic TimeIndicator functionality
 ○	Verify TLEPanel Selection mechanism
-○	Review TLEPanel logic
-○	TLEPanel System rework v2 
+℗	Review TLEPanel logic
+℗	TLEPanel System rework v2 
 ○	TLEPanelCells - Moving on Panel (Time related) 
 ○	
 ○	

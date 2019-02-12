@@ -79,7 +79,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void AddAnimationElement(string graphicGroupName)
         {
-            StaticHub.TimeLineEditor.AddNewAnimationElement(graphicGroupName);
+            //StaticHub.TimeLineEditor.AddNewAnimationElement(graphicGroupName);
         }
 
         public void AddAnimationGroup(string groupName)

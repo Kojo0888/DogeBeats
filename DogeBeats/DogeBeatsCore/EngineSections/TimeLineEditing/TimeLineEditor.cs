@@ -49,28 +49,88 @@ namespace DogeBeats.Modules
             TimeLine.Stopper.Elapsed = newTimespamp;
         }
 
-        public void RegisterBeat()
+        #region Beat Management
+
+        public void AddNewBeat()
         {
-            TimeLine.BeatGuider.RegisterBeat(TimeLine.Stopper.Elapsed);
-            //PanelBeat.RefreshPanelCells();
+            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
+
+            if (timeSpan != TimeLine.Stopper.Elapsed)
+                throw new Exception("Nesu: Time Spans are not matched");
+
+            TimeLine.BeatGuider.RegisterBeat(timeSpan);
+
+            TimeLine.Refresh();
+
+            PanelHub.InitializeBeatPanel(TimeLine.BeatGuider.GetTLECellElements());
         }
 
-        public void AddNewAnimationElement(string graphicGroupName)
+        public void RemoveBeat()
+        {
+            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
+
+            if (timeSpan != TimeLine.Stopper.Elapsed)
+                throw new Exception("Nesu: Time Spans are not matched");
+
+            TimeLine.BeatGuider.RemoveBeat(timeSpan);
+
+            TimeLine.Refresh();
+
+            PanelHub.InitializeBeatPanel(TimeLine.BeatGuider.GetTLECellElements());
+        }
+
+        public void MoveBeat(TimeSpan from)
+        {
+            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
+
+            if (timeSpan != TimeLine.Stopper.Elapsed)
+                throw new Exception("Nesu: Time Spans are not matched");
+
+            TimeLine.BeatGuider.RemoveBeat(from);
+            TimeLine.BeatGuider.RegisterBeat(timeSpan);
+
+            TimeLine.Refresh();
+
+            PanelHub.InitializeBeatPanel(TimeLine.BeatGuider.GetTLECellElements());
+        }
+
+        #endregion
+
+        #region AnimationElement Management
+
+        public void AddNewAnimationElement()
         {
             AnimationSingleElement element = new AnimationSingleElement();
-            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().GetCellElementBasedOnGraphicName(graphicGroupName);
+            element.SetStartTime(PanelHub.TimeIdentyficator.SelectedTime);
+
+            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().SelectedPanelCell.AnimationElement;
             if (panelElement as AnimationGroupElement != null)
             {
                 AnimationGroupElement group = panelElement as AnimationGroupElement;
                 group.Elements.Add(element);
-                PanelHub.InitializeAnimationElementPanel(group);
-                TimeLine.Refresh();
+                PanelHub.InitializeAnimationElementPanel(group.Elements.OfType<AnimationSingleElement>().ToList());
+            }
+            else if (panelElement as AnimationSingleElement != null)
+            {
+                throw new Exception("Nesu: TimeLineEditor - Parent animation element is single type");
+                //AnimationSingleElement singleAnimationElement = panelElement as AnimationSingleElement;
+                //var parent = PanelHub.GetLastGroupPanel
             }
             else
-                throw new Exception("Nesu... zjebales");
+            {
+                TimeLine.AnimationElements.Add(element);
+                PanelHub.InitializeAnimationElementPanel(TimeLine.GetAnimationElementsWithoutGroup());
+                //throw new Exception("Nesu: TimeLineEditor - Parent animation element is null");
+            }
 
-            //PanelHub.Refresh();
+            TimeLine.Refresh();
+
+            //PanelHub.InitializeAnimationElementPanel(panelElement.);
         }
+
+        #endregion
+
+        #region AnimationGroup Management
 
         public void AddNewAnimationGroup(string groupName, string parentGroupName = "")
         {
@@ -86,12 +146,13 @@ namespace DogeBeats.Modules
             }
 
             TLEPanelCell timedElement = TLEPanelCell.Parse(element);
-            PanelHub.Refresh();
             //PanelHub.PanelGroup.Elements.Add(timedElement);
 
             TimeLine.Refresh();
             //PanelGroup.RefreshPanelCells();
         }
+
+        #endregion
 
         //temporary... To be decided if removal should go to TimeLine class
         private void RemoveTimeLineElement(ITLEPanelCellElement elementToRemove)

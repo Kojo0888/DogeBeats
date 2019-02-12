@@ -187,6 +187,21 @@ namespace Testowy.Model
             _playToTimeSpan = to;
         }
 
+        public List<AnimationSingleElement> GetAnimationElementsWithoutGroup()
+        {
+            List<AnimationSingleElement> elementsWithoutGroup = new List<AnimationSingleElement>();
+
+            foreach (var element in AnimationElements)
+            {
+                if(element is AnimationSingleElement)
+                {
+                    elementsWithoutGroup.Add(element as AnimationSingleElement);
+                }
+            }
+
+            return elementsWithoutGroup;
+        }
+
         private void PushPassedElements()
         {
             PassedAnimationElements.AddRange(CurrentlyAnimatingElements.Where(w => w.Route.AnimationEndTime < Stopper.Elapsed).ToList());
