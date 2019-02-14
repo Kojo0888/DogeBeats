@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.Other;
 using DogeBeats.Renderer;
 using System;
@@ -78,6 +79,20 @@ namespace DogeBeats.Modules.TimeLines
                 timedElements.Add(cell);
             }
             return timedElements;
+        }
+
+        public static List<TLEPanelCell> Parse<T>(List<T> elements)
+        {
+            if (typeof(T) == typeof(AnimationRouteFrame))
+                return Parse(elements as List<AnimationRouteFrame>);
+            else if (typeof(T) == typeof(Beat))
+                return Parse(elements as List<Beat>);
+            else if (typeof(T) == typeof(ITLEPanelCellElement))
+                return Parse(elements as List<ITLEPanelCellElement>);
+            else if (typeof(T) == typeof(IAnimationElement))
+                return Parse(elements as List<IAnimationElement>);
+            else
+                throw new NesuException("TLEPanelCell: Parse generic unable to recognise generic type: " + typeof(T));
         }
     }
 }

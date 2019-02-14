@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using DogeBeats.Model;
 using DogeBeats.Modules.TimeLines;
@@ -65,6 +66,11 @@ namespace DogeBeats.Modules
             PanelHub.InitializeBeatPanel(TimeLine.BeatGuider.GetTLECellElements());
         }
 
+        public void UpdateBeat(NameValueCollection values)
+        {
+            return;
+        }
+
         public void RemoveBeat()
         {
             var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
@@ -124,32 +130,50 @@ namespace DogeBeats.Modules
             }
 
             TimeLine.Refresh();
-
-            //PanelHub.InitializeAnimationElementPanel(panelElement.);
         }
 
         #endregion
 
         #region AnimationGroup Management
 
-        public void AddNewAnimationGroup(string groupName, string parentGroupName = "")
+        public void AddNewAnimationGroup()
         {
             AnimationGroupElement element = new AnimationGroupElement();
-            //TODO this crap
-            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().GetCellElementBasedOnGraphicName (parentGroupName);
-            if(panelElement == null)
+
+            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().SelectedPanelCell?.AnimationElement;
+
+            if (panelElement == null)
                TimeLine.AnimationElements.Add(element);
-            else
+            else if(panelElement is AnimationGroupElement)
             {
                 AnimationGroupElement parentGroup = panelElement as AnimationGroupElement;
                 parentGroup.Elements.Add(element);
+                PanelHub.InitializeSpecificGroupPanel(PanelHub.GetLastGroupPanel());
             }
-
-            TLEPanelCell timedElement = TLEPanelCell.Parse(element);
-            //PanelHub.PanelGroup.Elements.Add(timedElement);
+            else
+                throw new NesuException("Nesu: AddNewAnimationGroup - panelElement not null & not group");
 
             TimeLine.Refresh();
-            //PanelGroup.RefreshPanelCells();
+        }
+
+        public void MoveAnimationGroup(string graphicalName = "")
+        {
+            ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().SelectedPanelCell?.AnimationElement;
+            var time = PanelHub.TimeIdentyficator.SelectedTime;
+
+            if (panelElement == null)
+                throw new NesuException("TLE: MoveAnimationGroup - panelElement is null");
+            else if (panelElement is AnimationGroupElement)
+            {
+                AnimationGroupElement parentGroup = panelElement as AnimationGroupElement;
+                parentGroup.SetStartTime(time);
+            }
+            else
+                throw new NesuException("TLE: MoveAnimationGroup - panelElement not null & not group");
+
+            TimeLine.Refresh();
+            
+
         }
 
         #endregion

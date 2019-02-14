@@ -65,6 +65,7 @@
     <Compile Include="EngineSections\Shared\ImageItem.cs" />
     <Compile Include="EngineSections\Shared\ManualUpdaterParser.cs" />
     <Compile Include="Misc\DStopWatch.cs" />
+    <Compile Include="Misc\NesuException.cs" />
     <Compile Include="MockUps\GameObject.cs" />
     <Compile Include="EngineSections\Resources\TrigonometricCache.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Sound\ProxySoundManager.cs" />

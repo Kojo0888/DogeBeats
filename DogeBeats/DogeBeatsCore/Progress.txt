@@ -227,6 +227,12 @@ Environment Variables implementation - nothing much
 ℗	Review TLEPanel logic
 ℗	TLEPanel System rework v2 
 
+13_02_2019: 1h 
+℗	TimeLineEditor - Adding new Elements
+	√	Group
+℗	Placing all Panels inside one dictionary. Reason? Functions will be half shorter, GroupPanel separation only needed for specific actions, height recalculation etc.
+℗	Creating Generic method for Panel Initialization (Why am I noticing this so late)
+
 
 
 
@@ -266,7 +272,7 @@ TODO Notes:
 
 ℗	TimeLineEditor
 ℗	TimeLineEditor - Adding new Elements
-	○	Group
+	√	Group
 	√	Element
 	○	Route
 	√	Beat

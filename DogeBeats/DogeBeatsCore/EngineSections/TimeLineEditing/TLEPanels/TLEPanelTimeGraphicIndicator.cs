@@ -73,5 +73,10 @@ namespace DogeBeats.Modules.TimeLines
 
             MovePrecentage(precentage);
         }
+
+        public TimeSpan GetTime()
+        {
+            return SelectedTime;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace DogeBeats.Modules.TimeLines
         //public List<TLEPanelCell> Elements { get; set; } = new List<TLEPanelCell>();
         public Dictionary<TimeSpan, List<TLEPanelCell>> StackedElements { get; set; } = new Dictionary<TimeSpan, List<TLEPanelCell>>();
 
-        public int PANEL_CELL_WIDTH = 10;
+        public static int PANEL_CELL_WIDTH = 10;
 
         public string PanelName { get; set; }
 
