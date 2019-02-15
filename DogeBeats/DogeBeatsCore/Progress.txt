@@ -233,8 +233,18 @@ Environment Variables implementation - nothing much
 ℗	Placing all Panels inside one dictionary. Reason? Functions will be half shorter, GroupPanel separation only needed for specific actions, height recalculation etc.
 ℗	Creating Generic method for Panel Initialization (Why am I noticing this so late)
 
-
-
+14_02_2019:
+√	Verify Graphic TimeIndicator functionality
+√	Verify TLEPanel Selection mechanism
+√	Review TLEPanel logic
+√	TLEPanel System rework v2 
+		Everyting inside PanelHub seems to be completed:
+			Panel Selection
+			Placement
+			Naming
+			Full review
+			Time scope updates
+			cleanup
 
 _________________________________________________________________________________________________
 
@@ -302,10 +312,6 @@ TODO Notes:
 ○	TimeLineEditor - Unit Tests
 ○	TimeLineEditor Panel - Unit Tests
 x	TLEPanel Refresh Method
-○	Verify Graphic TimeIndicator functionality
-○	Verify TLEPanel Selection mechanism
-℗	Review TLEPanel logic
-℗	TLEPanel System rework v2 
 ○	TLEPanelCells - Moving on Panel (Time related) 
 ○	
 ○	

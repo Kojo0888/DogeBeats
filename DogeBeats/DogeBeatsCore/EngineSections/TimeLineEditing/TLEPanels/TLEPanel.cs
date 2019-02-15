@@ -85,7 +85,7 @@ namespace DogeBeats.Modules.TimeLines
             return StackedElements.Max(w => w.Value.ToList().Count);
         }
 
-        public void UpdateSectionTime(TimeSpan startTime, TimeSpan endTime)
+        public void UpdateTimeScope(TimeSpan startTime, TimeSpan endTime)
         {
             StartTime = startTime;
             EndTime = endTime;

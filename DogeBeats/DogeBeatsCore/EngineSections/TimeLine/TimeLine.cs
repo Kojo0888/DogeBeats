@@ -187,19 +187,26 @@ namespace Testowy.Model
             _playToTimeSpan = to;
         }
 
-        public List<AnimationSingleElement> GetAnimationElementsWithoutGroup()
+        public List<AnimationSingleElement> GetAnimationSingleElementFirstLayer()
         {
-            List<AnimationSingleElement> elementsWithoutGroup = new List<AnimationSingleElement>();
-
+            List<AnimationSingleElement> elementsFirstLayer = new List<AnimationSingleElement>();
             foreach (var element in AnimationElements)
             {
                 if(element is AnimationSingleElement)
-                {
-                    elementsWithoutGroup.Add(element as AnimationSingleElement);
-                }
+                    elementsFirstLayer.Add(element as AnimationSingleElement);
             }
+            return elementsFirstLayer;
+        }
 
-            return elementsWithoutGroup;
+        public List<AnimationGroupElement> GetAnimationGroupElementFirstLayer()
+        {
+            List<AnimationGroupElement> elementsFirstLayer = new List<AnimationGroupElement>();
+            foreach (var element in AnimationElements)
+            {
+                if (element is AnimationGroupElement)
+                    elementsFirstLayer.Add(element as AnimationGroupElement);
+            }
+            return elementsFirstLayer;
         }
 
         private void PushPassedElements()

@@ -125,7 +125,7 @@ namespace DogeBeats.Modules
             else
             {
                 TimeLine.AnimationElements.Add(element);
-                PanelHub.InitializeAnimationElementPanel(TimeLine.GetAnimationElementsWithoutGroup());
+                PanelHub.InitializeAnimationElementPanel(TimeLine.GetAnimationSingleElementFirstLayer());
                 //throw new Exception("Nesu: TimeLineEditor - Parent animation element is null");
             }
 
