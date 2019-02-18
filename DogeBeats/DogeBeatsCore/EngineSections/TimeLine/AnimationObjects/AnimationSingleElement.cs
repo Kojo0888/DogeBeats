@@ -107,5 +107,15 @@ namespace Testowy.Model
             var ticks = currentStopperTime.Ticks % Route.CalculateAnimationTime().Ticks;
             return new TimeSpan(ticks);
         }
+
+        public AnimationSingleElement SearchParentAnimationElement(AnimationRouteFrame routeFrame)
+        {
+            foreach (var frame in Route.Frames)
+            {
+                if (frame == routeFrame)
+                    return this;
+            }
+            return null;
+        }
     }
 }

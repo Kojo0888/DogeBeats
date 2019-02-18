@@ -15,16 +15,14 @@ using Testowy.Model;
 
 namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 {
-    public class TimeLineEditorPanelHub
+    public class TLEPanelHub
     {
         //public TLEPanel Panels["Group"] { get; set; }
         //public TLEPanel Panels["Element"] { get; set; }
         //public TLEPanel Panels["Route"] { get; set; }
         //public TLEPanel Panels["Beat"] { get; set; }
 
-        public static string GROUP_PANEL_PREFIX => "Group_";
-        public static string PANEL_NAME_ANIMATION_SINGLE_ELEMENT => "AnimationSingleElement";
-        public static string PANEL_NAME_ANIMATION_GROUP_ELEMENT => "AnimationGroupElement";
+        public static string ANIMATIONELEMENT_PANEL_PREFIX => "AnimationElement_";
         public static string PANEL_NAME_ANIMATION_ROUTE => "AnimationRoute";
         public static string PANEL_NAME_BEAT => "Beat";
 
@@ -35,8 +33,6 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         private static Dictionary<string, int> PANEL_DEFAULT_HEIGHTS = new Dictionary<string, int>()
         {
             { PANEL_NAME_BEAT, 20},
-            { PANEL_NAME_ANIMATION_GROUP_ELEMENT, 100},
-            { PANEL_NAME_ANIMATION_SINGLE_ELEMENT, 100},
             { PANEL_NAME_ANIMATION_ROUTE, 100},
         };
 
@@ -49,11 +45,23 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         public AnimationSingleElement SelectedElement { get; set; }
         //public string SelectedPanelName { get; set; }
 
+        public TLEPanel SelectedPanel { get; set; }
+
         public float Width = 600;
 
-        public TimeLineEditorPanelHub()
+        public TLEPanelHub()
         {
 
+        }
+
+        public TLEPanel GetPanel(string panelName)
+        {
+            if (Panels.ContainsKey(panelName))
+            {
+                return Panels[panelName];
+            }
+            else
+                return null;
         }
 
         #region Initialization
@@ -69,7 +77,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             Panels.Clear();
 
             InitializePanel(PANEL_NAME_BEAT, timeLine.BeatGuider.Beats);
-            InitializePanel(GROUP_PANEL_PREFIX + "0", timeLine.GetAnimationGroupElementFirstLayer());
+            InitializePanel(ANIMATIONELEMENT_PANEL_PREFIX + "0", timeLine.AnimationElements);
 
             InitializeGraphicIdentyficator();
         }
@@ -82,6 +90,15 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             ReCalculatePlacementYForPanels();
         }
 
+        public void InitializeNewAnimationPanel<T>(List<T> animationElements)
+        {
+            int lastIndex = GetPanelGroupIndexes().LastOrDefault();
+            if (lastIndex == default(int))
+                throw new NesuException("PanelHub: Index is default... DO SOMETHING ABOUT IT!!!");
+
+            lastIndex++;
+            InitializePanel(ANIMATIONELEMENT_PANEL_PREFIX + lastIndex, animationElements);
+        }
 
         private TLEPanel CreatePanelWithDefaultSettings(string panelName = "")
         {
@@ -127,7 +144,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public TLEPanel GetLastGroupPanel()
         {
-            var lastGroupPanelKey = Panels.Keys.Where(s => s.StartsWith(GROUP_PANEL_PREFIX)).OrderBy(o => o).LastOrDefault();
+            var lastGroupPanelKey = Panels.Keys.Where(s => s.StartsWith(ANIMATIONELEMENT_PANEL_PREFIX)).OrderBy(o => o).LastOrDefault();
             if (lastGroupPanelKey != null && Panels.ContainsKey(lastGroupPanelKey))
             {
                 return Panels[lastGroupPanelKey];
@@ -153,6 +170,12 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
+        public object GetLastPanelAnimationElementIndex()
+        {
+            var panelIndexe = GetPanelGroupIndexes().LastOrDefault();
+            return panelIndexe;
+        }
+
         public void UpdateAllPanelTimeScope()
         {
             var endTime = PanelOffsetTime + PanelWidthTime;
@@ -165,44 +188,31 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void SelectPanel(string panelName)
         {
-            ClearPanelSelection();
-
-            if (Panels.ContainsKey(panelName))
-                Panels[panelName].Selected = true;
+            SelectedPanel = Panels[panelName];
 
             SelectPanel_RemovePanels(panelName);
         }
 
-        public void ClearPanelSelection()
+        public void SelectPanel_RemovePanels(string panelName)
         {
-            foreach (var panel in Panels.Values)
+            if (panelName.Contains(ANIMATIONELEMENT_PANEL_PREFIX))
             {
-                panel.Selected = false;
+                var groupPanelIndexes = GetPanelGroupIndexes();
+                var panelSelectionIndex = int.Parse(panelName.Replace(ANIMATIONELEMENT_PANEL_PREFIX, ""));
+
+                foreach (var groupPanelIndex in groupPanelIndexes)
+                {
+                    if (groupPanelIndex < panelSelectionIndex)
+                        Panels.Remove(ANIMATIONELEMENT_PANEL_PREFIX + groupPanelIndex);
+                }
+
+                Panels.Remove(PANEL_NAME_ANIMATION_ROUTE);
             }
         }
 
         public List<int> GetPanelGroupIndexes()
         {
-            return Panels.Keys.Where(s => s.StartsWith(GROUP_PANEL_PREFIX)).Select(s => int.Parse(s.Replace(GROUP_PANEL_PREFIX, ""))).OrderBy(o => o).ToList();
-        }
-
-        public void SelectPanel_RemovePanels(string panelName)
-        {
-            if (panelName.Contains(GROUP_PANEL_PREFIX))
-            {
-                var groupPanelIndexes = GetPanelGroupIndexes();
-                var panelSelectionIndex = int.Parse(panelName.Replace(GROUP_PANEL_PREFIX, ""));
-                foreach (var groupPanelIndex in groupPanelIndexes)
-                {
-                    if (groupPanelIndex < panelSelectionIndex)
-                        Panels.Remove(GROUP_PANEL_PREFIX + groupPanelIndex);
-                }
-
-                Panels.Remove(PANEL_NAME_ANIMATION_SINGLE_ELEMENT);
-                Panels.Remove(PANEL_NAME_ANIMATION_ROUTE);
-
-                //InitializePanel(PANEL_NAME_ANIMATION_SINGLE_ELEMENT, );
-            }
+            return Panels.Keys.Where(s => s.StartsWith(ANIMATIONELEMENT_PANEL_PREFIX)).Select(s => int.Parse(s.Replace(ANIMATIONELEMENT_PANEL_PREFIX, ""))).OrderBy(o => o).ToList();
         }
 
         private string GetNewGroupPanelName()
@@ -214,7 +224,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             if (!int.TryParse(splitedName[1], out lastPanelNameIndex))
                 throw new NesuException("PanelHub: InitializeNewElementGroupPanel index is not int " + splitedName[1]);
 
-            string newPanelName = GROUP_PANEL_PREFIX + "_" + (lastPanelNameIndex + 1);
+            string newPanelName = ANIMATIONELEMENT_PANEL_PREFIX + "_" + (lastPanelNameIndex + 1);
 
             return newPanelName;
         }
@@ -232,18 +242,12 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             var groupPanelIndexes = GetPanelGroupIndexes();
             foreach (var groupPanelIndex in groupPanelIndexes)
             {
-                string groupKey = GROUP_PANEL_PREFIX + groupPanelIndex;
+                string groupKey = ANIMATIONELEMENT_PANEL_PREFIX + groupPanelIndex;
                 if (Panels.ContainsKey(groupKey))
                 {
                     Panels[groupKey].Placement.Y = currentHeight;
                     currentHeight += Panels[groupKey].Placement.Height;
                 }
-            }
-
-            if (Panels.ContainsKey(PANEL_NAME_ANIMATION_SINGLE_ELEMENT))
-            {
-                Panels[PANEL_NAME_ANIMATION_SINGLE_ELEMENT].Placement.Y = currentHeight;
-                currentHeight += Panels[PANEL_NAME_ANIMATION_SINGLE_ELEMENT].Placement.Height;
             }
 
             if (Panels.ContainsKey(PANEL_NAME_ANIMATION_ROUTE))

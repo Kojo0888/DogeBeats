@@ -62,7 +62,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void RightMouseClickOnPanelElement(string elementName)
         {
-            StaticHub.TimeLineEditor.RemovePanelElement(elementName);
+            //StaticHub.TimeLineEditor.RemovePanelElement(elementName);
         }
 
         public void UpdatePlacement(string graphicName, Placement placement)
@@ -84,7 +84,7 @@ namespace DogeBeats.Modules.Renderer.RendererModules
 
         public void AddAnimationGroup(string groupName)
         {
-            StaticHub.TimeLineEditor.AddNewAnimationGroup(groupName);
+            //StaticHub.TimeLineEditor.AddNewAnimationGroup(groupName);
         }
 
         public void SaveTimeLine()

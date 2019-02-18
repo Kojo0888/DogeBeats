@@ -121,5 +121,76 @@ namespace Testowy.Model
             keys.Add("Prediction");
             return keys;
         }
+
+        public static AnimationGroupElement Parse(AnimationSingleElement singleAnimationElement)
+        {
+            var convertedGroup = new AnimationGroupElement();
+
+            convertedGroup.Name = singleAnimationElement.Name;
+            convertedGroup.Placement = singleAnimationElement.Placement;
+            convertedGroup.Prediction = singleAnimationElement.Prediction;
+            convertedGroup.Route = singleAnimationElement.Route;
+            convertedGroup.Elements = new List<IAnimationElement>();
+
+            return convertedGroup;
+        }
+
+        public AnimationGroupElement ConvertToGroup(AnimationSingleElement singleAnimationElement)
+        {
+            Elements.Remove(singleAnimationElement);
+
+            AnimationGroupElement convertedGroup = Parse(singleAnimationElement);
+            Elements.Add(convertedGroup);
+
+            return convertedGroup;
+        }
+
+        public AnimationGroupElement SearchParentAnimationElement(IAnimationElement singleAnimationElement)
+        {
+            foreach (var element in Elements)
+            {
+                if (Elements.Contains(singleAnimationElement))
+                    return this;
+
+                if (element is AnimationGroupElement)
+                {
+                    var group = element as AnimationGroupElement;
+
+                    AnimationGroupElement result = group.SearchParentAnimationElement(singleAnimationElement);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        public IAnimationElement SearchParentAnimationElement(AnimationRouteFrame routeFrame)
+        {
+            foreach (var frame in Route.Frames)
+            {
+                if (frame == routeFrame)
+                    return this;
+            }
+
+            foreach (var element in Elements)
+            {
+                if (element is AnimationSingleElement)
+                {
+                    var single = element as AnimationSingleElement;
+                    var singleResult = single.SearchParentAnimationElement(routeFrame);
+                    if (singleResult != null)
+                        return singleResult;
+                }
+                if (element is AnimationGroupElement)
+                {
+                    var group = element as AnimationGroupElement;
+                    var groupResult = group.SearchParentAnimationElement(routeFrame);
+                    if (groupResult != null)
+                        return groupResult;
+                }
+            }
+
+            return null;
+        }
     }
 }

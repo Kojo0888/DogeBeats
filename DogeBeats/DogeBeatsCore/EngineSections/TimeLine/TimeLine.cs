@@ -141,6 +141,44 @@ namespace Testowy.Model
             }
         }
 
+        public IAnimationElement SearchParentAnimationElement(IAnimationElement singleAnimationElement)
+        {
+            foreach (var AnimationElement in AnimationElements)
+            {
+                if (AnimationElement is AnimationGroupElement)
+                {
+                    var group = AnimationElement as AnimationGroupElement;
+
+                    AnimationGroupElement result = group.SearchParentAnimationElement(singleAnimationElement);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        public IAnimationElement SearchParentAnimationElement(AnimationRouteFrame routeFrame)
+        {
+            foreach (var AnimationElement in AnimationElements)
+            {
+                if (AnimationElement is AnimationSingleElement)
+                {
+                    var single = AnimationElement as AnimationSingleElement;
+                    var singleResult = single.SearchParentAnimationElement(routeFrame);
+                    if (singleResult != null)
+                        return singleResult;
+                }
+                if (AnimationElement is AnimationGroupElement)
+                {
+                    var group = AnimationElement as AnimationGroupElement;
+                    var groupResult = group.SearchParentAnimationElement(routeFrame);
+                    if (groupResult != null)
+                        return groupResult;
+                }
+            }
+            return null;
+        }
+
         public void InitializeStoryboardQueue()
         {
             StoryboardQueue = new Queue<IAnimationElement>();

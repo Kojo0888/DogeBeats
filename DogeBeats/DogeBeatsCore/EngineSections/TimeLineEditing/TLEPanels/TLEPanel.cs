@@ -25,7 +25,7 @@ namespace DogeBeats.Modules.TimeLines
 
         public TLEPanelCell SelectedPanelCell { get; set; }
 
-        public bool Selected { get; set; }
+        //public bool Selected { get; set; }
         public string GraphicName { get; set; }
         public Placement Placement { get; set; }
 

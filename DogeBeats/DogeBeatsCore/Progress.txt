@@ -246,6 +246,30 @@ Environment Variables implementation - nothing much
 			Time scope updates
 			cleanup
 
+17_02_2019: (4.5h)
+√	TimeLineEditor - Moving elements
+	√	Group
+	√	Element
+	√	Route
+√	TimeLineEditor - Removing elements
+	√	Group
+	√	Element
+	√	Route
+√	TimeLineEditor - Updating elements
+	√	Group
+	√	Element
+	√	Route
+	√	Beat
+√	Panel Some rework: GroupElements & SingleElements are tohether in the same panel.
+√	Some usefull panel hub methods.
+√	AnimationGroup conversion from single element.
+√	Recreating some TLE: Moving, Removeing & Updating elements
+	Every action from Panel Seems to be completed. Now Checking for veryfication & Tests;
+
+18_02_2019:
+p	Planned: Veryfication Panel Actions & minor tests/Start Testing
+
+
 _________________________________________________________________________________________________
 
 TODO Legend:
@@ -281,26 +305,6 @@ TODO Notes:
 ○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
 
 ℗	TimeLineEditor
-℗	TimeLineEditor - Adding new Elements
-	√	Group
-	√	Element
-	○	Route
-	√	Beat
-○	TimeLineEditor - Updating elements
-	○	Group
-	○	Element
-	○	Route
-	○	Beat
-℗	TimeLineEditor - Removing elements
-	○	Group
-	○	Element
-	○	Route
-	√	Beat
-℗	TimeLineEditor - Moving elements
-	○	Group
-	○	Element
-	○	Route
-	√	Beat
 ○	TimeLineEditor - Panel Management
 	○	Initial state
 	○	Selecting AnimationElement Panel
