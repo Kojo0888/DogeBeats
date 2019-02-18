@@ -260,14 +260,25 @@ Environment Variables implementation - nothing much
 	√	Element
 	√	Route
 	√	Beat
+√	TimeLineEditor - Panel Management
+	√	Initial state
+	√	Selecting AnimationElement Panel
+	v	Selecting AnimationGroupElement Panel
+	v	Updating Height of time indicator
+	√	Time scope update & element reinit after moving to next time scope section
 √	Panel Some rework: GroupElements & SingleElements are tohether in the same panel.
 √	Some usefull panel hub methods.
 √	AnimationGroup conversion from single element.
 √	Recreating some TLE: Moving, Removeing & Updating elements
 	Every action from Panel Seems to be completed. Now Checking for veryfication & Tests;
 
-18_02_2019:
-p	Planned: Veryfication Panel Actions & minor tests/Start Testing
+18_02_2019: 1.5h
+x	Planned: Veryfication Panel Actions & minor tests/Start Testing
+√	Optional: Extracting Modyfication modules. Creating Management Modules.
+√	Optional: Creating default value for new Elements. Done.
+
+
+19_02_2019: 
 
 
 _________________________________________________________________________________________________
@@ -305,12 +316,6 @@ TODO Notes:
 ○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
 
 ℗	TimeLineEditor
-○	TimeLineEditor - Panel Management
-	○	Initial state
-	○	Selecting AnimationElement Panel
-	○	Selecting AnimationGroupElement Panel
-	○	Updating Height of time indicator
-	○	Time scope update & element reinit after moving to next time scope section
 
 ○	TimeLineEditor - Integration Tests
 ○	TimeLineEditor - Unit Tests

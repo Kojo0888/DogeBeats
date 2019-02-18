@@ -117,5 +117,16 @@ namespace Testowy.Model
             }
             return null;
         }
+
+        public void SetDefaultData()
+        {
+            Placement.X = StaticHub.EnvironmentVariables.MainWindowWidth / 2;
+            Placement.Y = StaticHub.EnvironmentVariables.MainWindowHeight / 2;
+        }
+
+        public List<string> GetKeysUpdateManual()
+        {
+            return GetKeysManualUpdate().ToList();
+        }
     }
 }

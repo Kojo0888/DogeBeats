@@ -13,13 +13,13 @@ namespace DogeBeats.Modules.TimeLines
 {
     public class TLEPanelCell : IGraphicElement
     {
-        public ITLEPanelCellElement AnimationElement { get; set; }
+        public ITLEPanelCellElement ReferenceElement { get; set; }
 
         public TimeSpan DurationTime
         {
             get
             {
-                return AnimationElement.GetDurationTime();
+                return ReferenceElement.GetDurationTime();
             }
         }
 
@@ -32,7 +32,7 @@ namespace DogeBeats.Modules.TimeLines
         {
             TLEPanelCell cell = new TLEPanelCell();
             cell.GraphicName = GraphicProxy.GenerateGraphicName();
-            cell.AnimationElement = element;
+            cell.ReferenceElement = element;
             cell.Placement = new Placement();
             return cell;
         }

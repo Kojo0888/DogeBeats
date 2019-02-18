@@ -9,5 +9,7 @@ namespace DogeBeats.EngineSections.Resources
     public class EnvironmentVariables
     {
         public int MainWindowWidth { get; set; }
+
+        public int MainWindowHeight { get; set; }
     }
 }

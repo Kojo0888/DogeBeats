@@ -37,11 +37,11 @@ namespace DogeBeats.Modules.TimeLines
             currentTimeSpan = currentTimeSpan.Add(TimeCellWidth);
 
             List<TLEPanelCell> group = new List<TLEPanelCell>();
-            var orderedPanelCells = PanelCells.OrderBy(o => o.AnimationElement.GetStartTime()).ToList();
+            var orderedPanelCells = PanelCells.OrderBy(o => o.ReferenceElement.GetStartTime()).ToList();
 
             for (int i = 0; i < orderedPanelCells.Count; i++)
             {
-                if (orderedPanelCells[i].AnimationElement.GetStartTime() < currentTimeSpan)
+                if (orderedPanelCells[i].ReferenceElement.GetStartTime() < currentTimeSpan)
                     group.Add(orderedPanelCells[i]);
                 else
                 {
@@ -63,7 +63,7 @@ namespace DogeBeats.Modules.TimeLines
             var cells = PanelCells.Where(w => w.GraphicName == graphicName);
             foreach (var cell in cells)
             {
-                cell.AnimationElement.SetStartTime(destenationTime);
+                cell.ReferenceElement.SetStartTime(destenationTime);
             }
         }
 
@@ -104,7 +104,7 @@ namespace DogeBeats.Modules.TimeLines
                 cellWidth = Placement.Width / numberOfPossibleCellsOnWidth;
             }
 
-            var timestampWithGroup = GetStackedElementsForTimeSpan(element.AnimationElement.GetStartTime());
+            var timestampWithGroup = GetStackedElementsForTimeSpan(element.ReferenceElement.GetStartTime());
             //TODO Leaving here this needs to change
             var orderInderForGroupKey = StackedElements.Keys.ToList().IndexOf(timestampWithGroup.Key);
             var indexInGroup = timestampWithGroup.Value.IndexOf(element);
@@ -149,7 +149,7 @@ namespace DogeBeats.Modules.TimeLines
             TLEPanelCell cell = PanelCells.Where(w => w.GraphicName == graphicName).FirstOrDefault();
             if (cell != null)
             {
-                return cell.AnimationElement;
+                return cell.ReferenceElement;
             }
             return null;
         }

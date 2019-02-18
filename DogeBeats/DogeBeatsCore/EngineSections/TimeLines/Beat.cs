@@ -1,6 +1,8 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +36,27 @@ namespace DogeBeats.Modules.TimeLines
         public void SetStartTime(TimeSpan timeSpan)
         {
             Timestamp = timeSpan;
+        }
+
+        public void UpdateManual(NameValueCollection values)
+        {
+            return;
+        }        
+
+        public void SetDefaultData()
+        {
+            Placement.X = StaticHub.EnvironmentVariables.MainWindowWidth / 2;
+            Placement.Y = StaticHub.EnvironmentVariables.MainWindowHeight / 2;
+        }
+
+        public List<string> GetKeysUpdateManual()
+        {
+            return GetKeysManualUpdate().ToList();
+        }
+
+        public static IEnumerable<string> GetKeysManualUpdate()
+        {
+            return new string[0];
         }
     }
 }

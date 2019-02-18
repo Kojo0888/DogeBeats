@@ -1,4 +1,5 @@
-﻿using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Other;
 using System;
@@ -76,6 +77,17 @@ namespace Testowy.Model
             SpeedPhase = ManualUpdaterParser.Parse(values["SpeedPhase"], SpeedPhase);
             SpeedCycles = ManualUpdaterParser.Parse(values["SpeedCycles"], SpeedCycles);
             FrameTime = ManualUpdaterParser.Parse(values["FrameTime"], FrameTime);
+        }
+
+        public void SetDefaultData()
+        {
+            CheckpointPosition.X = StaticHub.EnvironmentVariables.MainWindowWidth / 2;
+            CheckpointPosition.Y = StaticHub.EnvironmentVariables.MainWindowHeight / 2;
+        }
+
+        public List<string> GetKeysUpdateManual()
+        {
+            return GetKeysManualUpdate().ToList();
         }
     }
 }

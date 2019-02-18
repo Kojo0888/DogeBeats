@@ -1,6 +1,8 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
 using DogeBeats.EngineSections.Resources;
 using DogeBeats.EngineSections.Shared;
+using DogeBeats.EngineSections.TimeLineEditing;
+using DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement;
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using DogeBeats.Model;
 using DogeBeats.Modules.TimeLines;
@@ -21,6 +23,20 @@ namespace DogeBeats.Modules
         public TimeLine TimeLine { get; set; }
 
         public TLEPanelHub PanelHub { get; set; }
+
+        public Dictionary<string, ITLEPanelCellElementManagement> PanelCellManagements { get; set; } = new Dictionary<string, ITLEPanelCellElementManagement>();
+
+        public TimeLineEditor()
+        {
+            InitializePanelCellManagements();
+        }
+
+        public void InitializePanelCellManagements()
+        {
+            PanelCellManagements.Add(TLEPanelNames.BEAT, new TLEPCEManagementBeat(this));
+            PanelCellManagements.Add(TLEPanelNames.ANIMATION_ROUTE, new TLEPCEManagementAnimationRoute(this));
+            PanelCellManagements.Add(TLEPanelNames.ANIMATION_ELEMENT_PREFIX, new TLEPCEManagementAnimationElement(this));
+        }
 
         public void AttachTimeLineToEditor(TimeLine timeline)
         {
@@ -51,315 +67,6 @@ namespace DogeBeats.Modules
             TimeLine.Stopper.Elapsed = newTimespamp;
         }
 
-        #region Beat Management
-
-        public void AddNewBeat()
-        {
-            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
-
-            if (timeSpan != TimeLine.Stopper.Elapsed)
-                throw new Exception("Nesu: Time Spans are not matched");
-
-            TimeLine.BeatGuider.RegisterBeat(timeSpan);
-
-            TimeLine.Refresh();
-
-            PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_BEAT, TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        public void UpdateBeat(NameValueCollection values)
-        {
-            return;
-        }
-
-        public void RemoveBeat()
-        {
-            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
-
-            if (timeSpan != TimeLine.Stopper.Elapsed)
-                throw new Exception("Nesu: Time Spans are not matched");
-
-            TimeLine.BeatGuider.RemoveBeat(timeSpan);
-
-            TimeLine.Refresh();
-
-            PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_BEAT,TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        public void MoveBeat(TimeSpan from)
-        {
-            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
-
-            if (timeSpan != TimeLine.Stopper.Elapsed)
-                throw new Exception("Nesu: Time Spans are not matched");
-
-            TimeLine.BeatGuider.RemoveBeat(from);
-            TimeLine.BeatGuider.RegisterBeat(timeSpan);
-
-            TimeLine.Refresh();
-
-            PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_BEAT, TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        #endregion
-
-        #region AnimationElement Management
-
-        public void AddNewAnimationElement()
-        {
-            AnimationSingleElement element = new AnimationSingleElement();
-            element.SetStartTime(PanelHub.TimeIdentyficator.SelectedTime);
-
-            ITLEPanelCellElement panelElement = PanelHub.SelectedPanel.SelectedPanelCell.AnimationElement;
-            if (panelElement as AnimationGroupElement != null)
-            {
-                AnimationGroupElement group = panelElement as AnimationGroupElement;
-                group.Elements.Add(element);
-                PanelHub.InitializeNewAnimationPanel(group.Elements.ToList());
-            }
-            else if (panelElement as AnimationSingleElement != null)
-            {
-                AnimationSingleElement singleAnimationElement = panelElement as AnimationSingleElement;
-                IAnimationElement parentParentElement = TimeLine.SearchParentAnimationElement(singleAnimationElement);
-
-                if(parentParentElement is AnimationGroupElement)
-                {
-                    var par = parentParentElement as AnimationGroupElement;
-                    if(par != null)
-                    {
-                        var convertedGroup = par.ConvertToGroup(singleAnimationElement);
-                        convertedGroup.Elements.Add(element);
-
-                        PanelHub.InitializeNewAnimationPanel(convertedGroup.Elements.ToList());
-                    }
-                }
-            }
-            else //null no group, directly attached to TimeLine. This shouldn't be used, although just in case.
-            {
-                TimeLine.AnimationElements.Add(element);
-                PanelHub.InitializeNewAnimationPanel(TimeLine.GetAnimationSingleElementFirstLayer());
-                //throw new Exception("Nesu: TimeLineEditor - Parent animation element is null");
-            }
-
-            TimeLine.Refresh();
-        }
-
-        public void UpdateAnimationElement(NameValueCollection values)
-        {
-            ITLEPanelCellElement panelElement = PanelHub.SelectedPanel.SelectedPanelCell.AnimationElement;
-            if (panelElement is AnimationSingleElement)
-            {
-                AnimationSingleElement elem = panelElement as AnimationSingleElement;
-                elem.UpdateManual(values);
-            }
-            else if (panelElement is AnimationGroupElement)
-            {
-                AnimationGroupElement elem = panelElement as AnimationGroupElement;
-                elem.UpdateManual(values);
-            }
-
-            var lastIndex = PanelHub.GetLastPanelAnimationElementIndex();
-            PanelHub.InitializePanel(TLEPanelHub.ANIMATIONELEMENT_PANEL_PREFIX + lastIndex, TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        public void MoveAnimationElement()
-        {
-            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
-
-            if (timeSpan != TimeLine.Stopper.Elapsed)
-                throw new NesuException("TLE: MoveAnimationElement: Time Spans are not matched");
-
-            //TimeLine.BeatGuider.RemoveBeat(from);
-            //TimeLine.BeatGuider.RegisterBeat(timeSpan);
-            var selectedElement = PanelHub.SelectedPanel.SelectedPanelCell.AnimationElement;
-            selectedElement.SetStartTime(timeSpan);
-
-            TimeLine.Refresh();
-
-            var lastIndex = PanelHub.GetLastPanelAnimationElementIndex();
-            PanelHub.InitializePanel(TLEPanelHub.ANIMATIONELEMENT_PANEL_PREFIX + lastIndex, TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        public void RemoveAnimationElement()
-        {
-            var timeSpan = PanelHub.TimeIdentyficator.SelectedTime;
-
-            if (timeSpan != TimeLine.Stopper.Elapsed)
-                throw new Exception("Nesu: Time Spans are not matched");
-
-            var element = PanelHub.SelectedPanel.SelectedPanelCell.AnimationElement;
-            if (element is IAnimationElement)
-            {
-                var animationElementI = element as IAnimationElement;
-                var parentElement = TimeLine.SearchParentAnimationElement(animationElementI);
-                if (parentElement is AnimationGroupElement)
-                {
-                    var par = parentElement as AnimationGroupElement;
-                    par.Elements.Remove(animationElementI);
-                }
-            }
-
-            TimeLine.Refresh();
-
-            var lastIndex = PanelHub.GetLastPanelAnimationElementIndex();
-            PanelHub.InitializePanel(TLEPanelHub.ANIMATIONELEMENT_PANEL_PREFIX + lastIndex, TimeLine.BeatGuider.GetTLECellElements());
-            //PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_BEAT, TimeLine.BeatGuider.GetTLECellElements());
-        }
-
-        #endregion
-
-        #region AnimationRoute Management
-
-        public void AddNewAnimationRoute()
-        {
-            var time = PanelHub.TimeIdentyficator.GetTime();
-            var frame = new AnimationRouteFrame();
-            frame.FrameTime = time;
-
-            var panelAnimationElement = PanelHub.GetPanel(TLEPanelHub.ANIMATIONELEMENT_PANEL_PREFIX + PanelHub.GetLastPanelAnimationElementIndex());
-            var parentAnimationElement = panelAnimationElement.SelectedPanelCell.AnimationElement;
-
-            if (parentAnimationElement is IAnimationElement)
-            {
-                var ianimationElemnt = parentAnimationElement as IAnimationElement;
-                ianimationElemnt.Route = new AnimationRoute();
-                ianimationElemnt.Route.Frames = new List<AnimationRouteFrame>();
-                ianimationElemnt.Route.Frames.Add(frame);
-
-                TimeLine.Refresh();
-
-                PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE, ianimationElemnt.Route.Frames);
-            }
-        }
-
-        public void RemoveAnimationRoute()
-        {
-            var panel = PanelHub.GetPanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE);
-            if (panel == null)
-                return;
-
-            var routeFrame = panel.SelectedPanelCell.AnimationElement;
-            if(routeFrame is AnimationRouteFrame)
-            {
-                var animationRouteFrame = routeFrame as AnimationRouteFrame;
-                var parentAnimationElement = TimeLine.SearchParentAnimationElement(animationRouteFrame);
-                parentAnimationElement.Route.Frames.Remove(animationRouteFrame);
-
-                TimeLine.Refresh();
-
-                PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE, parentAnimationElement.Route.Frames);
-            }
-        }
-
-        public void MoveAnimationRoute(TimeSpan from)
-        {
-            var panel = PanelHub.GetPanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE);
-            if (panel == null)
-                return;
-
-            var routeFrame = panel.SelectedPanelCell.AnimationElement;
-            if (routeFrame is AnimationRouteFrame)
-            {
-                var animationRouteFrame = routeFrame as AnimationRouteFrame;
-                var parentAnimationElement = TimeLine.SearchParentAnimationElement(animationRouteFrame);
-
-                var time = PanelHub.TimeIdentyficator.GetTime();
-                animationRouteFrame.FrameTime = time;
-
-                TimeLine.Refresh();
-
-                PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE, parentAnimationElement.Route.Frames);
-            }
-        }
-
-        public void UpdateAnimationRoute(NameValueCollection values)
-        {
-            var panel = PanelHub.GetPanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE);
-            if (panel == null)
-                return;
-
-            var routeFrame = panel.SelectedPanelCell.AnimationElement;
-            if (routeFrame is AnimationRouteFrame)
-            {
-                var animationRouteFrame = routeFrame as AnimationRouteFrame;
-                var parentAnimationElement = TimeLine.SearchParentAnimationElement(animationRouteFrame);
-
-                animationRouteFrame.UpdateManual(values);
-
-                TimeLine.Refresh();
-
-                PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_ANIMATION_ROUTE, parentAnimationElement.Route.Frames);
-            }
-        }
-
-        #endregion
-
-        //#region AnimationGroup Management
-
-        //public void AddNewAnimationGroup()
-        //{
-        //    AnimationGroupElement element = new AnimationGroupElement();
-
-        //    ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().SelectedPanelCell?.AnimationElement;
-
-        //    if (panelElement == null)
-        //       TimeLine.AnimationElements.Add(element);
-        //    else if(panelElement is AnimationGroupElement)
-        //    {
-        //        AnimationGroupElement parentGroup = panelElement as AnimationGroupElement;
-        //        parentGroup.Elements.Add(element);
-        //        PanelHub.GetLastGroupPanel();
-
-        //        PanelHub.InitializePanel(TLEPanelHub.PANEL_NAME_ANIMATION_GROUP_ELEMENT, PanelHub.GetLastGroupPanel().SelectedPanelCell.AnimationElement);
-        //    }
-        //    else
-        //        throw new NesuException("Nesu: AddNewAnimationGroup - panelElement not null & not group");
-
-        //    TimeLine.Refresh();
-        //}
-
-        //public void MoveAnimationGroup(string graphicalName = "")
-        //{
-        //    ITLEPanelCellElement panelElement = PanelHub.GetLastGroupPanel().SelectedPanelCell?.AnimationElement;
-        //    var time = PanelHub.TimeIdentyficator.SelectedTime;
-
-        //    if (panelElement == null)
-        //        throw new NesuException("TLE: MoveAnimationGroup - panelElement is null");
-        //    else if (panelElement is AnimationGroupElement)
-        //    {
-        //        AnimationGroupElement parentGroup = panelElement as AnimationGroupElement;
-        //        parentGroup.SetStartTime(time);
-        //    }
-        //    else
-        //        throw new NesuException("TLE: MoveAnimationGroup - panelElement not null & not group");
-
-        //    TimeLine.Refresh();
-
-
-        //}
-
-        //#endregion
-
-        //temporary... To be decided if removal should go to TimeLine class
-        private void RemoveTimeLineElement(ITLEPanelCellElement elementToRemove)
-        {
-            if (elementToRemove as AnimationGroupElement != null)
-            {
-                var group = elementToRemove as AnimationGroupElement;
-                if (group != null)
-                {
-                    TimeLine.AnimationElements.Remove(group);
-                }
-            }
-        }
-
-        //public void RemovePanelElement(string graphicName)
-        //{
-        //    var elementToRemove = PanelHub.RemovePanelsElement(graphicName);
-        //    RemoveTimeLineElement(elementToRemove);
-        //    TimeLine.Refresh();
-        //}
-
         public void SetTimeCursorToPrecentage(float precentage)
         {
             var time = PanelHub.SetTimeCursorToPrecentage(precentage);
@@ -381,33 +88,5 @@ namespace DogeBeats.Modules
             if (timeline != null)
                 AttachTimeLineToEditor(timeline);
         }
-
-        //public  List<string> GetKeysForManualUpdate(Type type)
-        //{
-        //    List<string> keys = new List<string>();
-        //    keys.AddRange(Placement.GetKeysManualUpdate());
-        //    if (type == typeof(AnimationGroupElement))
-        //    {
-        //        keys.AddRange(Placement.GetKeysManualUpdate());
-        //        keys.AddRange(AnimationGroupElement.GetKeysManualUpdate());
-        //    }
-        //    else if (type == typeof(AnimationSingleElement))
-        //    {
-        //        keys.AddRange(Placement.GetKeysManualUpdate());
-        //        keys.AddRange(AnimationSingleElement.GetKeysManualUpdate());
-        //    }
-        //    else if (type == typeof(AnimationRouteFrame))
-        //    {
-        //        keys.AddRange(Placement.GetKeysManualUpdate());
-        //        keys.AddRange(AnimationRouteFrame.GetKeysManualUpdate());
-        //    }
-        //    else if (type == typeof(Beat))
-        //    {
-        //        // noting to return 
-        //        return new List<string>();
-        //    }
-
-        //    return keys;
-        //}
     }
 }

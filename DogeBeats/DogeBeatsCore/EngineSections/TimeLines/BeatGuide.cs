@@ -18,6 +18,11 @@ namespace DogeBeats.Modules.TimeLines
         public void RemoveBeat(TimeSpan span)
         {
             var beat = Beats.FirstOrDefault(f => f.Timestamp <= span && (f.Timestamp + Beat.DurationTime) > span);
+            RemoveBeat(beat);
+        }
+
+        public void RemoveBeat(Beat beat)
+        {
             if (beat != null)
                 Beats.Remove(beat);
         }
