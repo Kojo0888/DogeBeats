@@ -76,7 +76,6 @@
     <Compile Include="EngineSections\GameEnvironmentProxy\Sound\ProxySoundManager.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Sound\SoundItem.cs" />
     <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\RendererElements\GraphicObjectParser.cs" />
-    <Compile Include="EngineSections\GameEnvironmentProxy\Renderer\RendererElements\GraphicProxyTimeLineEditor.cs" />
     <Compile Include="EngineSections\Resources\ResourceManager.cs" />
     <Compile Include="EngineSections\TimeLines\AnimationObjects\AnimationSingleElement.cs" />
     <Compile Include="EngineSections\TimeLines\AnimationObjects\AnimationGroupElement.cs" />

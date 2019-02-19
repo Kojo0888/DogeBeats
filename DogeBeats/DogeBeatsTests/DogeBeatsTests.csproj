@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="EngineSections\Resources\Centres\CentreFileBaseTests.cs" />
     <Compile Include="EngineSections\Resources\Centres\CentreSerializationBaseTests.cs" />
+    <Compile Include="EngineSections\TimeLineEditing\TimeLineEditorTests.cs" />
     <Compile Include="EngineSections\TimeLineEditing\TLEPanels\TLEPanelTests.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\AnimationGroupElementTests.cs" />
     <Compile Include="EngineSections\TimeLine\AnimationObjects\AnimationSingleElementTests.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="EngineSections\TimeLine\BeatGuideTests.cs" />
     <Compile Include="EngineSections\TimeLine\TimeLineTests.cs" />
     <Compile Include="FileTestHelper.cs" />
-    <Compile Include="EngineSections\AnimationObjects\AnimationElementTests.cs" />
     <Compile Include="EngineSections\Resources\FileAssistantTests.cs" />
     <Compile Include="EngineSections\Resources\ResourceManagerTests.cs" />
     <Compile Include="EngineSections\Resources\Centres\TimeLineCentreTests.cs" />

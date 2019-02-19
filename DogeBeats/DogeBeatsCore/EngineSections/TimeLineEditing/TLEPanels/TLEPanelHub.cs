@@ -37,8 +37,8 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public TLEPanelTimeGraphicIndicator TimeIdentyficator { get; set; }
 
-        public AnimationGroupElement SelectedGroup { get; set; }
-        public AnimationSingleElement SelectedElement { get; set; }
+        //public AnimationGroupElement SelectedGroup { get; set; }
+        //public AnimationSingleElement SelectedElement { get; set; }
         //public string SelectedPanelName { get; set; }
 
         public TLEPanel SelectedPanel { get; set; }
@@ -149,14 +149,14 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 return null;
         }
 
-        public void MoveForwardPanelTimeSection()
+        public void MoveForwardTimeScope()
         {
             PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks + (PanelWidthTime.Ticks / 2));
             UpdateAllPanelTimeScope();
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
-        public void MoveBackwardPanelTimeSection()
+        public void MoveBackwardTimeScope()
         {
             if (PanelOffsetTime.Ticks - (PanelWidthTime.Ticks / 2) < 0)
                 return;
@@ -182,11 +182,29 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             }
         }
 
-        public void SelectPanel(string panelName)
+        public void SelectPanel(string panelGraphicalName)
         {
-            SelectedPanel = Panels[panelName];
+            foreach (var panel in Panels.Values)
+            {
+                if(panel.GraphicName == panelGraphicalName)
+                {
+                    SelectedPanel = panel;
+                    SelectPanel_RemovePanels(SelectedPanel.PanelName);
+                }
+            }
+        }
 
-            SelectPanel_RemovePanels(panelName);
+        public void SelectPanelAndPanelElement(string elementName)
+        {
+            foreach (var Panel in Panels.Values)
+            {
+                var searchedElement = Panel.PanelCells.FirstOrDefault(f => f.GraphicName == elementName);
+                if (searchedElement != null)
+                {
+                    SelectedPanel = Panel;
+                    Panel.SelectedPanelCell = searchedElement;
+                }
+            }
         }
 
         public void SelectPanel_RemovePanels(string panelName)

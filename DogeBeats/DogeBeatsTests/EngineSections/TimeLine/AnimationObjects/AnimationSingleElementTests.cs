@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using DogeBeatsTests;
 
 namespace Testowy.Model.Tests
 {
@@ -28,6 +29,28 @@ namespace Testowy.Model.Tests
         public void RenderTest()
         {
             //nothing yet to test
+        }
+
+        [Fact]
+        public void SearchParentAnimationElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void UpdateManualTest()
+        {
+            var aElem = MockObjects.GetAnimationElement();
+            if (aElem == null)
+                throw new Exception("Assert Fails");
+
+            var values2 = new System.Collections.Specialized.NameValueCollection();
+            values2.Add("Prediction", "False");
+            values2.Add("ShapeTypeName", "IdkYet3");
+            values2.Add("Name", "IdkYet1233");
+            aElem.UpdateManual(values2);
+            if (aElem.Shape.TypeName != "IdkYet3")
+                throw new Exception("Assert Fails");
         }
     }
 }

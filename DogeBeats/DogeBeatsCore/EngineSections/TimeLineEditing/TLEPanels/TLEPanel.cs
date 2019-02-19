@@ -1,4 +1,5 @@
-﻿using DogeBeats.Other;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,13 @@ namespace DogeBeats.Modules.TimeLines
             {
                 cell.ReferenceElement.SetStartTime(destenationTime);
             }
+        }
+
+        public void MovePanelCellTime(string graphicName, float precentage)
+        {
+            var timespan = new TimeSpan((long)((EndTime.Ticks - StartTime.Ticks) * precentage));
+            
+            MovePanelCellTime(graphicName, StartTime + timespan);
         }
 
         public void RemovePanelCell(string graphicName)

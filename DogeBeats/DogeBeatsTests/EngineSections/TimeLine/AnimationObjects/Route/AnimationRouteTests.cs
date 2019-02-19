@@ -62,5 +62,11 @@ namespace Testowy.Model.Tests
                 throw new Exception("Assert Fails");
             //values.Add("");
         }
+
+        [Fact]
+        public void DuplicateLastFrame()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -61,10 +61,18 @@ namespace DogeBeats.Modules
             TimeLine.PauseStoryboard(false);
         }
 
-        public void ChangeCurrentTime(TimeSpan newTimespamp)
+        public void ChangeStopperTime(TimeSpan newTimespamp)
         {
-            TimeLine.Stopper.Stop();
-            TimeLine.Stopper.Elapsed = newTimespamp;
+            if (TimeLine.Stopper.IsRunning)
+            {
+                TimeLine.Stopper.Stop();
+                TimeLine.Stopper.Elapsed = newTimespamp;
+                TimeLine.Stopper.Start();
+            }
+            else
+            {
+                TimeLine.Stopper.Elapsed = newTimespamp;
+            }
         }
 
         public void SetTimeCursorToPrecentage(float precentage)
@@ -87,6 +95,23 @@ namespace DogeBeats.Modules
             TimeLine timeline = StaticHub.TimeLineCentre.Get(timelineName);
             if (timeline != null)
                 AttachTimeLineToEditor(timeline);
+        }
+
+        public void MoveForwardTimeScope()
+        {
+            PanelHub.MoveForwardTimeScope();
+        }
+
+        public void MoveBackwardTimeScope()
+        {
+            PanelHub.MoveBackwardTimeScope();
+        }
+
+        public void UpdateTimeScope(TimeSpan from, TimeSpan to)
+        {
+            PanelHub.PanelOffsetTime = from;
+            PanelHub.PanelWidthTime = new TimeSpan(to.Ticks - from.Ticks);
+            PanelHub.UpdateAllPanelTimeScope();
         }
     }
 }

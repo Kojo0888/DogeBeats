@@ -1,7 +1,6 @@
 ﻿using DogeBeats.EngineSections.Resources;
 using DogeBeats.MockUps;
 using DogeBeats.Model;
-using DogeBeats.Modules.Renderer.RendererModules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +12,6 @@ namespace DogeBeats.Renderer
 {
     public static class GraphicProxy
     {
-        public static GraphicProxyTimeLineEditor TimeLineEditor { get; set; } = new GraphicProxyTimeLineEditor();
-
         public static int GraphicElementNameIndex { get; set; }
 
         public static Dictionary<string, GameObject> ShapesOnScreen = new Dictionary<string, GameObject>();

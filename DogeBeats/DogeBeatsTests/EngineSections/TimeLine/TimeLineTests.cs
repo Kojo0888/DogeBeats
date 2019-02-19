@@ -131,5 +131,42 @@ namespace DogeBeatsTests.EngineSections.TimeLine
             Assert.Equal(PassedAnimationElements, timeLine.PassedAnimationElements.Count);
             Assert.Equal(storyboardqueue, timeLine.StoryboardQueue.Count);
         }
+
+        [Fact]
+        public void ManualUpdate()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void FixGroupAnimationTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void SearchParentAnimationElement_IAnimationElement()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Fact]
+        public void SearchParentAnimationElement_AnimationRoute()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetAllAnimationGroupElements()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetAnimationSingleElementFirstLayer()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
