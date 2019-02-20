@@ -17,30 +17,66 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
             panel = new TLEPanel();
         }
 
+
         [Fact]
         public void InitializeGrouppedElements()
         {
-            
-            //panel.InitializeGrouppedElements();//check this
+            throw new NotImplementedException();
         }
 
         [Fact]
         public void MovePanelCellTime()
         {
-            //panel.MovePanelCellTime();//test this
+            throw new NotImplementedException();
         }
 
-        //RemovePanelCell
-        //CalculateMaxElementsAtColumn
-        //CalculatePlacementForPanelCell
-        //CalculateDynamicCellWidth
-        //GetElementGroupForTimeSpan
-        //
-        //
-        //
-        //
-        //
-        //
-        //
+        [Fact]
+        public void RemovePanelCell()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void CalculateMaxElementsAtColumn()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void CalculatePlacementForPanelCell()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetStackedElementsForTimeSpan()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetCellElementBasedOnGraphicName()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetCell()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Fact]
+        public void SelectPanelCell()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void ClearCellSelection()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

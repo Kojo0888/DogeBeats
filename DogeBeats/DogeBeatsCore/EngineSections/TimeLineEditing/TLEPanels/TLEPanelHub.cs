@@ -47,7 +47,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public TLEPanelHub()
         {
-
+            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(GetAllPanelsHeight(), int.Parse(Width.ToString()), PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         public TLEPanel GetPanel(string panelName)
@@ -151,17 +151,22 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void MoveForwardTimeScope()
         {
-            PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks + (PanelWidthTime.Ticks / 2));
+            PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks + PanelWidthTime.Ticks);
             UpdateAllPanelTimeScope();
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         public void MoveBackwardTimeScope()
         {
-            if (PanelOffsetTime.Ticks - (PanelWidthTime.Ticks / 2) < 0)
-                return;
+            if (PanelOffsetTime.Ticks - PanelWidthTime.Ticks < 0)
+            {
+                PanelOffsetTime = new TimeSpan();
+            }
+            else
+            {
+                PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks - PanelWidthTime.Ticks);
+            }
 
-            PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks - (PanelWidthTime.Ticks / 2));
             UpdateAllPanelTimeScope();
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }

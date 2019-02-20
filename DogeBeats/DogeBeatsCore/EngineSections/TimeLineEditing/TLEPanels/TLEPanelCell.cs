@@ -28,7 +28,7 @@ namespace DogeBeats.Modules.TimeLines
 
         //public bool Selected { get; set; }
 
-        internal static TLEPanelCell Parse(ITLEPanelCellElement element)
+        public static TLEPanelCell Parse(ITLEPanelCellElement element)
         {
             TLEPanelCell cell = new TLEPanelCell();
             cell.GraphicName = GraphicProxy.GenerateGraphicName();

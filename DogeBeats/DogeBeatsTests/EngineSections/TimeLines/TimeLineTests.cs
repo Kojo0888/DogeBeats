@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Testowy.Model;
 using Xunit;
 
-namespace DogeBeatsTests.EngineSections.TimeLine
+namespace DogeBeatsTests.EngineSections.TimeLines
 {
     public class TimeLineTests
     {

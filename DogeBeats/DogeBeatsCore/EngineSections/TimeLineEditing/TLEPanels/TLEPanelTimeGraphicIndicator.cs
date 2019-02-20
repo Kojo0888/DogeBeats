@@ -59,7 +59,7 @@ namespace DogeBeats.Modules.TimeLines
         {
             SelectedPrecentage = precentage;
             var ticks = (EndTime.Ticks - StartTime.Ticks);
-            SelectedTime = new TimeSpan((long)(ticks * (double)precentage));
+            SelectedTime = new TimeSpan(StartTime.Ticks + (long)(ticks * (double)precentage));
 
             Placement.X = precentage * MaxWidth;
         }

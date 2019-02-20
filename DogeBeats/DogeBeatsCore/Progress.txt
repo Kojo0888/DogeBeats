@@ -277,12 +277,16 @@ x	Planned: Veryfication Panel Actions & minor tests/Start Testing
 √	Optional: Extracting Modyfication modules. Creating Management Modules.
 √	Optional: Creating default value for new Elements. Done.
 
-
 19_02_2019: 
 p	Planned: Unit Testing & Integration Testing 
 	40min on CodeSnippet + Setting 14 red tests for TimeLines namespace
 p	Planned: Setting bodyies for Graphical Proxy:
 	45min on this (+ creating connecting methods... eh... removal whole GraphicalProxy for TimeLineEditor)
+
+20_02_2019:
+	Adding new red tests: TLEPanelHubTests, TLEPanelTimeGraphicIndicator, TLEPanelTests, TimeLineEditorTests
+	Adding new red tests: All Managements
+	----56/127 red tests (4 done)----
 
 _________________________________________________________________________________________________
 

@@ -22,7 +22,7 @@ namespace DogeBeats.Modules
     {
         public TimeLine TimeLine { get; set; }
 
-        public TLEPanelHub PanelHub { get; set; }
+        public TLEPanelHub PanelHub { get; set; } = new TLEPanelHub();
 
         public Dictionary<string, ITLEPanelCellElementManagement> PanelCellManagements { get; set; } = new Dictionary<string, ITLEPanelCellElementManagement>();
 
@@ -33,6 +33,7 @@ namespace DogeBeats.Modules
 
         public void InitializePanelCellManagements()
         {
+            PanelCellManagements.Clear();
             PanelCellManagements.Add(TLEPanelNames.BEAT, new TLEPCEManagementBeat(this));
             PanelCellManagements.Add(TLEPanelNames.ANIMATION_ROUTE, new TLEPCEManagementAnimationRoute(this));
             PanelCellManagements.Add(TLEPanelNames.ANIMATION_ELEMENT_PREFIX, new TLEPCEManagementAnimationElement(this));
@@ -78,11 +79,12 @@ namespace DogeBeats.Modules
         public void SetTimeCursorToPrecentage(float precentage)
         {
             var time = PanelHub.SetTimeCursorToPrecentage(precentage);
-            bool running = TimeLine.Stopper.IsRunning;
+            bool wasRunning = TimeLine.Stopper.IsRunning;
             TimeLine.Stopper.Stop();
             TimeLine.Stopper.Elapsed = time;
-            if (running)
+            if (wasRunning)
                 TimeLine.Stopper.Start();
+            //PanelHub.SetTimeCursorToPrecentage(precentage);
         }
 
         public void SaveTimeLine()
