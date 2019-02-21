@@ -108,7 +108,15 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing
         [Fact]
         public void UpdateTimeScope()
         {
-            throw new NotImplementedException();
+            TLE.UpdateTimeScope(new TimeSpan(0, 0, 9), new TimeSpan(0, 0, 20));
+
+            var startTime = TLE.PanelHub.TimeIdentyficator.StartTime;
+            var endTime = TLE.PanelHub.TimeIdentyficator.EndTime;
+
+            if (startTime.Seconds != 9)
+                throw new Exception("Start Time has " + startTime.Seconds + " seconds");
+            if (endTime.Seconds != 20)
+                throw new Exception("End Time has " + startTime.Seconds + " seconds");
         }
     }
 }

@@ -104,14 +104,14 @@ namespace Testowy.Model
 
         public void FixParentAnimationTime()
         {
-            TimeSpan ts = Route.AnimationStartTime;
-            foreach (var element in Elements)
-            {
-                ts += element.GetDurationTime();
-            }
+            //TimeSpan ts = Route.AnimationStartTime;
+            //foreach (var element in Elements)
+            //{
+            //    ts += element.GetDurationTime();
+            //}
 
-            if (Route.CalculateAnimationTime() < ts)
-                Route.DuplicateLastFrame(ts);
+            //if (Route.CalculateAnimationTime() < ts)
+            //    Route.DuplicateLastFrame(ts);
         }
 
         public static IEnumerable<string> GetKeysManualUpdate()

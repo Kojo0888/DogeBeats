@@ -113,7 +113,7 @@ namespace DogeBeats.Modules
         {
             PanelHub.PanelOffsetTime = from;
             PanelHub.PanelWidthTime = new TimeSpan(to.Ticks - from.Ticks);
-            PanelHub.UpdateAllPanelTimeScope();
+            PanelHub.UpdateTimeScope();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace DogeBeats.Modules.TimeLines
         public string GraphicName { get; set; }
         public Placement Placement { get; set; }
 
-        public void InitializeGrouppedElements()
+        public void InitializeStackedElements()
         {
             StackedElements = new Dictionary<TimeSpan, List<TLEPanelCell>>();
 
@@ -46,7 +46,7 @@ namespace DogeBeats.Modules.TimeLines
                     group.Add(orderedPanelCells[i]);
                 else
                 {
-                    StackedElements.Add(currentTimeSpan, group);
+                    StackedElements.Add(currentTimeSpan - TimeCellWidth, group);
                     group = new List<TLEPanelCell>();
 
                     if (currentTimeSpan > EndTime)

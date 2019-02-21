@@ -288,6 +288,9 @@ p	Planned: Setting bodyies for Graphical Proxy:
 	Adding new red tests: All Managements
 	----56/127 red tests (4 done)----
 
+21_02_2019:
+	----45/127 red tests (11 done)----
+
 _________________________________________________________________________________________________
 
 TODO Legend:

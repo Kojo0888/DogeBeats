@@ -152,7 +152,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         public void MoveForwardTimeScope()
         {
             PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks + PanelWidthTime.Ticks);
-            UpdateAllPanelTimeScope();
+            UpdateTimeScope();
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
@@ -167,7 +167,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
                 PanelOffsetTime = new TimeSpan(PanelOffsetTime.Ticks - PanelWidthTime.Ticks);
             }
 
-            UpdateAllPanelTimeScope();
+            UpdateTimeScope();
             TimeIdentyficator.UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
@@ -177,14 +177,23 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             return panelIndexe;
         }
 
-        public void UpdateAllPanelTimeScope()
+        public void UpdateTimeScope(TimeSpan from, TimeSpan to)
         {
-            var endTime = PanelOffsetTime + PanelWidthTime;
+            PanelWidthTime = new TimeSpan(to.Ticks - from.Ticks);
+            PanelOffsetTime = from;
 
             foreach (var panel in Panels.Values)
             {
-                panel.UpdateTimeScope(PanelOffsetTime, endTime);
+                panel.UpdateTimeScope(from, to);
             }
+
+            TimeIdentyficator.StartTime = from;
+            TimeIdentyficator.EndTime = to;
+        }
+
+        public void UpdateTimeScope()
+        {
+            UpdateTimeScope(PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         public void SelectPanel(string panelGraphicalName)

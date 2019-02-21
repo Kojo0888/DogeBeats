@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using DogeBeatsTests;
+using DogeBeats.EngineSections.Shared;
 
 namespace Testowy.Model.Tests
 {
-    [Collection("Synchronical")]
     public class AnimationSingleElementTests
     {
         private AnimationSingleElement element;
@@ -34,7 +34,18 @@ namespace Testowy.Model.Tests
         [Fact]
         public void SearchParentAnimationElement()
         {
-            throw new NotImplementedException();
+            AnimationRouteFrame frame = new AnimationRouteFrame()
+            {
+                Amplitude = 123,
+                Cycles = 1
+            };
+
+            element.Route.Frames = new List<AnimationRouteFrame>();
+            element.Route.Frames.Add(frame);
+
+            var returnedElement = element.SearchParentAnimationElement(frame);
+            if (returnedElement != element)
+                throw new NesuException("References differs");
         }
 
         [Fact]

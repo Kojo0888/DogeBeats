@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using Xunit;
+using DogeBeats.EngineSections.Shared;
 
 namespace Testowy.Model.Tests
 {
-    [Collection("Synchronical")]
     public class AnimationRouteTests
     {
         AnimationRoute route = new AnimationRoute();
@@ -66,7 +66,10 @@ namespace Testowy.Model.Tests
         [Fact]
         public void DuplicateLastFrame()
         {
-            throw new NotImplementedException();
+            route.DuplicateLastFrame(new TimeSpan(0,0,50));
+            var slider = route.GetFrameSlider(new TimeSpan(0, 0, 50));
+            if (slider.CurrentFrame.FrameTime != new TimeSpan(0, 0, 50))
+                throw new NesuException("slider.CurrentFrame.FrameTime is " + slider.CurrentFrame.FrameTime);
         }
     }
 }

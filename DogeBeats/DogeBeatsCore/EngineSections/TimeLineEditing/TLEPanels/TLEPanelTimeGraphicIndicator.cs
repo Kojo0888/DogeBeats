@@ -17,7 +17,6 @@ namespace DogeBeats.Modules.TimeLines
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
 
-        public float SelectedPrecentage { get; set; }
         public TimeSpan SelectedTime { get; private set; }
 
         public float MaxWidth { get; set; }
@@ -57,7 +56,6 @@ namespace DogeBeats.Modules.TimeLines
 
         public void MovePrecentage(float precentage)//0.12
         {
-            SelectedPrecentage = precentage;
             var ticks = (EndTime.Ticks - StartTime.Ticks);
             SelectedTime = new TimeSpan(StartTime.Ticks + (long)(ticks * (double)precentage));
 
