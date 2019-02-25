@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Testowy.Model
 {
-    public class AnimationGroupElement : ITLEPanelCellElement, INamedElement, IAnimationElement
+    public class AnimationGroupElement : ITLEPanelCellElement, INamedElement, IAnimationElement, IGraphicElement
     {
         public List<IAnimationElement> Elements { get; set; }
 
@@ -25,6 +25,8 @@ namespace Testowy.Model
         public bool Prediction { get; set; }
 
         public Placement Placement { get; set; }
+
+        public string GraphicName { get; set; }
 
         public AnimationGroupElement()
         {

@@ -1,10 +1,12 @@
-﻿using DogeBeats.EngineSections.Shared;
+﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Testowy.Model;
 using Xunit;
 
 namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
@@ -22,7 +24,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         [Fact]
         public void GetPanel()
         {
-            PanelHub.InitializePanels(new Testowy.Model.TimeLine());
+            PanelHub.InitializeDefaultPanels(new Testowy.Model.TimeLine());
             var panel = PanelHub.GetPanel(TLEPanelNames.BEAT);
             if (panel == null)
                 throw new NesuException("panel is null");
@@ -33,31 +35,88 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         [Fact]
         public void InitializeGraphicIdentyficator()
         {
-            throw new NotImplementedException();
+            PanelHub.InitializeGraphicIdentyficator();
+            if (PanelHub.TimeIdentyficator == null)
+                throw new NesuException("TimeIdentificator is null");
         }
 
         [Fact]
-        public void InitializePanels()
+        public void InitializeDefaultPanels()
         {
-            throw new NotImplementedException();
+            PanelHub.InitializeDefaultPanels(new Testowy.Model.TimeLine());
+
+            if (!PanelHub.Panels.ContainsKey(TLEPanelNames.BEAT))
+                throw new NesuException("Beat panel is null");
+            if (!PanelHub.Panels.ContainsKey(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0"))
+                throw new NesuException("Beat panel is null");
+
+            if (PanelHub.TimeIdentyficator == null)
+                throw new NesuException("TimeIdentificator is null");
         }
 
         [Fact]
         public void InitializeNewAnimationPanel()
         {
-            throw new NotImplementedException();
-        }
+            PanelHub.InitializeNewAnimationPanel(new List<IAnimationElement>());
 
-        [Fact]
-        public void CreatePanelWithDefaultSettings()
-        {
-            throw new NotImplementedException();
+            if (!PanelHub.Panels.ContainsKey(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0"))
+                throw new NesuException("Panel animationElemnt with index 0 does not exist");
+
+            PanelHub.InitializeNewAnimationPanel(new List<IAnimationElement>());
+
+            if (!PanelHub.Panels.ContainsKey(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "1"))
+                throw new NesuException("Panel animationElemnt with index 1 does not exist");
+
         }
 
         [Fact]
         public void MoveTimeForPanelsElement()
         {
-            throw new NotImplementedException();
+            string graphicElement = "asddsa123";
+
+            TimeLine tl = MockObjects.GetTimeLine2();
+            var element = tl.AnimationElements.FirstOrDefault();
+            element.GraphicName = graphicElement;
+            //tl.AnimationElements
+            PanelHub.InitializeDefaultPanels(tl);
+
+            var cellBefore = PanelHub.GetPanelCellBasedOnReferenceElement(element);
+            var panelCellGraphicName = cellBefore.GraphicName;
+
+            PanelHub.TimeIdentyficator.MovePrecentage(.8f);
+            var time = PanelHub.TimeIdentyficator.GetTime();
+
+            PanelHub.MoveTimeForPanelsElement(panelCellGraphicName, .8f);
+
+            var cellAfter = PanelHub.GetPanelCellBasedOnReferenceElement(element);
+            var elem  = cellAfter.ReferenceElement as AnimationSingleElement;
+            if (elem.Route.AnimationStartTime != time)
+                throw new NesuException("AnimationTime does not equal to time");
+        }
+
+        [Fact]
+        public void MoveTimeForPanelsElement2()
+        {
+            string graphicElement = "asddsa123";
+
+            TimeLine tl = MockObjects.GetTimeLine2();
+            var element = tl.AnimationElements.FirstOrDefault();
+            element.GraphicName = graphicElement;
+            //tl.AnimationElements
+            PanelHub.InitializeDefaultPanels(tl);
+
+            var cellBefore = PanelHub.GetPanelCellBasedOnReferenceElement(element);
+            var panelCellGraphicName = cellBefore.GraphicName;
+
+            PanelHub.TimeIdentyficator.MovePrecentage(.8f);
+            var time = PanelHub.TimeIdentyficator.GetTime();
+
+            PanelHub.MoveTimeForPanelsElement(element, .8f);
+
+            var cellAfter = PanelHub.GetPanelCellBasedOnReferenceElement(element);
+            var elem = cellAfter.ReferenceElement as AnimationSingleElement;
+            if (elem.Route.AnimationStartTime != time)
+                throw new NesuException("AnimationTime does not equal to time");
         }
 
         [Fact]

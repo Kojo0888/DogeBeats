@@ -17,100 +17,7 @@ namespace DogeBeatsTests.EngineSections.TimeLines
 
         private void InitAnimationElements()
         {
-            timeLine.AnimationElements = new List<DogeBeats.EngineSections.AnimationObjects.IAnimationElement>()
-            {
-                new AnimationSingleElement()
-                {
-                    Route = new AnimationRoute()
-                    {
-                        AnimationStartTime = new TimeSpan(0,0,0,10),
-                        Frames = new List<AnimationRouteFrame>()
-                        {
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,12)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
-                            }
-                        }
-                    }
-                },
-                new AnimationSingleElement()
-                {
-                    Route = new AnimationRoute()
-                    {
-                        AnimationStartTime = new TimeSpan(0,0,0,2),
-                        Frames = new List<AnimationRouteFrame>()
-                        {
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
-                            }
-                        }
-                    }
-                },
-                new AnimationGroupElement()
-                {
-                    Route = new AnimationRoute()
-                    {
-                        AnimationStartTime = new TimeSpan(0,0,0,13),
-                        Frames = new List<AnimationRouteFrame>()
-                        {
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,12)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
-                            }
-                        }
-                    },
-                    Elements = new List<DogeBeats.EngineSections.AnimationObjects.IAnimationElement>()
-                    {
-                        new AnimationSingleElement()
-                        {
-                            Route = new AnimationRoute()
-                            {
-                                AnimationStartTime = new TimeSpan(0,0,0,50),
-                                Frames = new List<AnimationRouteFrame>()
-                                {
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,1)
-                                    },
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,1)
-                                    },
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,5)
-                                    }
-                                }
-                            }
-                        },
-                    }
-                }
-            };
+            timeLine.AnimationElements = MockObjects.GetTimeLine2().AnimationElements;
         }
 
         [Theory]
@@ -176,23 +83,47 @@ namespace DogeBeatsTests.EngineSections.TimeLines
                 throw new NesuException("Parent is invalid");
         }
 
-
         [Fact]
         public void SearchParentAnimationElement_AnimationRoute()
         {
-            throw new NotImplementedException();
+            InitAnimationElements();
+
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            var frame = group.Route.Frames.LastOrDefault();
+
+            var parent = timeLine.SearchParentAnimationElement(frame);
+            if (group != parent)
+                throw new NesuException("Parent is invalid");
         }
 
         [Fact]
         public void GetAllAnimationGroupElements()
         {
-            throw new NotImplementedException();
+            InitAnimationElements();
+
+            var groups = timeLine.GetAllAnimationGroupElements();
+            if (groups.Count != 1)
+                throw new NesuException("Groups count is not 1");
         }
 
         [Fact]
         public void GetAnimationSingleElementFirstLayer()
         {
-            throw new NotImplementedException();
+            InitAnimationElements();
+
+            var singleElements = timeLine.GetAnimationSingleElementFirstLayer();
+            if (singleElements.Count != 2)
+                throw new NesuException("singleElement count != 2");
+        }
+
+        [Fact]
+        public void GetAnimationGroupElementFirstLayer()
+        {
+            InitAnimationElements();
+
+            var groupElements = timeLine.GetAnimationGroupElementFirstLayer();
+            if (groupElements.Count != 1)
+                throw new NesuException("groupElements count != 1");
         }
     }
 }

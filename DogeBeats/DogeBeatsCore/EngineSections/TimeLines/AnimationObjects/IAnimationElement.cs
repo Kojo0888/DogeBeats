@@ -1,6 +1,7 @@
 ﻿using DogeBeats.EngineSections.Shared;
 using DogeBeats.Modules.TimeLines;
 using DogeBeats.Modules.TimeLines.Shapes;
+using DogeBeats.Other;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Testowy.Model;
 
 namespace DogeBeats.EngineSections.AnimationObjects
 {
-    public interface IAnimationElement : ITLEPanelCellElement/*temporarly*/, INamedElement
+    public interface IAnimationElement : ITLEPanelCellElement/*temporarly*/, INamedElement, IGraphicElement
     {
         AnimationRoute Route { get; set; }
 

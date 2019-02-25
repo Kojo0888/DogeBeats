@@ -68,7 +68,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, StaticHub.EnvironmentVariables.MainWindowWidth, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
-        public void InitializePanels(TimeLine timeLine)
+        public void InitializeDefaultPanels(TimeLine timeLine)
         {
             Panels.Clear();
 
@@ -88,9 +88,15 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void InitializeNewAnimationPanel<T>(List<T> animationElements)
         {
-            int lastIndex = GetPanelGroupIndexes().LastOrDefault();
-            if (lastIndex == default(int))
-                throw new NesuException("PanelHub: Index is default... DO SOMETHING ABOUT IT!!!");
+            var indexes = GetPanelGroupIndexes();
+            int lastIndex = -1;
+
+            if(indexes.Count > 0)
+            {
+                lastIndex = indexes.LastOrDefault();
+                //if (lastIndex == default(int))
+                //    throw new NesuException("PanelHub: Index is default... DO SOMETHING ABOUT IT!!!");
+            }
 
             lastIndex++;
             InitializePanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + lastIndex, animationElements);
@@ -102,6 +108,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
             panel.StartTime = PanelOffsetTime;
             panel.EndTime = PanelOffsetTime + PanelWidthTime;
             panel.PanelName = panelName;
+            panel.Placement = new Placement();
 
             if (!string.IsNullOrEmpty(panelName) && PANEL_DEFAULT_HEIGHTS.ContainsKey(panelName))
                 panel.Placement.Height = PANEL_DEFAULT_HEIGHTS[panelName];
@@ -116,13 +123,46 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void MoveTimeForPanelsElement(string elementName, float wayPrecentage)
         {
-            TimeSpan destenationTime = new TimeSpan(PanelOffsetTime.Ticks + (long)(PanelWidthTime.Ticks * wayPrecentage));
+            TimeIdentyficator.MovePrecentage(wayPrecentage);
 
-            //TODO: think about it
+            TimeSpan destenationTime = TimeIdentyficator.GetTime();
+
             foreach (var panel in Panels.Values)
             {
                 panel.MovePanelCellTime(elementName, destenationTime);
             }
+        }
+
+
+        public void MoveTimeForPanelsElement(ITLEPanelCellElement element, float wayPrecentage)
+        {
+            TimeIdentyficator.MovePrecentage(wayPrecentage);
+
+            TimeSpan destenationTime = TimeIdentyficator.GetTime();
+
+            element.SetStartTime(destenationTime);
+        }
+
+        public TLEPanelCell GetPanelCell(string grahicName)
+        {
+            foreach (var panel in Panels.Values)
+            {
+                var cell = panel.PanelCells.FirstOrDefault(f => f.GraphicName == grahicName);
+                if (cell != null)
+                    return cell;
+            }
+            return null;
+        }
+
+        public TLEPanelCell GetPanelCellBasedOnReferenceElement(ITLEPanelCellElement element)
+        {
+            foreach (var panel in Panels.Values)
+            {
+                var cell = panel.PanelCells.FirstOrDefault(f => f.ReferenceElement == element);
+                if (cell != null)
+                    return cell;
+            }
+            return null;
         }
 
         public TimeSpan SetTimeCursorToPrecentage(float precentage)
@@ -240,7 +280,11 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public List<int> GetPanelGroupIndexes()
         {
-            return Panels.Keys.Where(s => s.StartsWith(TLEPanelNames.ANIMATION_ELEMENT_PREFIX)).Select(s => int.Parse(s.Replace(TLEPanelNames.ANIMATION_ELEMENT_PREFIX, ""))).OrderBy(o => o).ToList();
+            return Panels.Keys
+                .Where(s => s.StartsWith(TLEPanelNames.ANIMATION_ELEMENT_PREFIX))
+                .Select(s => int.Parse(s.Replace(TLEPanelNames.ANIMATION_ELEMENT_PREFIX, "")))
+                .OrderBy(o => o)
+                .ToList();
         }
 
         private string GetNewGroupPanelName()
