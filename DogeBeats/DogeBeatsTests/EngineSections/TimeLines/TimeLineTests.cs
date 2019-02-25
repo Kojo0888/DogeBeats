@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DogeBeats.EngineSections.Resources;
+using DogeBeats.EngineSections.Shared;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,19 +138,42 @@ namespace DogeBeatsTests.EngineSections.TimeLines
         [Fact]
         public void ManualUpdate()
         {
-            throw new NotImplementedException();
+            string timeLineNAme = "Test123321";
+            var values = new NameValueCollection();
+            values.Add("Name", timeLineNAme);
+            timeLine.ManualUpdate(values);
+
+            if (timeLine.Name != timeLineNAme)
+                throw new NesuException("Timeline name differs");
         }
 
         [Fact]
         public void FixGroupAnimationTime()
         {
-            throw new NotImplementedException();
+            InitAnimationElements();
+            var time = new TimeSpan(2, 0, 0);
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            group.Elements.LastOrDefault().Route.Frames.LastOrDefault().FrameTime = time;
+            var totalDurationTime = group.Elements.LastOrDefault().GetDurationTime();
+
+            timeLine.FixGroupAnimationTime();
+
+            group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            if (group.Route.AnimationEndTime - group.Route.AnimationStartTime != totalDurationTime)
+                throw new NesuException("Time does not match");
         }
 
         [Fact]
         public void SearchParentAnimationElement_IAnimationElement()
         {
-            throw new NotImplementedException();
+            InitAnimationElements();
+
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            var child = group.Elements.LastOrDefault();
+
+            var parent = timeLine.SearchParentAnimationElement(child);
+            if (group != parent)
+                throw new NesuException("Parent is invalid");
         }
 
 

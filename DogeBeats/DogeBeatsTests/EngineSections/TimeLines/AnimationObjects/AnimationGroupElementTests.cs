@@ -39,6 +39,19 @@ namespace Testowy.Model.Tests
         }
 
         [Fact]
+        public void FixParentAnimationTime()
+        {
+            var time = new TimeSpan(0, 1, 0);
+
+            element.Elements.Add(new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = time } } } });
+
+            element.FixParentAnimationTime();
+
+            if (element.Route.Frames.LastOrDefault()?.FrameTime != time)
+                throw new NesuException("-.-");
+        }
+
+        [Fact]
         public void SearchParentAnimationElement_Route()
         {
             var testFrame = new AnimationRouteFrame();

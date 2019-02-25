@@ -13,7 +13,7 @@ namespace DogeBeats.EngineSections.Resources.Centres
     {
         public string ResourceType { get; set; }
 
-        public DDictionary<string, T> CentreElements { get; set; }
+        public DDictionary<string, T> CentreElements { get; set; } = new DDictionary<string, T>();
 
         public CentreFileBase(string type)
         {
@@ -74,6 +74,9 @@ namespace DogeBeats.EngineSections.Resources.Centres
 
         public T Get(string name)
         {
+            if (string.IsNullOrEmpty(name))
+                return default(T);
+
             if (CentreElements.ContainsKey(name))
                 return CentreElements[name];
             else

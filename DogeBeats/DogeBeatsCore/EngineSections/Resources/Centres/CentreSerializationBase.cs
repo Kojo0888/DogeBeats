@@ -13,7 +13,7 @@ namespace DogeBeats.EngineSections.Resources
     {
         public string ResourceType { get; set; }
 
-        public DDictionary<string, T> CentreElements { get; set; }
+        public DDictionary<string, T> CentreElements { get; set; } = new DDictionary<string, T>();
 
         public CentreSerializationBase(string type)
         {

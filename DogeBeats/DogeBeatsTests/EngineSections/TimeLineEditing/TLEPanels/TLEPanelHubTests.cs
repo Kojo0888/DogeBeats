@@ -1,4 +1,5 @@
-﻿using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
+﻿using DogeBeats.EngineSections.Shared;
+using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,12 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         [Fact]
         public void GetPanel()
         {
-            throw new NotImplementedException();
+            PanelHub.InitializePanels(new Testowy.Model.TimeLine());
+            var panel = PanelHub.GetPanel(TLEPanelNames.BEAT);
+            if (panel == null)
+                throw new NesuException("panel is null");
+            if (panel.PanelName != TLEPanelNames.BEAT)
+                throw new NesuException("Panel name differs");
         }
 
         [Fact]

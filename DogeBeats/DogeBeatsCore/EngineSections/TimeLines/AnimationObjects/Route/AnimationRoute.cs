@@ -113,13 +113,16 @@ namespace Testowy.Model
         {
             var slider = GetFrameSlider(ts);
             var newLastFrame = new AnimationRouteFrame();
-            newLastFrame.Amplitude = slider.PreviousFrame.Amplitude;
-            newLastFrame.CheckpointPosition = slider.PreviousFrame.CheckpointPosition;
-            newLastFrame.Cycles = slider.PreviousFrame.Cycles;
-            newLastFrame.SpeedAmplitude = slider.PreviousFrame.SpeedAmplitude;
-            newLastFrame.SpeedCycles = slider.PreviousFrame.SpeedCycles;
+            if(slider.PreviousFrame != null)
+            {
+                newLastFrame.Amplitude = slider.PreviousFrame.Amplitude;
+                newLastFrame.CheckpointPosition = slider.PreviousFrame.CheckpointPosition;
+                newLastFrame.Cycles = slider.PreviousFrame.Cycles;
+                newLastFrame.SpeedAmplitude = slider.PreviousFrame.SpeedAmplitude;
+                newLastFrame.SpeedCycles = slider.PreviousFrame.SpeedCycles;
+                newLastFrame.SpeedPhase = slider.PreviousFrame.SpeedPhase;
+            }
             newLastFrame.FrameTime = ts;
-            newLastFrame.SpeedPhase = slider.PreviousFrame.SpeedPhase;
             Frames.Add(newLastFrame);
         }
     }
