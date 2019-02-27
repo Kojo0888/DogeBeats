@@ -295,7 +295,11 @@ p	Planned: Setting bodyies for Graphical Proxy:
 	----43/127 red tests (2 done)----
 
 25_02_2019:
-	----34/129 red tests (9 done)----
+	----34/129 red tests (11 done)----
+
+26_02_2019:
+	----28/133 red tests (10 done)----
+
 
 _________________________________________________________________________________________________
 
@@ -329,10 +333,7 @@ TODO Notes:
 ○	Think - Selector
 ○	Think - Group Placement Width & Heigth (interpreted as scale)?
 ○	Think - Creating PanelContainer for TimeLineEditor
-○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?
-
-℗	TimeLineEditor
-
+○	Think - Is it good idea to get GetSlder with trimmed aniamtion time? TimeTrim method meybe?s
 ○	TimeLineEditor - Integration Tests
 ○	TimeLineEditor - Unit Tests
 ○	TimeLineEditor Panel - Unit Tests

@@ -30,6 +30,11 @@ namespace DogeBeats.Modules.TimeLines
         public string GraphicName { get; set; }
         public Placement Placement { get; set; }
 
+        public TLEPanel()
+        {
+            Placement = new Placement();
+        }
+
         public void InitializeStackedElements()
         {
             StackedElements = new Dictionary<TimeSpan, List<TLEPanelCell>>();
@@ -68,24 +73,26 @@ namespace DogeBeats.Modules.TimeLines
             }
         }
 
-        public void MovePanelCellTime(string graphicName, float precentage)
+        public void MovePanelCellTime(TLEPanelCell panelCell, TimeSpan destenationTime)
         {
-            var timespan = new TimeSpan((long)((EndTime.Ticks - StartTime.Ticks) * precentage));
-            
-            MovePanelCellTime(graphicName, StartTime + timespan);
+            panelCell.ReferenceElement.SetStartTime(destenationTime);
         }
 
-        public void RemovePanelCell(string graphicName)
-        {
-            var cells = PanelCells.Where(w => w.GraphicName == graphicName);
-            foreach (var cell in cells)
-            {
-                PanelCells.Remove(cell);
-            }
+        //public void MovePanelCellTime(string graphicName, float precentage)
+        //{
+        //    var timespan = new TimeSpan((long)((EndTime.Ticks - StartTime.Ticks) * precentage));
 
-            //IniitializeCurrentElements();
-            //InitializeGrouppedElements();
-            //return cells.FirstOrDefault()?.ReferencingTimedElement.Object;
+        //    MovePanelCellTime(graphicName, StartTime + timespan);
+        //}
+
+        public void RemovePanelCell(TLEPanelCell panelCell)
+        {
+            PanelCells.Remove(panelCell);
+        }
+
+        public int RemovePanelCell(string graphicName)
+        {
+            return PanelCells.RemoveAll(w => w.GraphicName == graphicName);
         }
 
         public int CalculateMaxElementsAtColumn()
@@ -144,7 +151,7 @@ namespace DogeBeats.Modules.TimeLines
 
         public KeyValuePair<TimeSpan, List<TLEPanelCell>> GetStackedElementsForTimeSpan(TimeSpan timespan)
         {
-            var timespanKey = StackedElements.Where(w => w.Key < timespan).Max(m => m.Key);
+            var timespanKey = StackedElements.Where(w => w.Key == timespan).Max(m => m.Key);
 
             return new KeyValuePair<TimeSpan, List<TLEPanelCell>>(timespanKey, StackedElements[timespanKey]);
         }
@@ -164,19 +171,29 @@ namespace DogeBeats.Modules.TimeLines
 
         public TLEPanelCell GetCell(string graphicName)
         {
-            if (!string.IsNullOrEmpty(graphicName))
+            if (string.IsNullOrEmpty(graphicName))
                 return null;
 
             return PanelCells.FirstOrDefault(f => f.GraphicName == graphicName);
         }
 
+        public TLEPanelCell GetCell(ITLEPanelCellElement referenceElement)
+        {
+            if (referenceElement == null)
+                return null;
+
+            return PanelCells.FirstOrDefault(f => f.ReferenceElement == referenceElement);
+        }
+
         public void SelectPanelCell(string elementName)
         {
-            ClearCellSelection();
-
             TLEPanelCell cell = GetCell(elementName);
             SelectedPanelCell = cell;
-            //cell.Selected = true;
+        }
+
+        public void SelectPanelCell(TLEPanelCell panelCell)
+        {
+            SelectedPanelCell = panelCell;
         }
 
         private void ClearCellSelection()
