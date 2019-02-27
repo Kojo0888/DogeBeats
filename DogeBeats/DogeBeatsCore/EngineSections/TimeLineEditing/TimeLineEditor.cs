@@ -42,6 +42,7 @@ namespace DogeBeats.Modules
         public void AttachTimeLineToEditor(TimeLine timeline)
         {
             TimeLine = timeline;
+            PanelHub.InitializeDefaultPanels(timeline);
         }
 
         public void Play()

@@ -45,6 +45,8 @@ namespace DogeBeats.Modules.TimeLines
             List<TLEPanelCell> group = new List<TLEPanelCell>();
             var orderedPanelCells = PanelCells.OrderBy(o => o.ReferenceElement.GetStartTime()).ToList();
 
+            //bool first = true;
+
             for (int i = 0; i < orderedPanelCells.Count; i++)
             {
                 if (orderedPanelCells[i].ReferenceElement.GetStartTime() < currentTimeSpan)
@@ -62,6 +64,9 @@ namespace DogeBeats.Modules.TimeLines
                     continue;
                 }
             }
+
+            if(group != null && group.Count > 0)
+                StackedElements.Add(currentTimeSpan - TimeCellWidth, group);
         }
 
         public void MovePanelCellTime(string graphicName, TimeSpan destenationTime)
@@ -129,7 +134,7 @@ namespace DogeBeats.Modules.TimeLines
             Placement placement = new Placement();
             placement.X = orderInderForGroupKey * cellWidth;
             placement.Height = Placement.Height / timestampWithGroup.Value.Count;
-            placement.Y = Placement.Y + Placement.Height - (Placement.Height * indexInGroup);
+            placement.Y = Placement.Y + Placement.Height - (placement.Height * indexInGroup);
             placement.Width = cellWidth;
             placement.Rotation = 0;
 
@@ -158,7 +163,7 @@ namespace DogeBeats.Modules.TimeLines
 
         public ITLEPanelCellElement GetCellElementBasedOnGraphicName(string graphicName)
         {
-            if (!string.IsNullOrEmpty(graphicName))
+            if (string.IsNullOrEmpty(graphicName))
                 return null;
 
             TLEPanelCell cell = PanelCells.Where(w => w.GraphicName == graphicName).FirstOrDefault();

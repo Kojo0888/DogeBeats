@@ -300,6 +300,9 @@ p	Planned: Setting bodyies for Graphical Proxy:
 26_02_2019:
 	----28/133 red tests (10 done)----
 
+27_02_2019:
+	----25/134 red tests (4 done)----
+	Need for rework the Panel Cell selection (Specificaly Panel creation upon PanelCell selection)
 
 _________________________________________________________________________________________________
 

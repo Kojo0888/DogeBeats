@@ -1,4 +1,5 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Shared;
 using DogeBeats.EngineSections.TimeLineEditing;
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
 using DogeBeats.Modules;
@@ -27,7 +28,13 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
             var frame = new AnimationRouteFrame();
             frame.FrameTime = time;
 
-            var panelAnimationElement = ParentTLE.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + ParentTLE.PanelHub.GetLastPanelAnimationElementIndex());
+            string panelName = TLEPanelNames.ANIMATION_ELEMENT_PREFIX + ParentTLE.PanelHub.GetLastPanelAnimationElementIndex();
+
+            var panelAnimationElement = ParentTLE.PanelHub.GetPanel(panelName);
+
+            if (panelAnimationElement.SelectedPanelCell == null)
+                throw new NesuException("There is no SelectedCell in panel " + panelName);
+
             var parentAnimationElement = panelAnimationElement.SelectedPanelCell.ReferenceElement;
 
             if (parentAnimationElement is IAnimationElement)

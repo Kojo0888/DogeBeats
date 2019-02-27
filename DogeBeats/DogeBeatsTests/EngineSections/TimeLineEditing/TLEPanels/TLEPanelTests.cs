@@ -131,9 +131,8 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
 
         }
 
-        //TODO later...
         [Fact]
-        public void CalculatePlacementForPanelCell2()
+        public void CalculatePlacementForPanelCell_FirstElement()
         {
             panel.PanelCells = new List<TLEPanelCell>() { new TLEPanelCell() { ReferenceElement = new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = new TimeSpan(0, 0, 0) } } } } } };
 
@@ -145,7 +144,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
             var placement = panel.CalculatePlacementForPanelCell(firstCell);
             if (placement == null)
                 throw new NesuException("Placement is null");
-            if (placement.Y != 100 - 0)//will be wrong
+            if (placement.Y != 100)
                 throw new NesuException("Y");
             if (placement.X != (100.0f / 30) * 0)
                 throw new NesuException("X");
@@ -159,15 +158,74 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         }
 
         [Fact]
+        public void CalculatePlacementForPanelCell_TwoFirstElements()
+        {
+            panel.PanelCells = new List<TLEPanelCell>();
+            panel.PanelCells.Add(new TLEPanelCell() { ReferenceElement = new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = new TimeSpan(0, 0, 0) } } } } } );
+            panel.PanelCells.Add(new TLEPanelCell() { ReferenceElement = new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = new TimeSpan(0, 0, 0, 0 ,1) } } } } });
+
+            panel.InitializeStackedElements();
+
+            var firstCell = panel.PanelCells.FirstOrDefault();
+            panel.Placement.Width = 100;
+            panel.Placement.Height = 100;
+            var placement = panel.CalculatePlacementForPanelCell(firstCell);
+            if (placement == null)
+                throw new NesuException("Placement is null");
+            if (placement.Y != 100)
+                throw new NesuException("Y");
+            if (placement.X != (100.0f / 30) * 0)
+                throw new NesuException("X");
+            if (placement.Width != 100.0f / 30)
+                throw new NesuException("Width");
+            if (placement.Height != 50)//will be wrong
+                throw new NesuException("Height");
+            if (placement.Rotation != 0)
+                throw new NesuException("Rotation");
+
+            firstCell = panel.PanelCells.LastOrDefault();
+            panel.Placement.Width = 100;
+            panel.Placement.Height = 100;
+            placement = panel.CalculatePlacementForPanelCell(firstCell);
+            if (placement == null)
+                throw new NesuException("Placement is null");
+            if (placement.Y != 50)
+                throw new NesuException("Y");
+            if (placement.X != (100.0f / 30) * 0)
+                throw new NesuException("X");
+            if (placement.Width != 100.0f / 30)
+                throw new NesuException("Width");
+            if (placement.Height != 50)
+                throw new NesuException("Height");
+            if (placement.Rotation != 0)
+                throw new NesuException("Rotation");
+
+        }
+
+        [Fact]
         public void GetStackedElementsForTimeSpan()
         {
-            throw new NotImplementedException();
+            panel.InitializeStackedElements();
+            var result = panel.GetStackedElementsForTimeSpan(new TimeSpan(0,0,12));
+            if (result.Value.Count != 3)
+                throw new NesuException("Count is " + result.Value.Count);
         }
 
         [Fact]
         public void GetCellElementBasedOnGraphicName()
         {
-            throw new NotImplementedException();
+            panel.PanelCells = new List<TLEPanelCell>();
+            var firstCell = new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = new TimeSpan(0, 0, 0) } } } };
+            var secondCell = new AnimationSingleElement() { Route = new AnimationRoute() { Frames = new List<AnimationRouteFrame>() { new AnimationRouteFrame() { FrameTime = new TimeSpan(0, 0, 0) } } } };
+            panel.PanelCells.Add(new TLEPanelCell() { ReferenceElement = firstCell, GraphicName = "Test1" });
+            panel.PanelCells.Add(new TLEPanelCell() { ReferenceElement = secondCell, GraphicName = "Test2" });
+
+            var receivedFirstCell = panel.GetCellElementBasedOnGraphicName("Test1");
+            if (receivedFirstCell != firstCell)
+                throw new NesuException("First cell does not match");
+            var receivedSecondCell = panel.GetCellElementBasedOnGraphicName("Test2");
+            if (receivedSecondCell != secondCell)
+                throw new NesuException("Second cell does not match");
         }
 
         [Fact]
