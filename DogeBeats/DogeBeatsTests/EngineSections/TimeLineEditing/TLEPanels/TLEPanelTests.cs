@@ -12,11 +12,11 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
 {
     public class TLEPanelTests
     {
-        TLEPanel panel = new TLEPanel();
+        TLEPanel panel;
 
         public TLEPanelTests()
         {
-            panel = new TLEPanel();
+            panel = new TLEPanel("Doesn't matter");
             //panel.TimeCellWidth
 
             List<ITLEPanelCellElement> elements = new List<ITLEPanelCellElement>();

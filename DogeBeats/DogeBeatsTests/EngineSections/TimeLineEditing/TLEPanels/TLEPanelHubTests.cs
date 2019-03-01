@@ -120,6 +120,111 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         }
 
         [Fact]
+        public void SelectPanelCell()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            //var element = tl.AnimationElements.FirstOrDefault();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+
+            if (PanelHub.Panels.Count != 2)
+                throw new NesuException("1. There supposed to be only 2 panels. There is " + PanelHub.Panels.Count);
+
+            PanelHub.SelectPanelCell(cell);
+
+            if (PanelHub.Panels.Count != 3)
+                throw new NesuException("2. There supposed to be only 3 panels. There is " + PanelHub.Panels.Count);
+        }
+
+        [Fact]
+        public void GetPanelForPanelCell_GraphicalName()
+        {
+            string name = "ttrt";
+
+            TimeLine tl = MockObjects.GetTimeLine2();
+            //var element = tl.AnimationElements.FirstOrDefault();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+            cell.GraphicName = name;
+
+            if (PanelHub.Panels.Count != 2)
+                throw new NesuException("1. There supposed to be only 2 panels. There is " + PanelHub.Panels.Count);
+
+            PanelHub.SelectPanelCell(name);
+
+            if (PanelHub.Panels.Count != 3)
+                throw new NesuException("2. There supposed to be only 3 panels. There is " + PanelHub.Panels.Count);
+        }
+
+        [Fact]
+        public void GetPanelForPanelCell()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+
+            var receivedPanel = PanelHub.GetPanelForPanelCell(cell);
+            if (receivedPanel != panel)
+                throw new NesuException("Panels does not match");
+        }
+
+        [Fact]
+        public void CreatePanels()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            if (PanelHub.Panels.Count != 3)
+                throw new NesuException("2. There supposed to be only 3 panels. There is " + PanelHub.Panels.Count);
+
+            if (PanelHub.Panels.LastOrDefault().Key != TLEPanelNames.ANIMATION_ROUTE)
+                throw new NesuException("New Panel is not an AniamtionElement panel. It is: " + PanelHub.Panels.LastOrDefault().Key);
+        }
+
+        [Fact]
+        public void CreatePanels2()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.LastOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            if (PanelHub.Panels.Count != 3)
+                throw new NesuException("2. There supposed to be only 3 panels. There is " + PanelHub.Panels.Count);
+
+            if (PanelHub.Panels.LastOrDefault().Key != TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "1")
+                throw new NesuException("New Panel is not an AniamtionElement panel. It is: " + PanelHub.Panels.LastOrDefault().Key);
+        }
+
+        [Fact]
+        public void RemovePanels()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.LastOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            if (PanelHub.Panels.Count != 3)
+                throw new NesuException("1. There supposed to be only 3 panels. There is " + PanelHub.Panels.Count);
+
+            PanelHub.RemovePanels(panel.PanelName);
+
+            if (PanelHub.Panels.Count != 2)
+                throw new NesuException("2. There supposed to be only 2 panels. There is " + PanelHub.Panels.Count);
+        }
+
+        [Fact]
         public void SetTimeCursorToPrecentage()
         {
             throw new NotImplementedException();

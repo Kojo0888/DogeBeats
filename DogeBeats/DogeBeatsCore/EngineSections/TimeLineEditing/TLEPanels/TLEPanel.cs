@@ -30,9 +30,11 @@ namespace DogeBeats.Modules.TimeLines
         public string GraphicName { get; set; }
         public Placement Placement { get; set; }
 
-        public TLEPanel()
+        public TLEPanel(string name)
         {
             Placement = new Placement();
+            if (string.IsNullOrEmpty(name))
+                throw new Exception("PANEL MUST HAVE A NAME!!!");
         }
 
         public void InitializeStackedElements()

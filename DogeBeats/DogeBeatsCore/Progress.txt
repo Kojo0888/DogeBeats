@@ -304,6 +304,11 @@ p	Planned: Setting bodyies for Graphical Proxy:
 	----25/134 red tests (4 done)----
 	Need for rework the Panel Cell selection (Specificaly Panel creation upon PanelCell selection)
 
+28_02_2019:
+	----25/140 red test (6 done)----
+	PanelHub refactor
+	PanelHub PanelCell Selection mechanism created
+
 _________________________________________________________________________________________________
 
 TODO Legend:
