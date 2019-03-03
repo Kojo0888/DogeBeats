@@ -47,8 +47,11 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public float Width = 600;
 
-        public TLEPanelHub()
+        public TLEPanelHub(TimeSpan PanelOffsetTime, TimeSpan PanelWidthTime, float Width)
         {
+            this.Width = Width;
+            this.PanelOffsetTime = PanelOffsetTime;
+            this.PanelWidthTime = PanelWidthTime;
             TimeIdentyficator = new TLEPanelTimeGraphicIndicator(GetAllPanelsHeight(), int.Parse(Width.ToString()), PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
@@ -67,7 +70,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
         public void InitializeGraphicIdentyficator()
         {
             float panelHeight = GetAllPanelsHeight();
-            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, StaticHub.EnvironmentVariables.MainWindowWidth, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
+            TimeIdentyficator = new TLEPanelTimeGraphicIndicator(panelHeight, EnvironmentVariables.MainWindowWidth, PanelOffsetTime, PanelOffsetTime + PanelWidthTime);
         }
 
         public void InitializeDefaultPanels(TimeLine timeLine)

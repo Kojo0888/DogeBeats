@@ -22,12 +22,16 @@ namespace DogeBeats.Modules
     {
         public TimeLine TimeLine { get; set; }
 
-        public TLEPanelHub PanelHub { get; set; } = new TLEPanelHub();
+        public TLEPanelHub PanelHub { get; set; }
+
+        public static TimeSpan DEFAULT_PANEL_START_TIME = new TimeSpan(0, 0, 0);
+        public static TimeSpan DEFAULT_PANEL_WIDTH_TIME = new TimeSpan(0, 0, 30);
 
         public Dictionary<string, ITLEPanelCellElementManagement> PanelCellManagements { get; set; } = new Dictionary<string, ITLEPanelCellElementManagement>();
 
         public TimeLineEditor()
         {
+            PanelHub = new TLEPanelHub(DEFAULT_PANEL_START_TIME, DEFAULT_PANEL_WIDTH_TIME, EnvironmentVariables.MainWindowWidth);
             InitializePanelCellManagements();
         }
 

@@ -14,7 +14,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanelCellElementManag
     public class TLEPCEManagementAnimationElementTests
     {
         TimeLineEditor editor;
-        TLEPCEManagementAnimationRoute Management;
+        TLEPCEManagementAnimationElement Management;
 
         public TLEPCEManagementAnimationElementTests()
         {
@@ -22,7 +22,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanelCellElementManag
             var timeLine = MockObjects.GetTimeLine2();
             editor.AttachTimeLineToEditor(timeLine);
             //editor.PanelHub.InitializeDefaultPanels(timeLine);
-            Management = new TLEPCEManagementAnimationRoute(editor);
+            Management = new TLEPCEManagementAnimationElement(editor);
         }
 
         //TODO
@@ -32,31 +32,53 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanelCellElementManag
         {
             var animationElementPanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
             var panelCell = animationElementPanel.PanelCells.FirstOrDefault();
-            animationElementPanel.SelectPanelCell(panelCell);
+            Management.ParentTLE.PanelHub.SelectPanelCell(panelCell);
 
             //editor.PanelHub.SelectPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
 
-            var animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ROUTE);
+            var animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
             if (animationRoutePanel == null)
                 throw new NesuException("PreCheck: Panel is null");
             var panelCells = animationRoutePanel.PanelCells;
-            if (panelCells.Count != 0)
-                throw new NesuException("PreCheck: Panel Cell is not 0");
+            if (panelCells.Count != 3)
+                throw new NesuException("PreCheck: Panel Cell is not 3. It is " + panelCells.Count);
 
             Management.AddNewElement();
 
-            animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ROUTE);
+            animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
             if (animationRoutePanel == null)
                 throw new NesuException("Panel is null");
             panelCells = animationRoutePanel.PanelCells;
-            if (panelCells.Count != 1)
-                throw new NesuException("Panel Cell is not 1");
+            if (panelCells.Count != 4)
+                throw new NesuException("Panel Cell is not 4");
         }
 
         [Fact]
         public void MoveElement()
         {
-            throw new NotImplementedException();
+            var animationElementPanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var panelCell = animationElementPanel.PanelCells.FirstOrDefault();
+            Management.ParentTLE.PanelHub.SelectPanelCell(panelCell);
+
+            //Management.ParentTLE.PanelHub.Time
+
+            Management.ParentTLE.PanelHub.TimeIdentyficator.MaxWidth = 100;
+            //editor.PanelHub.SelectPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+
+            var animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            if (animationRoutePanel == null)
+                throw new NesuException("PreCheck: Panel is null");
+
+            Management.ParentTLE.SetTimeCursorToPrecentage(0.5f);
+
+            Management.MoveElement();
+
+            animationRoutePanel = editor.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            if (animationRoutePanel == null)
+                throw new NesuException("Panel is null");
+            panelCell = animationElementPanel.PanelCells.FirstOrDefault();
+            if (panelCell.ReferenceElement.GetStartTime() != new TimeSpan(0, 0, 15))
+                throw new Exception("times not match");
         }
 
         [Fact]

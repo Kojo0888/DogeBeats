@@ -81,8 +81,8 @@ namespace Testowy.Model
 
         public void SetDefaultData()
         {
-            CheckpointPosition.X = StaticHub.EnvironmentVariables.MainWindowWidth / 2;
-            CheckpointPosition.Y = StaticHub.EnvironmentVariables.MainWindowHeight / 2;
+            CheckpointPosition.X = EnvironmentVariables.MainWindowWidth / 2;
+            CheckpointPosition.Y = EnvironmentVariables.MainWindowHeight / 2;
         }
 
         public List<string> GetKeysUpdateManual()

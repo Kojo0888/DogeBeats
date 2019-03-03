@@ -1,6 +1,9 @@
 ﻿using DogeBeats.EngineSections.AnimationObjects;
+using DogeBeats.EngineSections.Resources;
 using DogeBeats.EngineSections.Shared;
 using DogeBeats.EngineSections.TimeLineEditing.TLEPanels;
+using DogeBeats.Modules;
+using DogeBeats.Modules.TimeLines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +20,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
 
         public TLEPanelHubTests()
         {
-            PanelHub = new TLEPanelHub();
+            PanelHub = new TLEPanelHub(TimeLineEditor.DEFAULT_PANEL_START_TIME, TimeLineEditor.DEFAULT_PANEL_WIDTH_TIME, EnvironmentVariables.MainWindowWidth);
         }
 
 
@@ -89,7 +92,7 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
             PanelHub.MoveTimeForPanelsElement(panelCellGraphicName, .8f);
 
             var cellAfter = PanelHub.GetPanelCellBasedOnReferenceElement(element);
-            var elem  = cellAfter.ReferenceElement as AnimationSingleElement;
+            var elem = cellAfter.ReferenceElement as AnimationSingleElement;
             if (elem.Route.AnimationStartTime != time)
                 throw new NesuException("AnimationTime does not equal to time");
         }
@@ -227,67 +230,234 @@ namespace DogeBeatsTests.EngineSections.TimeLineEditing.TLEPanels
         [Fact]
         public void SetTimeCursorToPrecentage()
         {
-            throw new NotImplementedException();
+            var time = PanelHub.SetTimeCursorToPrecentage(.5f);
+            if (time != new TimeSpan(0, 0, 15))
+                throw new NesuException("time is " + time.ToString());
         }
 
         [Fact]
-        public void GetLastGroupPanel()
+        public void GetLastGroupPanel_Single()
         {
-            throw new NotImplementedException();
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            var lastGroupPanel = PanelHub.GetLastAnimationElementPanel();
+            if (lastGroupPanel.PanelName != TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0")
+                throw new NesuException("LAst panel is not new animation element panel. It is: " + lastGroupPanel.PanelName);
+        }
+
+        [Fact]
+        public void GetLastGroupPanel_Group()
+        {
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.LastOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            var lastGroupPanel = PanelHub.GetLastAnimationElementPanel();
+            if (lastGroupPanel.PanelName != TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "1")
+                throw new NesuException("LAst panel is not new animation element panel with 0 index. It is: " + lastGroupPanel.PanelName);
         }
 
         [Fact]
         public void MoveForwardTimeScope()
         {
-            throw new NotImplementedException();
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            PanelHub.MoveForwardTimeScope();
+
+            var time = PanelHub.TimeIdentyficator.StartTime;
+            if (time != TimeLineEditor.DEFAULT_PANEL_START_TIME + TimeLineEditor.DEFAULT_PANEL_WIDTH_TIME)
+                throw new NesuException("Start time does not match. It Is " + time.ToString());
+
+            var panel = PanelHub.Panels.Values.FirstOrDefault();
+            if (panel.StartTime != TimeLineEditor.DEFAULT_PANEL_START_TIME + TimeLineEditor.DEFAULT_PANEL_WIDTH_TIME)
+                throw new NesuException("Panel start time does not match. It Is " + panel.StartTime.ToString());
         }
 
         [Fact]
-        public void MoveBackwardTimeScope()
+        public void MoveBackwardTimeScope_Zero()
         {
-            throw new NotImplementedException();
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            PanelHub.MoveBackwardTimeScope();
+
+            var time = PanelHub.TimeIdentyficator.StartTime;
+            if (time != new TimeSpan(0, 0, 0))
+                throw new NesuException("Start time does not match. It Is " + time.ToString());
+
+            var panel = PanelHub.Panels.Values.FirstOrDefault();
+            if (panel.StartTime != new TimeSpan(0, 0, 0))
+                throw new NesuException("Panel start time does not match. It Is " + panel.StartTime.ToString());
         }
 
         [Fact]
-        public void GetLastPanelAnimationElementIndex()
+        public void MoveBackwardTimeScope_Bacward()
         {
-            throw new NotImplementedException();
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            PanelHub.MoveForwardTimeScope();
+            PanelHub.MoveForwardTimeScope();
+            PanelHub.MoveBackwardTimeScope();
+
+            var time = PanelHub.TimeIdentyficator.StartTime;
+            if (time != new TimeSpan(0, 0, 30))
+                throw new NesuException("Start time does not match. It Is " + time.ToString());
+
+            var panel = PanelHub.Panels.Values.FirstOrDefault();
+            if (panel.StartTime != new TimeSpan(0, 0, 30))
+                throw new NesuException("Panel start time does not match. It Is " + panel.StartTime.ToString());
         }
 
         [Fact]
-        public void UpdateAllPanelTimeScope()
+        public void GetLastPanelAnimationElementIndex_Group()
         {
-            throw new NotImplementedException();
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.LastOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            var lastGroupPanelIndex = PanelHub.GetLastPanelAnimationElementIndex();
+            if (lastGroupPanelIndex != 1)
+                throw new NesuException("LAst panel index is not 1 index. It is: " + lastGroupPanelIndex);
         }
 
         [Fact]
-        public void SelectPanel()
+        public void GetLastPanelAnimationElementIndex_Single()
         {
-            throw new NotImplementedException();
+            TimeLine tl = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(tl);
+            var panel = PanelHub.GetPanel(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+            var cell = panel.PanelCells.FirstOrDefault();
+
+            PanelHub.CreatePanels(panel.PanelName, cell);
+
+            var lastGroupPanelIndex = PanelHub.GetLastPanelAnimationElementIndex();
+            if (lastGroupPanelIndex != 0)
+                throw new NesuException("LAst panel index is not 0 index. It is: " + lastGroupPanelIndex);
         }
 
         [Fact]
-        public void SelectPanelAndPanelElement()
+        public void UpdateAllPanelTimeScope_1()
         {
-            throw new NotImplementedException();
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+            var starttime = new TimeSpan(0, 2, 0);
+            PanelHub.PanelOffsetTime = starttime;
+            PanelHub.PanelWidthTime = new TimeSpan(0, 0, 15);
+
+            PanelHub.UpdateTimeScope();
+
+            var time = PanelHub.TimeIdentyficator.StartTime;
+            if (time != starttime)
+                throw new NesuException("Start time does not match. It Is " + time.ToString());
+
+            var panel = PanelHub.Panels.Values.FirstOrDefault();
+            if (panel.StartTime != starttime)
+                throw new NesuException("Panel start time does not match. It Is " + panel.StartTime.ToString());
+
+        }
+
+        [Fact]
+        public void UpdateAllPanelTimeScope_2()
+        {
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+            var starttime = new TimeSpan(0, 2, 0);
+
+            PanelHub.UpdateTimeScope(starttime, new TimeSpan(0, 0, 15));
+
+            var time = PanelHub.TimeIdentyficator.StartTime;
+            if (time != starttime)
+                throw new NesuException("Start time does not match. It Is " + time.ToString());
+
+            var panel = PanelHub.Panels.Values.FirstOrDefault();
+            if (panel.StartTime != starttime)
+                throw new NesuException("Panel start time does not match. It Is " + panel.StartTime.ToString());
+        }
+
+        [Fact]
+        public void SelectPanelAndPanelElement_AnimaitonElemnt0()
+        {
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            var panelCountBefore = PanelHub.Panels.Values.Count();
+
+            var panel = PanelHub.Panels[TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0"];
+            var cell = panel.PanelCells.FirstOrDefault();
+            PanelHub.SelectPanelCell(cell);
+
+            var panelCountAfter = PanelHub.Panels.Values.Count();
+            if (panelCountBefore == panelCountAfter)
+                throw new NesuException("Panel count didn't change");
+        }
+
+        [Fact]
+        public void SelectPanelAndPanelElement_Beat()
+        {
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            var panelCountBefore = PanelHub.Panels.Values.Count();
+
+            var panel = PanelHub.Panels[TLEPanelNames.BEAT];
+            panel.PanelCells.Add(new DogeBeats.Modules.TimeLines.TLEPanelCell() { ReferenceElement = new Beat() { Timestamp = new TimeSpan(0, 0, 20) } });
+            var cell = panel.PanelCells.FirstOrDefault();
+            PanelHub.SelectPanelCell(cell);
+
+            var panelCountAfter = PanelHub.Panels.Values.Count();
+            if (panelCountBefore != panelCountAfter)
+                throw new NesuException("Panel count did change");
         }
 
         [Fact]
         public void SelectPanel_RemovePanels()
         {
-            throw new NotImplementedException();
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
+
+            var panelCountBefore = PanelHub.Panels.Values.Count();
+
+            var panel = PanelHub.Panels[TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0"];
+            var cell = panel.PanelCells.FirstOrDefault();
+            PanelHub.SelectPanelCell(cell);
+
+            var panelCountAfter = PanelHub.Panels.Values.Count();
+            if (panelCountBefore == panelCountAfter)
+                throw new NesuException("Panel count didn't change");
+
+            PanelHub.RemovePanels(TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0");
+
+            var panelCountAfter2 = PanelHub.Panels.Values.Count();
+            if (panelCountBefore != panelCountAfter2)
+                throw new NesuException("Removal unsuccessful");
         }
 
         [Fact]
         public void GetPanelGroupIndexes()
         {
-            throw new NotImplementedException();
-        }
+            var timeLine = MockObjects.GetTimeLine2();
+            PanelHub.InitializeDefaultPanels(timeLine);
 
-        [Fact]
-        public void GetNewGroupPanelName()
-        {
-            throw new NotImplementedException();
+            var panel = PanelHub.Panels[TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0"];
+            var cell = panel.PanelCells.LastOrDefault();
+            PanelHub.SelectPanelCell(cell);
+
+            var listOfIndexes = PanelHub.GetPanelGroupIndexes();
+            if (listOfIndexes == null || !listOfIndexes.Contains(0) || !listOfIndexes.Contains(1))
+                throw new NesuException("0 or 1 are not on the list");
         }
     }
 }

@@ -13,7 +13,7 @@ using Testowy.Model;
 
 namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
 {
-    class TLEPCEManagementAnimationElement : ITLEPanelCellElementManagement
+    public class TLEPCEManagementAnimationElement : ITLEPanelCellElementManagement
     {
         public TimeLineEditor ParentTLE { get; set; }
 
@@ -26,6 +26,9 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
         {
             AnimationSingleElement element = new AnimationSingleElement();
             element.SetStartTime(ParentTLE.PanelHub.TimeIdentyficator.SelectedTime);
+
+            if (ParentTLE.PanelHub.SelectedPanel == null)
+                throw new NesuException("SelectedPanel is null");
 
             ITLEPanelCellElement panelElement = ParentTLE.PanelHub.SelectedPanel.SelectedPanelCell.ReferenceElement;
             if (panelElement as AnimationGroupElement != null)
