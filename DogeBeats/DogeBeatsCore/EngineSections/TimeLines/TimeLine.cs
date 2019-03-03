@@ -87,7 +87,7 @@ namespace Testowy.Model
             ProgressStoryboard();
         }
 
-        public void Verify()
+        public void VerifyAnimationTimes()
         {
             FixGroupAnimationTime();
         }
@@ -206,6 +206,15 @@ namespace Testowy.Model
             }
 
             return toReturn;
+        }
+
+        public AnimationGroupElement ConvertToGroup(AnimationSingleElement singleAnimationElement)
+        {
+            AnimationElements.Remove(singleAnimationElement);
+            AnimationGroupElement convertedGroup = AnimationGroupElement.Parse(singleAnimationElement);
+            AnimationElements.Add(convertedGroup);
+
+            return convertedGroup;
         }
 
         public void Refresh()

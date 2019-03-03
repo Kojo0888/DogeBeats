@@ -13,6 +13,7 @@ namespace DogeBeats.Modules.TimeLines
         public void RegisterBeat(TimeSpan span)
         {
             Beats.Add(new Beat() { Timestamp = span});
+            Beats = Beats.OrderBy(o => o.Timestamp).ToList();
         }
 
         public void RemoveBeat(TimeSpan span)
@@ -24,7 +25,10 @@ namespace DogeBeats.Modules.TimeLines
         public void RemoveBeat(Beat beat)
         {
             if (beat != null)
+            {
                 Beats.Remove(beat);
+                Beats = Beats.OrderBy(o => o.Timestamp).ToList();
+            }
         }
 
         public List<ITLEPanelCellElement> GetTLECellElements()

@@ -136,7 +136,16 @@ namespace DogeBeatsTests
                         },
                     }
                 }
-            }
+            },
+                BeatGuider = new DogeBeats.Modules.TimeLines.BeatGuide()
+                {
+                    Beats = new List<DogeBeats.Modules.TimeLines.Beat>()
+                    {
+                        new DogeBeats.Modules.TimeLines.Beat(){ Timestamp = new TimeSpan(0,0,15)},
+                        new DogeBeats.Modules.TimeLines.Beat(){ Timestamp = new TimeSpan(0,0,16)},
+                        new DogeBeats.Modules.TimeLines.Beat(){ Timestamp = new TimeSpan(0,0,17)},
+                    }
+                }
             };
         }
     }

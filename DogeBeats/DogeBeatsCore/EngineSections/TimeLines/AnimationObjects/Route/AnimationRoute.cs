@@ -56,7 +56,6 @@ namespace Testowy.Model
             if (frameSlider.NextFrame == null && currentStopperTime > CalculateAnimationTime())
                 throw new Exception("Nesu Out of Animation Duration Time (Parent probably)");
             //TODO: Remake is needed
-            //newPlacement.X += 
             
             return frameSlider.CurrentFrame.CheckpointPosition;
         }

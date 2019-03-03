@@ -28,24 +28,20 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
             var frame = new AnimationRouteFrame();
             frame.FrameTime = time;
 
-            string panelName = TLEPanelNames.ANIMATION_ELEMENT_PREFIX + ParentTLE.PanelHub.GetLastPanelAnimationElementIndex();
+            var lastAnimationElementPanel = ParentTLE.PanelHub.GetLastAnimationElementPanel();
+            if (lastAnimationElementPanel == null)
+                throw new NesuException("There is no LastAnimationElementPanel somehow");
 
-            var panelAnimationElement = ParentTLE.PanelHub.GetPanel(panelName);
+            if (lastAnimationElementPanel.SelectedPanelCell == null)
+                throw new NesuException("There is no SelectedCell in panel " + lastAnimationElementPanel.PanelName);
 
-            if (panelAnimationElement.SelectedPanelCell == null)
-                throw new NesuException("There is no SelectedCell in panel " + panelName);
-
-            var parentAnimationElement = panelAnimationElement.SelectedPanelCell.ReferenceElement;
-
+            var parentAnimationElement = lastAnimationElementPanel.SelectedPanelCell.ReferenceElement;
             if (parentAnimationElement is IAnimationElement)
             {
                 var ianimationElemnt = parentAnimationElement as IAnimationElement;
-                ianimationElemnt.Route = new AnimationRoute();
-                ianimationElemnt.Route.Frames = new List<AnimationRouteFrame>();
                 ianimationElemnt.Route.Frames.Add(frame);
 
                 ParentTLE.TimeLine.Refresh();
-
                 ParentTLE.PanelHub.InitializePanel(TLEPanelNames.ANIMATION_ROUTE, ianimationElemnt.Route.Frames);
             }
         }
@@ -55,6 +51,13 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
             var panel = ParentTLE.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ROUTE);
             if (panel == null)
                 return;
+
+            var lastAnimationElementPanel = ParentTLE.PanelHub.GetLastAnimationElementPanel();
+            if (lastAnimationElementPanel == null)
+                throw new NesuException("There is no LastAnimationElementPanel somehow");
+
+            if (lastAnimationElementPanel.SelectedPanelCell == null)
+                throw new NesuException("There is no SelectedCell in panel " + lastAnimationElementPanel.PanelName);
 
             var routeFrame = panel.SelectedPanelCell.ReferenceElement;
             if (routeFrame is AnimationRouteFrame)
@@ -77,6 +80,13 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
             if (panel == null)
                 return;
 
+            var lastAnimationElementPanel = ParentTLE.PanelHub.GetLastAnimationElementPanel();
+            if (lastAnimationElementPanel == null)
+                throw new NesuException("There is no LastAnimationElementPanel somehow");
+
+            if (lastAnimationElementPanel.SelectedPanelCell == null)
+                throw new NesuException("There is no SelectedCell in panel " + lastAnimationElementPanel.PanelName);
+
             var routeFrame = panel.SelectedPanelCell.ReferenceElement;
             if (routeFrame is AnimationRouteFrame)
             {
@@ -94,7 +104,18 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
         {
             var panel = ParentTLE.PanelHub.GetPanel(TLEPanelNames.ANIMATION_ROUTE);
             if (panel == null)
-                return;
+                throw new NesuException("There is no Animation rote panel selected");
+
+            if (panel.SelectedPanelCell == null)
+                throw new NesuException("There is no Panel cell selected in route panel");
+
+            //var lastAnimationElementPanel = ParentTLE.PanelHub.GetLastAnimationElementPanel();
+            //if (lastAnimationElementPanel == null)
+            //    throw new NesuException("There is no LastAnimationElementPanel somehow");
+
+            //if (lastAnimationElementPanel.SelectedPanelCell == null)
+            //    throw new NesuException("There is no SelectedCell in panel " + lastAnimationElementPanel.PanelName);
+
 
             var routeFrame = panel.SelectedPanelCell.ReferenceElement;
             if (routeFrame is AnimationRouteFrame)

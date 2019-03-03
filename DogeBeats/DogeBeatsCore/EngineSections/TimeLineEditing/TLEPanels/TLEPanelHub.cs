@@ -85,7 +85,10 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void InitializePanel<T>(string panelName, List<T> elements)
         {
-            Panels[panelName] = CreatePanelWithDefaultSettings(panelName);
+            if (!Panels.ContainsKey(panelName))
+            {
+                Panels[panelName] = CreatePanelWithDefaultSettings(panelName);
+            }
             Panels[panelName].PanelCells = TLEPanelCell.Parse(elements);
 
             ReCalculatePlacementYForPanels();
@@ -316,8 +319,11 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         public void SelectPanelCell(TLEPanelCell cell)
         {
-            SelectedPanelCell = cell;
+            SelectedPanelCell = cell ?? throw new Exception("Cell is null. Unable to perform cell selection.");
+
             var parentPanel = GetPanelForPanelCell(SelectedPanelCell);
+            SelectedPanel = parentPanel;
+            SelectedPanel.SelectedPanelCell = cell;
             var selectedCellPanelName = parentPanel.PanelName;
 
             RemovePanels(selectedCellPanelName);
@@ -346,7 +352,11 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanels
 
         private string CreateNewGroupPanelName()
         {
-            string lastPanelName = GetLastAnimationElementPanel().PanelName;
+            var lastAnimationElementPanel = GetLastAnimationElementPanel();
+            if(lastAnimationElementPanel == null)
+                return TLEPanelNames.ANIMATION_ELEMENT_PREFIX + "0";
+
+            string lastPanelName = lastAnimationElementPanel.PanelName;
             var splitedName = lastPanelName.Split('_');
 
             int lastPanelNameIndex = -1;

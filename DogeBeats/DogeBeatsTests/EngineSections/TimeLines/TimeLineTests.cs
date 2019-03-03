@@ -21,8 +21,8 @@ namespace DogeBeatsTests.EngineSections.TimeLines
         }
 
         [Theory]
-        [InlineData(2, 1, 0, 2)]
-        [InlineData(11, 1, 1, 1)]
+        //[InlineData(2, 1, 0, 2)]
+        //[InlineData(11, 1, 1, 1)]
         [InlineData(30, 1, 2, 0)]
         public void CheckCurrentAnimatingElements(int sec, int currentlyAnimatingElements, int PassedAnimationElements, int storyboardqueue)
         {
@@ -32,7 +32,7 @@ namespace DogeBeatsTests.EngineSections.TimeLines
             timeLine.Stopper.Elapsed = new TimeSpan(0,0,0, sec);
             timeLine.StartStoryboard();
 
-            timeLine.Verify();
+            timeLine.VerifyAnimationTimes();
             timeLine.ProgressStoryboard();
 
             timeLine.PauseStoryboard(false);

@@ -12,7 +12,7 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
 {
     public class TLEPCEManagementBeat : ITLEPanelCellElementManagement
     {
-        TimeLineEditor ParentTLE;
+        public TimeLineEditor ParentTLE;
 
         public TLEPCEManagementBeat(TimeLineEditor parent)
         {
@@ -60,14 +60,23 @@ namespace DogeBeats.EngineSections.TimeLineEditing.TLEPanelCellElementManagement
         public void RemoveElement()
         {
             var timeSpan = ParentTLE.PanelHub.TimeIdentyficator.SelectedTime;
-
             if (timeSpan != ParentTLE.TimeLine.Stopper.Elapsed)
                 throw new Exception("Nesu: Time Spans are not matched");
 
-            ParentTLE.TimeLine.BeatGuider.RemoveBeat(timeSpan);
+            var panel = ParentTLE.PanelHub.GetPanel(TLEPanelNames.BEAT);
+            if (panel == null)
+                throw new Exception("Beat panel is null");
 
+            var panelCell = panel.SelectedPanelCell;
+            if (panelCell == null)
+                throw new Exception("Beat panel is null");
+
+            var beat = panelCell.ReferenceElement as Beat;
+            if (beat == null)
+                throw new Exception("Selected Panel Cell referenced element is not a beat element");
+
+            ParentTLE.TimeLine.BeatGuider.RemoveBeat(beat);
             ParentTLE.TimeLine.Refresh();
-
             ParentTLE.PanelHub.InitializePanel(TLEPanelNames.BEAT, ParentTLE.TimeLine.BeatGuider.GetTLECellElements());
         }
 
