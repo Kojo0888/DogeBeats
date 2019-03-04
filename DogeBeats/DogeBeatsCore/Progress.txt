@@ -309,6 +309,9 @@ p	Planned: Setting bodyies for Graphical Proxy:
 	PanelHub refactor
 	PanelHub PanelCell Selection mechanism created
 
+29_02 - 4_03_2019:
+	All 144 tests green.
+	Many fixes has been aplied.
 _________________________________________________________________________________________________
 
 TODO Legend:

@@ -58,16 +58,74 @@ namespace DogeBeatsTests.EngineSections.TimeLines
         public void FixGroupAnimationTime()
         {
             InitAnimationElements();
-            var time = new TimeSpan(2, 0, 0);
+            var time = new TimeSpan(1, 0, 0);
             var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
             group.Elements.LastOrDefault().Route.Frames.LastOrDefault().FrameTime = time;
-            var totalDurationTime = group.Elements.LastOrDefault().GetDurationTime();
+            var totalDurationTimeBefore = group.Elements.LastOrDefault().GetDurationTime();
+
+            timeLine.FixGroupAnimationTime();
+
+            var totalDurationTimeAfter = group.Elements.LastOrDefault().GetDurationTime();
+            if (totalDurationTimeBefore != totalDurationTimeAfter)
+                throw new NesuException("totalDurationTime does not match");
+
+            group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            if (group.Route.AnimationEndTime - group.Route.AnimationStartTime != new TimeSpan(1,0,39))
+                throw new NesuException("Time does not match");
+        }
+
+        [Fact]
+        public void FixGroupAnimationTime2()
+        {
+            InitAnimationElements();
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
 
             timeLine.FixGroupAnimationTime();
 
             group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
-            if (group.Route.AnimationEndTime - group.Route.AnimationStartTime != totalDurationTime)
-                throw new NesuException("Time does not match");
+            if (group.Route.AnimationEndTime != new TimeSpan(0, 0, 57))
+                throw new NesuException("Time does not match. it is: " + (group.Route.AnimationEndTime - group.Route.AnimationStartTime));
+        }
+
+        [Fact]
+        public void FixGroupAnimationTime3()
+        {
+            InitAnimationElements();
+            var time = new TimeSpan(0, 1, 0);
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            var single = group.Elements.LastOrDefault();
+            var newGroup = group.ConvertToGroup(single);
+            var newSingleElement = new AnimationSingleElement();
+            newSingleElement.Route.AnimationStartTime = new TimeSpan(0,0,10);
+            newSingleElement.Route.Frames.Add(new AnimationRouteFrame() { FrameTime = time });
+            newGroup.Elements.Add(newSingleElement);
+
+            timeLine.FixGroupAnimationTime();
+
+            group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            if (group.Route.AnimationEndTime != new TimeSpan(0, 2, 0))
+                throw new NesuException("Time does not match. End time is " + group.Route.AnimationEndTime);
+        }
+
+        [Fact]
+        public void FixGroupAnimationTime4()
+        {
+            InitAnimationElements();
+            var time = new TimeSpan(0, 1, 0);
+            var group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            var single = group.Elements.LastOrDefault();
+            var newGroup = group.ConvertToGroup(single);
+            newGroup.Route.AnimationStartTime = new TimeSpan(0,1,0);
+            var newSingleElement = new AnimationSingleElement();
+            newSingleElement.Route.AnimationStartTime = new TimeSpan(0, 0, 10);
+            newSingleElement.Route.Frames.Add(new AnimationRouteFrame() { FrameTime = time });
+            newGroup.Elements.Add(newSingleElement);
+
+            timeLine.FixGroupAnimationTime();
+
+            group = timeLine.AnimationElements.OfType<AnimationGroupElement>().LastOrDefault();
+            if (group.Route.AnimationEndTime != new TimeSpan(0, 2, 23))
+                throw new NesuException("Time does not match. End time is " + group.Route.AnimationEndTime);
         }
 
         [Fact]

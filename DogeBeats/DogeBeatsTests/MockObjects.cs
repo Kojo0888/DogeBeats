@@ -44,99 +44,99 @@ namespace DogeBeatsTests
             return new TimeLine()
             {
                 AnimationElements = new List<DogeBeats.EngineSections.AnimationObjects.IAnimationElement>()
-            {
-                new AnimationSingleElement()
                 {
-                    Route = new AnimationRoute()
+                    new AnimationSingleElement()
                     {
-                        AnimationStartTime = new TimeSpan(0,0,0,10),
-                        Frames = new List<AnimationRouteFrame>()
+                        Route = new AnimationRoute()
                         {
-                            new AnimationRouteFrame()
+                            AnimationStartTime = new TimeSpan(0,0,0,10),
+                            Frames = new List<AnimationRouteFrame>()
                             {
-                                FrameTime = new TimeSpan(0,0,0,12)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
-                            }
-                        }
-                    }
-                },
-                new AnimationSingleElement()
-                {
-                    Route = new AnimationRoute()
-                    {
-                        AnimationStartTime = new TimeSpan(0,0,0,2),
-                        Frames = new List<AnimationRouteFrame>()
-                        {
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
-                            }
-                        }
-                    }
-                },
-                new AnimationGroupElement()
-                {
-                    Route = new AnimationRoute()
-                    {
-                        AnimationStartTime = new TimeSpan(0,0,0,13),
-                        Frames = new List<AnimationRouteFrame>()
-                        {
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,12)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,1)
-                            },
-                            new AnimationRouteFrame()
-                            {
-                                FrameTime = new TimeSpan(0,0,0,5)
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,12)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,1)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,5)
+                                }
                             }
                         }
                     },
-                    Elements = new List<DogeBeats.EngineSections.AnimationObjects.IAnimationElement>()
+                    new AnimationSingleElement()
                     {
-                        new AnimationSingleElement()
+                        Route = new AnimationRoute()
                         {
-                            Route = new AnimationRoute()
+                            AnimationStartTime = new TimeSpan(0,0,0,2),
+                            Frames = new List<AnimationRouteFrame>()
                             {
-                                AnimationStartTime = new TimeSpan(0,0,0,50),
-                                Frames = new List<AnimationRouteFrame>()
+                                new AnimationRouteFrame()
                                 {
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,1)
-                                    },
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,1)
-                                    },
-                                    new AnimationRouteFrame()
-                                    {
-                                        FrameTime = new TimeSpan(0,0,0,5)
-                                    }
+                                    FrameTime = new TimeSpan(0,0,0,1)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,1)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,5)
+                                }
+                            }
+                        }
+                    },
+                    new AnimationGroupElement()
+                    {
+                        Route = new AnimationRoute()
+                        {
+                            AnimationStartTime = new TimeSpan(0,0,0,13),
+                            Frames = new List<AnimationRouteFrame>()
+                            {
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,12)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,1)
+                                },
+                                new AnimationRouteFrame()
+                                {
+                                    FrameTime = new TimeSpan(0,0,0,5)
                                 }
                             }
                         },
+                        Elements = new List<DogeBeats.EngineSections.AnimationObjects.IAnimationElement>()
+                        {
+                            new AnimationSingleElement()
+                            {
+                                Route = new AnimationRoute()
+                                {
+                                    AnimationStartTime = new TimeSpan(0,0,0,37),
+                                    Frames = new List<AnimationRouteFrame>()
+                                    {
+                                        new AnimationRouteFrame()
+                                        {
+                                            FrameTime = new TimeSpan(0,0,0,1)
+                                        },
+                                        new AnimationRouteFrame()
+                                        {
+                                            FrameTime = new TimeSpan(0,0,0,1)
+                                        },
+                                        new AnimationRouteFrame()
+                                        {
+                                            FrameTime = new TimeSpan(0,0,0,5)
+                                        }
+                                    }
+                                }
+                            },
+                        }
                     }
-                }
-            },
+                },
                 BeatGuider = new DogeBeats.Modules.TimeLines.BeatGuide()
                 {
                     Beats = new List<DogeBeats.Modules.TimeLines.Beat>()

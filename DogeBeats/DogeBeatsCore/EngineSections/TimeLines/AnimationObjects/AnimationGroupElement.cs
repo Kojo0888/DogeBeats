@@ -50,15 +50,22 @@ namespace Testowy.Model
 
         public void Update(TimeSpan currentStopperTime, Placement parentPlacement)
         {
-            TimeSpan elementTime = currentStopperTime.Subtract(Route.AnimationStartTime);
+            TimeSpan elementTime = TrimTimeSpan(currentStopperTime);
+            //currentStopperTime.Subtract(Route.AnimationStartTime);
             //TODO Verify this timeSpan. Probably some if sstatements needed
 
-            Placement = Route.CalculatePlacement(currentStopperTime);
+            Placement = Route.CalculatePlacement(elementTime);
 
             foreach (var element in Elements)
             {
                 element.Update(elementTime, Placement);
             }
+        }
+
+        private TimeSpan TrimTimeSpan(TimeSpan currentStopperTime)
+        {
+            var ticks = currentStopperTime.Ticks % Route.CalculateAnimationTime().Ticks;
+            return new TimeSpan(ticks);
         }
 
         public TimeSpan GetDurationTime()
@@ -84,7 +91,7 @@ namespace Testowy.Model
 
             foreach (var element in Elements)
             {
-                if(element is AnimationGroupElement)
+                if (element is AnimationGroupElement)
                 {
                     var group = element as AnimationGroupElement;
                     toReturn.Add(group);
@@ -109,7 +116,9 @@ namespace Testowy.Model
             TimeSpan ts = new TimeSpan();//Route.AnimationStartTime;
             foreach (var element in Elements)
             {
-                ts += element.GetDurationTime();
+                if (element is AnimationGroupElement)
+                    (element as AnimationGroupElement).FixParentAnimationTime();
+                ts += element.GetDurationTime() + element.GetStartTime();
             }
 
             if (Route.CalculateAnimationTime() < ts)
@@ -135,6 +144,15 @@ namespace Testowy.Model
             convertedGroup.Elements = new List<IAnimationElement>();
 
             return convertedGroup;
+        }
+
+        public AnimationGroupElement ConvertToGroup(IAnimationElement singleAnimationElement)
+        {
+            if(singleAnimationElement is AnimationSingleElement)
+            {
+                return ConvertToGroup(singleAnimationElement as AnimationSingleElement);
+            }
+            return null;
         }
 
         public AnimationGroupElement ConvertToGroup(AnimationSingleElement singleAnimationElement)
